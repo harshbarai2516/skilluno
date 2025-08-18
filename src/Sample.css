@@ -1,0 +1,80 @@
+/* Reset margins and padding for consistent rendering across browsers */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base container styling */
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif; /* Consistent font across browsers */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Common section styles */
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+}
+
+/* Specific section styles */
+.top-section {
+  height: 27vh; /* 27% of viewport height */
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.main-section {
+  height: 65vh; /* 65% of viewport height */
+  background-color: #f1f1f1; /* Light gray */
+  color: #333;
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+.bottom-section {
+  height: 8vh; /* 8% of viewport height */
+  background-color: #2196F3; /* Blue */
+  color: white;
+}
+
+/* Ensure consistent rendering across browsers */
+h1, h2, h3, p {
+  margin: 0.5em 0;
+}
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+  .section {
+    padding: 10px;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+  
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Vendor prefixes for maximum browser compatibility */
+.container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.section {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
