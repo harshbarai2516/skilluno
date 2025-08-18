@@ -3,7 +3,7 @@ import './App.css';
 import Leftcol from './Leftcol';
 import RightCol from './RightCol';
 import NumberGrid from './NumberGrid'; 
-
+import BottomSection from './Bottom';
 
 const App = () => {
   const [heights, setHeights] = useState({
@@ -57,9 +57,29 @@ const App = () => {
       </div>
       
       <div className="section bottom-section" style={{ height: heights.bottom }}>
-        <div className="section-content">
-          <h2>Footer (8%)</h2>
-          <p>Footer area with 8% height.</p>
+        <div className="footer-row">
+          <div className="footer-col footer-col1">
+             <button className="advance-draw-btn">Advance Draw F9</button>
+          </div>
+          <div className="footer-col footer-col2">
+            <div className="footer-center-row">
+              <div className="footer-center-col footer-center-col1">
+                <span className="footer-text">Last Transaction:<br/>#22081690601 Pt(40)</span>
+              </div>
+              <div className="footer-center-col footer-center-col2">
+                     <input type="text" placeholder="Barcode" className="barcode-input" />
+              </div>
+              <div className="footer-center-col footer-center-col3">
+                  <button className="buy-now-btn">Buy Now (F6)</button>
+              </div>
+            </div>
+          </div>
+          <div className="footer-col footer-col3">
+             <div className="section3-part-3">
+                <button className="advance-sum-btn">0</button>
+                <button className="advance-sum-btn">0</button>
+             </div>
+          </div>
         </div>
       </div>
     </div>
