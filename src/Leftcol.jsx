@@ -10,169 +10,187 @@ export default function Leftcol() {
   ];
   const [selected, setSelected] = useState("1000-1099");
 
-  const checkboxStyle = {
-    width: '40px', // doubled from 20px
-    height: '24px', // doubled from 12px
-    marginRight: '2px'
-  };
-
-  const labelStyle = {
-    fontSize: '1.3em', // Increase font size for labels
-    fontWeight: 'bold',
-    marginLeft: '4px',
-    color: '#222',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  };
-
   return (
-    <>
-      <style>{`
-        .range-wrapper {
-          display: flex;
-          flex: 1;
+    <div className="left-col-container">
+      <div className="range-list">
+        {ranges.map((range) => (
+          <label
+            key={range}
+            className={`range-item ${selected === range ? "selected" : ""}`}
+          >
+            <input
+              type="checkbox"
+              checked={selected === range}
+              onChange={() => setSelected(range)}
+              className="range-checkbox"
+            />
+            <span className="range-text">{range}</span>
+          </label>
+        ))}
+      </div>
+
+      <style jsx>{`
+        .left-col-container {
           width: 100%;
           height: 100%;
-          justify-content: center;
-          align-items: center;
           background: #fff8dc;
-          box-sizing: border-box;
-        }
-
-        .range-container {
           display: flex;
           flex-direction: column;
-          width: 100%;
-          height: 100%;
-          justify-content: stretch;
-          align-items: center;
-          padding: 0;
           box-sizing: border-box;
           overflow: hidden;
+          padding: 1px 0;
         }
 
         .range-list {
-          display: flex;
-          flex-direction: column;
+          display: grid;
+          grid-template-rows: repeat(${ranges.length}, 1fr);
           width: 100%;
           height: 100%;
-          justify-content: stretch;
-          align-items: center;
-          gap: 0.1rem;
+          gap: 3px;
           overflow: hidden;
-          box-sizing: border-box;
         }
 
         .range-item {
-          flex: 1;
-          background: linear-gradient(90deg, #ffeb8a 0%, #ffd700 100%);
-          border: 1px solid #e6c200;
-          border-radius: 3px;
-          font-size: clamp(8px, 1vw, 12px);
-          font-weight: bold;
-          color: #333;
           display: flex;
           align-items: center;
-          justify-content: center;
+          background: linear-gradient(90deg, #ffeb8a 0%, #ffd700 100%);
+          border: 1px solid #e6c200;
+          border-radius: 4px;
+          color: #333;
           cursor: pointer;
-          width: 100%;
-          box-sizing: border-box;
-          transition: box-shadow 0.2s, transform 0.1s;
-          text-align: center;
-          padding: 0;
-          margin: 0;
+          transition: all 0.2s ease;
+          overflow: hidden;
+          padding: 0 6px;
         }
 
         .range-item:hover {
-          transform: scale(1.02);
+          transform: scale(1.01);
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .range-item.selected {
           background: linear-gradient(90deg, #ffe066 0%, #ffcc00 100%);
           border-color: #ffbf00;
-          box-shadow: 0 2px 8px rgba(255,215,0,0.2);
+          box-shadow: 0 0 0 2px rgba(255,215,0,0.5);
         }
 
-        .range-item input {
-          margin-right: 2px;
-          accent-color: #ffd700;
-          transform: scale(0.7);
+        .range-checkbox {
+          width: 14px;
+          height: 14px;
+          margin-right: 6px;
+          accent-color: #ffcc00;
+          cursor: pointer;
+          flex-shrink: 0;
         }
 
-        /* Mobile - Fix overflow and sizing */
-        @media (max-width: 767px) {
-          .range-wrapper {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden !important;
-            box-sizing: border-box !important;
-          }
-          .range-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-            box-sizing: border-box !important;
-          }
+        .range-text {
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: calc(8px + 0.3vw);
+        }
+
+        /* Tablet and small desktop */
+        @media (max-width: 1024px) {
           .range-list {
-            gap: 0.05rem !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden !important;
-            box-sizing: border-box !important;
+            gap: 2.5px;
           }
-          .range-item {
-            font-size: clamp(6px, 1.2vw, 9px) !important;
-            padding: 0 !important;
-            min-height: clamp(12px, 2.5vw, 16px) !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden !important;
-            white-space: nowrap !important;
-            text-overflow: ellipsis !important;
-            box-sizing: border-box !important;
-            border-radius: 2px !important;
+          .range-checkbox {
+            width: 13px;
+            height: 13px;
+            margin-right: 5px;
           }
-          .range-item input {
-            transform: scale(0.5) !important;
-            margin-right: 1px !important;
+          .range-text {
+            font-size: calc(7px + 0.3vw);
           }
         }
 
-        /* Extra-small mobile fix */
-        @media (max-width: 400px) {
-          .range-item {
-            font-size: clamp(5px, 2vw, 8px) !important;
-            padding: 0 !important;
+        /* Mobile landscape */
+        @media (max-width: 768px) and (orientation: landscape) {
+          .range-list {
+            gap: 2px;
           }
-          .range-item input {
-            transform: scale(0.4) !important;
+          .range-item {
+            padding: 0 4px;
+          }
+          .range-checkbox {
+            width: 12px;
+            height: 12px;
+            margin-right: 4px;
+          }
+          .range-text {
+            font-size: calc(6px + 0.3vw);
+          }
+        }
+
+        /* Mobile portrait */
+        @media (max-width: 768px) and (orientation: portrait) {
+          .range-list {
+            gap: 2px;
+          }
+          .range-checkbox {
+            width: 12px;
+            height: 12px;
+            margin-right: 4px;
+          }
+          .range-text {
+            font-size: calc(6px + 0.3vw);
+          }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+          .range-list {
+            gap: 1.5px;
+          }
+          .range-item {
+            padding: 0 3px;
+            border-radius: 3px;
+          }
+          .range-checkbox {
+            width: 11px;
+            height: 11px;
+            margin-right: 3px;
+          }
+          .range-text {
+            font-size: calc(5px + 0.3vw);
+          }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 360px) {
+          .range-list {
+            gap: 1px;
+          }
+          .range-item {
+            padding: 0 2px;
+          }
+          .range-checkbox {
+            width: 10px;
+            height: 10px;
+            margin-right: 2px;
+          }
+          .range-text {
+            font-size: calc(4px + 0.3vw);
+          }
+        }
+
+        /* High contrast mode support */
+        @media (forced-colors: active) {
+          .range-item {
+            forced-color-adjust: none;
+            border-color: ButtonText;
+          }
+          .range-item.selected {
+            background: Highlight;
+            color: HighlightText;
+          }
+          .range-checkbox {
+            forced-color-adjust: none;
           }
         }
       `}</style>
-
-      <div className="range-wrapper">
-        <div className="range-container">
-          <div className="range-list">
-            {ranges.map((range) => (
-              <label
-                key={range}
-                className={`range-item ${selected === range ? "selected" : ""}`}
-                onClick={() => setSelected(range)}
-              >
-                <input
-                  type="checkbox"
-                  checked={selected === range}
-                  onChange={() => setSelected(range)}
-                  style={{ pointerEvents: "none", ...checkboxStyle }}
-                />
-                <span style={{ flex: 1, textAlign: "center", ...labelStyle }}>{range}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
