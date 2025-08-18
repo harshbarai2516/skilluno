@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Leftcol from './Leftcol';
 import RightCol from './RightCol';
+import NumberGrid from './NumberGrid'; 
+
 
 const App = () => {
   const [heights, setHeights] = useState({
@@ -43,8 +45,7 @@ const App = () => {
           </div>
           <div className="middle-center">
             <div className="middle-content">
-              <h3>Center (60%)</h3>
-              <p>Main content area</p>
+              <NumberGrid />
             </div>
           </div>
           <div className="middle-right">
