@@ -3,7 +3,7 @@ import './App.css';
 import Leftcol from './Leftcol';
 import RightCol from './RightCol';
 import NumberGrid from './NumberGrid'; 
-import BottomSection from './Bottom';
+import Filter from './Filter';
 
 const App = () => {
   const [heights, setHeights] = useState({
@@ -30,9 +30,11 @@ const App = () => {
   return (
     <div className="container">
       <div className="section top-section" style={{ height: heights.top }}>
-        <div className="section-content">
-          <h2>Header Section (27%)</h2>
-          <p>This section takes 27% of the viewport height.</p>
+        <div className="top-vertical-container">
+          <div className="top-vertical-part part1">Top 1 (35%)</div>
+          <div className="top-vertical-part part2">Top 2 (15%)</div>
+          <div className="top-vertical-part part3">Top 3 (25%)</div>
+          <div className="top-vertical-part part4"><Filter /></div>
         </div>
       </div>
       
