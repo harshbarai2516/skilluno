@@ -3,6 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 html, body, #root {
@@ -14,37 +16,47 @@ html, body, #root {
 .container {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   font-family: Arial, sans-serif;
 }
 
 .section {
   width: 100%;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
-  display: flex;
   overflow: hidden;
 }
 
 .section-content {
   width: 100%;
-  padding: 15px;
+  height: 100%;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
 }
 
+/* Top and Bottom sections */
 .top-section {
   background-color: #4CAF50;
   color: white;
-}
-
-.main-section {
-  background-color: #f1f1f1;
-  color: #333;
-  overflow-y: auto;
 }
 
 .bottom-section {
@@ -52,38 +64,126 @@ html, body, #root {
   color: white;
 }
 
+/* Middle section container */
+.middle-container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+/* Middle section parts */
+.middle-left, .middle-center, .middle-right {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.middle-left {
+  width: 20%;
+  background-color: #FF9800; /* Orange */
+}
+
+.middle-center {
+  width: 60%;
+  background-color: #f1f1f1; /* Light gray */
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+.middle-right {
+  width: 20%;
+  background-color: #9C27B0; /* Purple */
+}
+
+.middle-content {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
 /* Text elements */
-h2 {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  margin-bottom: 0.5em;
+h2, h3 {
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  margin-bottom: 0.3em;
   line-height: 1.2;
-}
-
-p {
-  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
-  line-height: 1.2;
-  max-width: 90%;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .section-content {
-    padding: 10px;
-  }
-  
-  h2 {
-    font-size: 1.1rem;
-  }
-  
-  p {
-    font-size: 0.9rem;
-  }
-}
-
-/* Prevent text overflow */
-h2, p {
+  font-weight: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+}
+
+p {
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 100%;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .section-content, .middle-content {
+    padding: 5px;
+  }
+  
+  h2 {
+    font-size: 1rem;
+  }
+  
+  h3 {
+    font-size: 0.9rem;
+  }
+  
+  p {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 3;
+  }
+}
+
+/* Fallback for very small screens */
+@media (max-width: 480px) {
+  .middle-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  
+  .middle-left, .middle-center, .middle-right {
+    width: 100%;
+    height: auto;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
 }
