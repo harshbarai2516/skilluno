@@ -52,7 +52,7 @@ export default function NumberGrid() {
         .grid-wrapper {
           display: grid;
           grid-template-columns: repeat(${columns.length + 1}, minmax(0, 1fr));
-          gap: 3px;
+          gap: 2px; /* Reduced gap between columns */
           width: 100%;
           height: 100%;
           overflow: hidden;
@@ -68,7 +68,7 @@ export default function NumberGrid() {
           justify-content: center;
           background: #e0e0e0;
           border-radius: 4px;
-          padding: 3px;
+          padding: 2px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -77,17 +77,18 @@ export default function NumberGrid() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: space-evenly; /* Better vertical distribution */
           background: #ffffff;
           border-radius: 4px;
           overflow: hidden;
-          padding: 2px;
+          padding: 1px; /* Reduced padding */
+          min-height: 0; /* Allows proper flex distribution */
         }
 
         .number-text {
           font-weight: bold;
           margin: 0;
-          line-height: 1.2;
+          line-height: 1.1; /* Tighter line height */
           font-size: calc(9px + 0.4vw);
           color: #000;
           white-space: nowrap;
@@ -95,6 +96,7 @@ export default function NumberGrid() {
           text-overflow: ellipsis;
           width: 100%;
           text-align: center;
+          flex-shrink: 1;
         }
 
         .number-capsule {
@@ -102,16 +104,17 @@ export default function NumberGrid() {
           border: 1.2px solid #6a1b9a;
           background-color: white;
           width: calc(24px + 1.5vw);
-          height: calc(10px + 0.8vh);
-          margin-top: 2px;
+          height: calc(11px + 0.9vh); /* 10% height increase */
           min-width: 24px;
-          min-height: 10px;
+          min-height: 11px; /* 10% min-height increase */
+          flex-shrink: 0;
+          margin-top: 0; /* Removed extra margin */
         }
 
         /* Large tablets and small laptops */
         @media (max-width: 1024px) {
           .grid-wrapper {
-            gap: 2.5px;
+            gap: 1.5px;
           }
           .grid-header {
             font-size: calc(9px + 0.4vw);
@@ -121,29 +124,30 @@ export default function NumberGrid() {
           }
           .number-capsule {
             width: calc(22px + 1.5vw);
-            height: calc(9px + 0.8vh);
+            height: calc(10px + 0.9vh);
             min-width: 22px;
-            min-height: 9px;
+            min-height: 10px;
           }
         }
 
         /* Tablets */
         @media (max-width: 768px) {
           .grid-wrapper {
-            gap: 2px;
+            gap: 1px;
           }
           .grid-header {
             font-size: calc(8px + 0.4vw);
-            padding: 2px;
+            padding: 1px;
           }
           .number-text {
             font-size: calc(7px + 0.4vw);
+            line-height: 1;
           }
           .number-capsule {
             width: calc(20px + 1.5vw);
-            height: calc(8px + 0.8vh);
+            height: calc(9px + 0.9vh);
             min-width: 20px;
-            min-height: 8px;
+            min-height: 9px;
             border-width: 1.1px;
           }
         }
@@ -158,23 +162,22 @@ export default function NumberGrid() {
           }
           .number-capsule {
             width: calc(18px + 1.5vw);
-            height: calc(7px + 0.8vh);
+            height: calc(8px + 0.9vh);
             min-width: 18px;
-            min-height: 7px;
-            margin-top: 1px;
+            min-height: 8px;
           }
         }
 
         /* Medium phones */
         @media (max-width: 480px) {
           .grid-wrapper {
-            gap: 1.5px;
+            gap: 0.8px;
           }
           .number-capsule {
             width: calc(16px + 1.5vw);
-            height: calc(6px + 0.8vh);
+            height: calc(7px + 0.9vh);
             min-width: 16px;
-            min-height: 6px;
+            min-height: 7px;
             border-width: 1px;
           }
         }
@@ -189,22 +192,22 @@ export default function NumberGrid() {
           }
           .number-capsule {
             width: calc(14px + 1.5vw);
-            height: calc(5px + 0.8vh);
+            height: calc(6px + 0.9vh);
             min-width: 14px;
-            min-height: 5px;
+            min-height: 6px;
           }
         }
 
         /* Extra small phones */
         @media (max-width: 320px) {
           .grid-wrapper {
-            gap: 1px;
+            gap: 0.5px;
           }
           .number-capsule {
             width: calc(12px + 1.5vw);
-            height: calc(4px + 0.8vh);
+            height: calc(5px + 0.9vh);
             min-width: 12px;
-            min-height: 4px;
+            min-height: 5px;
           }
         }
 
@@ -217,7 +220,7 @@ export default function NumberGrid() {
             font-size: calc(5px + 0.4vh);
           }
           .number-capsule {
-            height: calc(6px + 0.5vh);
+            height: calc(6px + 0.6vh);
             min-height: 6px;
           }
         }
