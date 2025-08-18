@@ -1,34 +1,89 @@
-.section {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #fff;
-}
-.section1 {
-  background: #0077ff;
-  height: 27vh;
-}
-.section2 {
-  background: #00c49a;
-  height: 65vh;
-}
-.section3 {
-  background: #ff6f61;
-  height: 8vh;
-}
-.safearea {
+/* ThreeSectionLayout.css */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 16px);
-  padding-bottom: env(safe-area-inset-bottom, 16px);
-  padding-left: env(safe-area-inset-left, 16px);
-  padding-right: env(safe-area-inset-right, 16px);
-  min-height: 100vh;
-  width: 100vw;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.section {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.section-content {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  background: #f9f9f9;
+  align-items: center;
+  text-align: center;
+}
+
+.top-section {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.main-section {
+  background-color: #f1f1f1;
+  color: #333;
+  overflow-y: auto;
+}
+
+.bottom-section {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* Text elements */
+h2 {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+p {
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+  line-height: 1.2;
+  max-width: 90%;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .section-content {
+    padding: 10px;
+  }
+  
+  h2 {
+    font-size: 1.1rem;
+  }
+  
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Prevent text overflow */
+h2, p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
