@@ -8,9 +8,9 @@ function App() {
 
   return (
     <div className="safearea">
-      {/* Your app content goes here */}
-      <h1>Responsive SafeArea</h1>
-      <p>This area is safe and responsive on all devices.</p>
+      <div className="section section1">Section 1 (27%)</div>
+      <div className="section section2">Section 2 (65%)</div>
+      <div className="section section3">Section 3 (8%)</div>
     </div>
   )
 }
