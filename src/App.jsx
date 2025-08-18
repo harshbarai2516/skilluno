@@ -4,6 +4,7 @@ import Leftcol from './Leftcol';
 import RightCol from './RightCol';
 import NumberGrid from './NumberGrid'; 
 import Filter from './Filter';
+import Result from './Result';
 
 const App = () => {
   const [heights, setHeights] = useState({
@@ -31,7 +32,7 @@ const App = () => {
     <div className="container">
       <div className="section top-section" style={{ height: heights.top }}>
         <div className="top-vertical-container">
-          <div className="top-vertical-part part1">Top 1 (35%)</div>
+          <div className="top-vertical-part part1"><Result/></div>
           <div className="top-vertical-part part2">Top 2 (15%)</div>
           <div className="top-vertical-part part3">Top 3 (25%)</div>
           <div className="top-vertical-part part4"><Filter /></div>

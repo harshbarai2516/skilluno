@@ -20,8 +20,8 @@
   box-sizing: border-box;
   padding: 0.2em 0.5em;
 }
-.part1 { background: #4caf50; height: 35%; flex-basis: 30%; }
-.part2 { background: #ff9800; height: 15%; flex-basis: 10%; }
+.part1 { background: #030303; height: 35%; flex-basis: 30%; }
+.part2 { background: #060606; height: 15%; flex-basis: 10%; }
 .part3 { background: #2196f3; height: 25%; flex-basis: 30%; }
 .part4 { background: #9c27b0; height: 25%; flex-basis: 30%; }
 
