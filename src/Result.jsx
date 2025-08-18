@@ -107,9 +107,9 @@ export default function Result() {
             overflow: hidden !important;
           }
           .box {
-            font-size: 1.8vw !important;
+            font-size: 1.2vw !important;
             padding: 0.04vw 0.12vw !important;
-            height: 2.95vw !important;
+            height: 1.5vw !important;
             min-width: 0 !important;
           }
           .box span {
@@ -119,7 +119,7 @@ export default function Result() {
             min-width: 1.5vw !important;
           }
           .kohinoor-time {
-            font-size: 1.1vw !important;
+            font-size: 0.7vw !important;
             margin-left: 0.4vw !important;
           }
         }
