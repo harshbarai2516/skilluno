@@ -153,7 +153,7 @@ p {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .section-content, .middle-content {
-    padding: 5px;
+    padding: 2px;
   }
   
   h2 {
