@@ -98,7 +98,7 @@ export default function NumberGrid() {
           text-overflow: ellipsis;
           width: 100%;
           text-align: center;
-          margin: 0 0 2px 0;
+          margin: 0px;
         }
 
         .number-capsule {
