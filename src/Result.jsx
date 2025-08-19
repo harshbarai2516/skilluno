@@ -34,7 +34,7 @@ export default function Result() {
           overflow: hidden;
         }
         .kohinoor-title {
-          font-size: 2vw;
+          font-size: calc(2vw + 2px);
           font-weight: bold;
           margin-right: 0.5vw;
           flex-shrink: 0;
@@ -54,7 +54,7 @@ export default function Result() {
           padding: 0.2vw 0.4vw;
           border-radius: 0.3vw;
           font-weight: bold;
-          font-size: 1.6vw;
+          font-size: calc(1.6vw + 2px);
           flex: 1;
           min-width: 0;
           height: 2.5vw;
@@ -64,7 +64,7 @@ export default function Result() {
           background: black;
           color: red;
           border-radius: 0.3vw;
-          font-size: 1vw;
+          font-size: calc(1vw + 2px);
           font-weight: bold;
           padding: 0.2vw 0.6vw;
           display: flex;
@@ -85,7 +85,7 @@ export default function Result() {
         .teal { background: #00796b; }
         .yellow { background: #fbc02d; }
         .kohinoor-time {
-          font-size: 1.2vw;
+          font-size: calc(1.2vw + 2px);
           text-align: right;
           margin-left: 0.5vw;
           flex-shrink: 0;
@@ -93,53 +93,53 @@ export default function Result() {
 
         /* Large tablets */
         @media (max-width: 1200px) {
-          .kohinoor-title { font-size: 1.8vw; margin-right: 0.4vw; }
-          .box { font-size: 1.4vw; height: 2.2vw; padding: 0.15vw 0.3vw; }
-          .box span { font-size: 0.9vw; padding: 0.15vw 0.5vw; }
-          .kohinoor-time { font-size: 1vw; margin-left: 0.4vw; }
+          .kohinoor-title { font-size: calc(1.8vw + 2px); margin-right: 0.4vw; }
+          .box { font-size: calc(1.4vw + 2px); height: 2.2vw; padding: 0.15vw 0.3vw; }
+          .box span { font-size: calc(0.9vw + 2px); padding: 0.15vw 0.5vw; }
+          .kohinoor-time { font-size: calc(1vw + 2px); margin-left: 0.4vw; }
           .kohinoor-boxes { gap: 0.25vw; }
         }
 
         /* Tablets */
         @media (max-width: 992px) {
-          .kohinoor-title { font-size: 1.6vw; margin-right: 0.35vw; }
-          .box { font-size: 1.3vw; height: 2vw; padding: 0.12vw 0.28vw; }
-          .box span { font-size: 0.85vw; padding: 0.12vw 0.45vw; }
-          .kohinoor-time { font-size: 0.9vw; margin-left: 0.35vw; }
+          .kohinoor-title { font-size: calc(1.6vw + 2px); margin-right: 0.35vw; }
+          .box { font-size: calc(1.3vw + 2px); height: 2vw; padding: 0.12vw 0.28vw; }
+          .box span { font-size: calc(0.85vw + 2px); padding: 0.12vw 0.45vw; }
+          .kohinoor-time { font-size: calc(0.9vw + 2px); margin-left: 0.35vw; }
           .kohinoor-boxes { gap: 0.22vw; }
         }
 
         /* Mobile large */
         @media (max-width: 768px) {
-          .kohinoor-title { font-size: 2vw; margin-right: 0.3vw; }
-          .box { font-size: 1.6vw; height: 3vw; padding: 0.15vw 0.35vw; }
-          .box span { font-size: 1vw; padding: 0.15vw 0.4vw; }
-          .kohinoor-time { font-size: 1.2vw; margin-left: 0.3vw; }
+          .kohinoor-title { font-size: calc(2vw + 2px); margin-right: 0.3vw; }
+          .box { font-size: calc(1.6vw + 2px); height: 3vw; padding: 0.15vw 0.35vw; }
+          .box span { font-size: calc(1vw + 2px); padding: 0.15vw 0.4vw; }
+          .kohinoor-time { font-size: calc(1.2vw + 2px); margin-left: 0.3vw; }
           .kohinoor-boxes { gap: 0.2vw; }
         }
 
         /* Mobile medium */
         @media (max-width: 576px) {
-          .kohinoor-title { font-size: 2.2vw; margin-right: 0.25vw; }
-          .box { font-size: 1.8vw; height: 3.2vw; padding: 0.15vw 0.3vw; }
-          .box span { font-size: 1.1vw; padding: 0.12vw 0.35vw; }
-          .kohinoor-time { font-size: 1.3vw; margin-left: 0.25vw; }
+          .kohinoor-title { font-size: calc(2.2vw + 2px); margin-right: 0.25vw; }
+          .box { font-size: calc(1.8vw + 2px); height: 3.2vw; padding: 0.15vw 0.3vw; }
+          .box span { font-size: calc(1.1vw + 2px); padding: 0.12vw 0.35vw; }
+          .kohinoor-time { font-size: calc(1.3vw + 2px); margin-left: 0.25vw; }
         }
 
         /* Mobile small */
         @media (max-width: 480px) {
-          .kohinoor-title { font-size: 2.5vw; margin-right: 0.2vw; }
-          .box { font-size: 2vw; height: 3.5vw; padding: 0.12vw 0.28vw; }
-          .box span { font-size: 1.2vw; padding: 0.1vw 0.3vw; }
-          .kohinoor-time { font-size: 1.4vw; margin-left: 0.2vw; }
+          .kohinoor-title { font-size: calc(2.5vw + 2px); margin-right: 0.2vw; }
+          .box { font-size: calc(2vw + 2px); height: 3.5vw; padding: 0.12vw 0.28vw; }
+          .box span { font-size: calc(1.2vw + 2px); padding: 0.1vw 0.3vw; }
+          .kohinoor-time { font-size: calc(1.4vw + 2px); margin-left: 0.2vw; }
         }
 
         /* Mobile extra small */
         @media (max-width: 360px) {
-          .kohinoor-title { font-size: 2.8vw; margin-right: 0.2vw; }
-          .box { font-size: 2.2vw; height: 3.8vw; padding: 0.1vw 0.25vw; }
-          .box span { font-size: 1.3vw; padding: 0.1vw 0.25vw; }
-          .kohinoor-time { font-size: 1.6vw; margin-left: 0.2vw; }
+          .kohinoor-title { font-size: calc(2.8vw + 2px); margin-right: 0.2vw; }
+          .box { font-size: calc(2.2vw + 2px); height: 3.8vw; padding: 0.1vw 0.25vw; }
+          .box span { font-size: calc(1.3vw + 2px); padding: 0.1vw 0.25vw; }
+          .kohinoor-time { font-size: calc(1.6vw + 2px); margin-left: 0.2vw; }
         }
       `}</style>
     </div>

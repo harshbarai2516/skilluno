@@ -17,7 +17,7 @@ export default function NumberGrid() {
     <div className="number-grid-container">
       <div className="grid-wrapper">
         {/* Header row */}
-        <div className="grid-header" style={{ color: "#1565c0" }}>BLOCK</div>
+        <div className="grid-header">BLOCK</div>
         {columns.map((col) => (
           <div key={col} className="grid-header">{col}</div>
         ))}
@@ -43,10 +43,11 @@ export default function NumberGrid() {
         .number-grid-container {
           width: 100%;
           height: 100%;
+          max-height: 100%;
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          overflow: hidden;
+          overflow-y: hidden;
           background: #f5f5f5;
         }
 
@@ -55,14 +56,15 @@ export default function NumberGrid() {
           grid-template-columns: repeat(${columns.length + 1}, minmax(0, 1fr));
           width: 100%;
           height: 100%;
+          max-height: 100%;
           gap: 0;
-          overflow: hidden;
+          overflow-y: hidden;
         }
 
         .grid-header {
           font-weight: bold;
           text-align: center;
-          color: #000;
+          color: #000 !important;
           font-size: calc(12px + 0.5vw);
           display: flex;
           align-items: center;
@@ -82,13 +84,15 @@ export default function NumberGrid() {
           border-radius: 4px;
           overflow: hidden;
           min-height: 0;
+          max-height: 100%;
+          flex-shrink: 1;
         }
 
         .number-text {
           font-weight: bold;
           line-height: 1;
           font-size: calc(11px + 0.5vw);
-          color: #000;
+          color: #000 !important;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -102,7 +106,7 @@ export default function NumberGrid() {
           border: 1.5px solid #6a1b9a;
           background-color: white;
           width: calc(50px + 2vw);
-          height: calc(14px + 0.9vw); /* Reduced 5% */
+          height: calc(14px + 0.9vw);
           min-width: 30px;
           min-height: 10px;
           flex-shrink: 0;
@@ -164,9 +168,9 @@ export default function NumberGrid() {
 
         /* High contrast */
         @media (forced-colors: active) {
-          .grid-header { background: ButtonFace; color: ButtonText; }
-          .grid-cell { background: Canvas; color: CanvasText; }
-          .number-capsule { border-color: ButtonText; background: Canvas; }
+          .grid-header { background: ButtonFace; color: #000 !important; }
+          .grid-cell { background: Canvas; color: #000 !important; }
+          .number-capsule { border-color: #000; background: Canvas; }
         }
       `}</style>
     </div>
