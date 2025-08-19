@@ -11,17 +11,7 @@ import Notification from './Notifcation';
 
 const App = () => {
 
-    useEffect(() => {
-    const setRealHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
 
-    setRealHeight(); // Set initial height
-    window.addEventListener('resize', setRealHeight); // Update on resize
-    
-    return () => window.removeEventListener('resize', setRealHeight);
-  }, []);
   const [heights, setHeights] = useState({
     top: '21%',
     main: '72%',
