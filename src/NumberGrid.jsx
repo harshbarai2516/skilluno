@@ -65,7 +65,7 @@ export default function NumberGrid() {
           font-weight: bold;
           text-align: center;
           color: #000 !important;
-          font-size: calc(12px + 0.5vw);
+          font-size: calc(13px + 0.5vw); /* desktop default */
           display: flex;
           align-items: center;
           justify-content: center;
@@ -91,31 +91,25 @@ export default function NumberGrid() {
         .number-text {
           font-weight: bold;
           line-height: 1;
-          font-size: calc(11px + 0.5vw);
+          font-size: calc(13px + 0.5vw); /* desktop default */
           color: #000 !important;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           width: 100%;
           text-align: center;
-          margin: 0px;
+          margin: 0;
         }
 
         .number-capsule {
           border-radius: 999px;
           border: 1.5px solid #6a1b9a;
           background-color: white;
-          width: calc(50px + 2vw);
-          height: calc(14px + 0.9vw);
+          width: calc(60px + 2vw);   /* desktop default */
+          height: calc(20px + 1vw);  /* desktop default */
           min-width: 30px;
           min-height: 10px;
           flex-shrink: 0;
-        }
-
-        /* Desktop */
-        @media (min-width: 1367px) {
-          .number-text { font-size: calc(13px + 0.5vw); }
-          .number-capsule { width: calc(60px + 2vw); height: calc(20px + 1vw); }
         }
 
         /* Laptops */
@@ -124,31 +118,27 @@ export default function NumberGrid() {
           .number-capsule { width: calc(45px + 2vw); height: calc(17px + 0.9vw); }
         }
 
-        /* Large tablets */
-        @media (max-width: 1024px) {
-          .grid-header { font-size: calc(10px + 0.5vw); }
-          .number-text { font-size: calc(9px + 0.5vw); }
-          .number-capsule { width: calc(40px + 2vw); height: calc(15px + 0.9vw); }
+        /* Large desktop */
+        @media (min-width: 1600px) {
+          .number-text {
+            font-size: calc(17px + 0.5vw);
+            margin-bottom: 4px;
+          }
+          .number-capsule {
+            width: calc(40px + 1vw);
+            height: calc(15px + 0.5vw);
+          }
         }
 
-        /* Tablets */
-        @media (max-width: 768px) {
-          .grid-header { font-size: calc(9px + 0.5vw); }
-          .number-text { font-size: calc(8px + 0.5vw); }
-          .number-capsule { width: calc(35px + 2vw); height: calc(13px + 0.9vw); border-width: 1.3px; }
+        /* Desktop/Laptops */
+        @media (min-width: 1025px) and (max-width: 1599px) {
+          .number-capsule {
+            width: calc(36px + 1vw);
+            height: calc(15px + 0.5vw);
+          }
         }
-
-        /* Large phones */
-        @media (max-width: 600px) {
-          .grid-header { font-size: calc(8px + 0.5vw); }
-          .number-text { font-size: calc(7px + 0.5vw); }
-          .number-capsule { width: calc(38px + 2vw); height: calc(11px + 0.9vw); }
-        }
-
-        /* Medium phones */
-        @media (max-width: 480px) {
           .grid-header { font-size: calc(7px + 0.5vw); }
-          .number-text { font-size: calc(6px + 0.5vw); }
+          .number-text { font-size: calc(8px + 0.5vw); }
           .number-capsule { width: calc(28px + 2vw); height: calc(9px + 0.9vw); border-width: 1.1px; }
         }
 
