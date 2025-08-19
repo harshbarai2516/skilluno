@@ -88,7 +88,9 @@ export default function Leftcol() {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          font-size: calc(8px + 0.3vw);
+          font-size: calc(11px + 0.3vw);
+          text-align: center;
+          width: 100%;
         }
 
         /* Tablet and small desktop */
@@ -97,12 +99,12 @@ export default function Leftcol() {
             gap: 2.5px;
           }
           .range-checkbox {
-            width: 13px;
-            height: 13px;
-            margin-right: 5px;
-          }
-          .range-text {
-            font-size: calc(7px + 0.3vw);
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            accent-color: #ffcc00;
+            cursor: pointer;
+            flex-shrink: 0;
           }
         }
 

@@ -63,7 +63,7 @@ export default function RightCol() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: calc(8px + 0.3vw);
+    font-size: calc(10px + 0.4vw);
           height: calc(20px + 0.5vh);
           flex-shrink: 0;
         }
@@ -77,10 +77,10 @@ export default function RightCol() {
         }
 
         .qty-cell {
-          background-color: #f7e9b1;
+           background: linear-gradient(90deg, #ffeb8a 0%, #ffd700 100%);
           border: 1px solid #e0d5a4;
           border-radius: 3px;
-          font-size: calc(7px + 0.3vw);
+          font-size: calc(9px + 0.4vw);
           font-weight: bold;
           display: flex;
           align-items: center;
@@ -94,10 +94,10 @@ export default function RightCol() {
             gap: 2.5px;
           }
           .qty-header {
-            font-size: calc(7px + 0.3vw);
+            font-size: calc(9px + 0.4vw);
           }
           .qty-cell {
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(8px + 0.4vw);
           }
         }
 
@@ -107,11 +107,10 @@ export default function RightCol() {
             gap: 2px;
           }
           .qty-header {
-            height: calc(18px + 0.5vh);
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(8px + 0.4vw);
           }
           .qty-cell {
-            font-size: calc(5px + 0.3vw);
+            font-size: calc(7px + 0.4vw);
             border-radius: 2px;
           }
         }
@@ -122,10 +121,10 @@ export default function RightCol() {
             gap: 2px;
           }
           .qty-header {
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(8px + 0.4vw);
           }
           .qty-cell {
-            font-size: calc(5px + 0.3vw);
+            font-size: calc(7px + 0.4vw);
           }
         }
 
@@ -135,11 +134,10 @@ export default function RightCol() {
             gap: 1.5px;
           }
           .qty-header {
-            font-size: calc(5px + 0.3vw);
-            height: calc(16px + 0.5vh);
+            font-size: calc(7px + 0.4vw);
           }
           .qty-cell {
-            font-size: calc(4px + 0.3vw);
+            font-size: calc(6px + 0.4vw);
           }
         }
 
@@ -149,10 +147,10 @@ export default function RightCol() {
             gap: 1px;
           }
           .qty-header {
-            font-size: calc(4px + 0.3vw);
+            font-size: calc(6px + 0.4vw);
           }
           .qty-cell {
-            font-size: calc(3px + 0.3vw);
+            font-size: calc(5px + 0.4vw);
           }
         }
 

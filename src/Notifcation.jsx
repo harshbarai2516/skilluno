@@ -16,6 +16,7 @@ const Notification = () => {
           padding: 0.8vw;
           border-radius: 0.5vw;
           box-sizing: border-box;
+          margin-bottom: 0.3vw;
         }
 
         /* Large tablets */
