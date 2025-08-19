@@ -86,6 +86,7 @@ export default function RightCol() {
           align-items: center;
           justify-content: center;
           overflow: hidden;
+          color: #000;
         }
 
         /* Tablet and small desktop */
@@ -98,6 +99,7 @@ export default function RightCol() {
           }
           .qty-cell {
             font-size: calc(8px + 0.4vw);
+            color: #000;
           }
         }
 
@@ -112,6 +114,7 @@ export default function RightCol() {
           .qty-cell {
             font-size: calc(7px + 0.4vw);
             border-radius: 2px;
+            color: #000;
           }
         }
 
@@ -125,6 +128,7 @@ export default function RightCol() {
           }
           .qty-cell {
             font-size: calc(7px + 0.4vw);
+            color: #000;
           }
         }
 
@@ -138,6 +142,7 @@ export default function RightCol() {
           }
           .qty-cell {
             font-size: calc(6px + 0.4vw);
+            color: #000;
           }
         }
 
@@ -151,6 +156,7 @@ export default function RightCol() {
           }
           .qty-cell {
             font-size: calc(5px + 0.4vw);
+            color: #000;
           }
         }
 
@@ -164,7 +170,7 @@ export default function RightCol() {
           .qty-cell {
             forced-color-adjust: none;
             background-color: Canvas;
-            color: CanvasText;
+            color: black;
             border-color: ButtonText;
           }
         }

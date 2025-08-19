@@ -43,7 +43,7 @@ export default function NumberGrid() {
         .number-grid-container {
           width: 100%;
           height: 100%;
-          padding: 1px;
+          padding: 0;
           box-sizing: border-box;
           overflow: hidden;
           background: #f5f5f5;
@@ -52,7 +52,7 @@ export default function NumberGrid() {
         .grid-wrapper {
           display: grid;
           grid-template-columns: repeat(${columns.length + 1}, minmax(0, 1fr));
-          gap: 2px; /* Reduced gap between columns */
+          gap: 0;
           width: 100%;
           height: 100%;
           overflow: hidden;
@@ -68,7 +68,7 @@ export default function NumberGrid() {
           justify-content: center;
           background: #e0e0e0;
           border-radius: 4px;
-          padding: 2px;
+          padding: 0;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -81,7 +81,7 @@ export default function NumberGrid() {
           background: #ffffff;
           border-radius: 4px;
           overflow: hidden;
-          padding: 1px; /* Reduced padding */
+          padding: 0;
           min-height: 0; /* Allows proper flex distribution */
         }
 
@@ -103,18 +103,18 @@ export default function NumberGrid() {
           border-radius: 999px;
           border: 1.2px solid #6a1b9a;
           background-color: white;
-          width: calc(24px + 1.5vw);
-          height: calc(11px + 0.9vh); /* 10% height increase */
-          min-width: 24px;
-          min-height: 11px; /* 10% min-height increase */
+          width: calc(38.5px + 1.65vw); /* 10% wider */
+          height: calc(14.7px + 0.945vh); /* 5% taller */
+          min-width: 26.4px; /* 10% wider */
+          min-height: 11.55px; /* 5% taller */
           flex-shrink: 0;
-          margin-top: 0; /* Removed extra margin */
+          margin-top: 0;
         }
 
         /* Large tablets and small laptops */
         @media (max-width: 1024px) {
           .grid-wrapper {
-            gap: 1.5px;
+            gap: 0;
           }
           .grid-header {
             font-size: calc(9px + 0.4vw);
@@ -123,31 +123,31 @@ export default function NumberGrid() {
             font-size: calc(8px + 0.4vw);
           }
           .number-capsule {
-            width: calc(22px + 1.5vw);
-            height: calc(10px + 0.9vh);
-            min-width: 22px;
-            min-height: 10px;
+            width: calc(25.3px + 1.65vw); /* 10% wider */
+            height: calc(12.6px + 0.945vh); /* 5% taller */
+            min-width: 24.2px; /* 10% wider */
+            min-height: 10.5px; /* 5% taller */
           }
         }
 
         /* Tablets */
         @media (max-width: 768px) {
           .grid-wrapper {
-            gap: 1px;
+            gap: 0;
           }
           .grid-header {
             font-size: calc(8px + 0.4vw);
-            padding: 1px;
+            padding: 0;
           }
           .number-text {
             font-size: calc(7px + 0.4vw);
             line-height: 1;
           }
           .number-capsule {
-            width: calc(20px + 1.5vw);
-            height: calc(9px + 0.9vh);
-            min-width: 20px;
-            min-height: 9px;
+            width: calc(22px + 1.65vw); /* 10% wider */
+            height: calc(9.45px + 0.945vh); /* 5% taller */
+            min-width: 22px; /* 10% wider */
+            min-height: 9.45px; /* 5% taller */
             border-width: 1.1px;
           }
         }
@@ -161,23 +161,23 @@ export default function NumberGrid() {
             font-size: calc(6px + 0.4vw);
           }
           .number-capsule {
-            width: calc(18px + 1.5vw);
-            height: calc(8px + 0.9vh);
-            min-width: 18px;
-            min-height: 8px;
+            width: calc(19.8px + 1.65vw); /* 10% wider */
+            height: calc(8.4px + 0.945vh); /* 5% taller */
+            min-width: 19.8px; /* 10% wider */
+            min-height: 8.4px; /* 5% taller */
           }
         }
 
         /* Medium phones */
         @media (max-width: 480px) {
           .grid-wrapper {
-            gap: 0.8px;
+            gap: 0;
           }
           .number-capsule {
-            width: calc(16px + 1.5vw);
-            height: calc(7px + 0.9vh);
-            min-width: 16px;
-            min-height: 7px;
+            width: calc(17.6px + 1.65vw); /* 10% wider */
+            height: calc(12.35px + 0.945vh); /* 5% taller */
+            min-width: 17.6px; /* 10% wider */
+            min-height: 7.35px; /* 5% taller */
             border-width: 1px;
           }
         }
@@ -191,23 +191,23 @@ export default function NumberGrid() {
             font-size: calc(5px + 0.4vw);
           }
           .number-capsule {
-            width: calc(14px + 1.5vw);
-            height: calc(6px + 0.9vh);
-            min-width: 14px;
-            min-height: 6px;
+            width: calc(15.4px + 1.65vw); /* 10% wider */
+            height: calc(6.3px + 0.945vh); /* 5% taller */
+            min-width: 15.4px; /* 10% wider */
+            min-height: 6.3px; /* 5% taller */
           }
         }
 
         /* Extra small phones */
         @media (max-width: 320px) {
           .grid-wrapper {
-            gap: 0.5px;
+            gap: 0;
           }
           .number-capsule {
-            width: calc(12px + 1.5vw);
-            height: calc(5px + 0.9vh);
-            min-width: 12px;
-            min-height: 5px;
+            width: calc(13.2px + 1.65vw); /* 10% wider */
+            height: calc(5.25px + 0.945vh); /* 5% taller */
+            min-width: 13.2px; /* 10% wider */
+            min-height: 5.25px; /* 5% taller */
           }
         }
 

@@ -154,6 +154,18 @@ const UpperRow = () => {
           flex-shrink: 0;
         }
 
+        /* Desktop only: Increase Global Bonus size */
+        @media (min-width: 992px) {
+          .bonus-label {
+            font-size: calc(13px + 0.5vw);
+          }
+          .bonus-value {
+            font-size: calc(15px + 0.6vw);
+            min-width: 35px;
+            padding: 2px 10px;
+          }
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 1440px) {
           .info-label, .bonus-label {

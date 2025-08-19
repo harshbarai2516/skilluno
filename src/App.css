@@ -22,8 +22,8 @@
 }
 .part1 { background: #030303; height: 35%; flex-basis: 30%; }
 .part2 { background: #060606; height: 18%; flex-basis: 10%; }
-.part3 { background: #2196f3; height: 23%; flex-basis: 30%; }
-.part4 { background: #9c27b0; height: 24%; flex-basis: 30%; }
+.part3 { background: #fcedff; height: 23%; flex-basis: 30%; }
+.part4 { background: #fcedff; height: 24%; flex-basis: 30%; }
 
 @media (max-width: 900px) {
   .top-vertical-part { font-size: 1rem; padding: 0.15em 0.3em; }
@@ -256,7 +256,7 @@
   font-size: 1.1rem;
   border: none;
   border-radius: 6px;
-  background: #890b85;
+  background: #f62185;
   color: #333;
   font-weight: 600;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
