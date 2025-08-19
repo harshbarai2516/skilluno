@@ -17,7 +17,8 @@ export default function Result() {
         <div className="box yellow">1920 <span>2x</span></div>
       </div>
       <div className="kohinoor-time">
-        2023-02-01<br />04:30 pm
+        <span className="kohinoor-date">2023-02-01</span>
+        <span className="kohinoor-time-small">04:30 pm</span>
       </div>
 
       <style>{`
@@ -89,6 +90,17 @@ export default function Result() {
           text-align: right;
           margin-left: 0.5vw;
           flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+        }
+        .kohinoor-date {
+          display: block;
+        }
+        .kohinoor-time-small {
+          display: block;
+          line-height: 1.1;
+          margin-top: -0.2vw;
         }
 
         /* Large tablets */
