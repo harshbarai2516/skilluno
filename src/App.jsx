@@ -11,18 +11,18 @@ import Notification from './Notifcation';
 
 const App = () => {
   const [heights, setHeights] = useState({
-    top: '27%',
-    main: '65%',
-    bottom: '8%'
+    top: '21%',
+    main: '72%',
+    bottom: '7%'
   });
 
   useEffect(() => {
     const calculateHeights = () => {
       const windowHeight = window.innerHeight;
       setHeights({
-        top: `${0.27 * windowHeight}px`,
-        main: `${0.65 * windowHeight}px`,
-        bottom: `${0.08 * windowHeight}px`
+        top: `${0.21 * windowHeight}px`,
+        main: `${0.72 * windowHeight}px`,
+        bottom: `${0.07 * windowHeight}px`
       });
     };
 

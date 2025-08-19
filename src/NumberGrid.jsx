@@ -62,13 +62,13 @@ export default function NumberGrid() {
           font-weight: bold;
           text-align: center;
           color: #000;
-          font-size: calc(10px + 0.4vw);
+          font-size: calc(12px + 0.5vw);
           display: flex;
           align-items: center;
           justify-content: center;
           background: #e0e0e0;
           border-radius: 4px;
-          padding: 0;
+          padding: 2px 0;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -77,19 +77,19 @@ export default function NumberGrid() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-evenly; /* Better vertical distribution */
+          justify-content: center;
           background: #ffffff;
           border-radius: 4px;
           overflow: hidden;
-          padding: 0;
-          min-height: 0; /* Allows proper flex distribution */
+          padding: 2px 0;
+          min-height: 0;
         }
 
         .number-text {
           font-weight: bold;
-          margin: 0;
-          line-height: 1.1; /* Tighter line height */
-          font-size: calc(9px + 0.4vw);
+          margin: 0 0 3px 0;
+          line-height: 1;
+          font-size: calc(11px + 0.5vw);
           color: #000;
           white-space: nowrap;
           overflow: hidden;
@@ -101,127 +101,129 @@ export default function NumberGrid() {
 
         .number-capsule {
           border-radius: 999px;
-          border: 1.2px solid #6a1b9a;
+          border: 1.5px solid #6a1b9a;
           background-color: white;
-          width: calc(38.5px + 1.65vw); /* 10% wider */
-          height: calc(14.7px + 0.945vh); /* 5% taller */
-          min-width: 26.4px; /* 10% wider */
-          min-height: 11.55px; /* 5% taller */
+          width: calc(50px + 2vw);
+          height: calc(15px + 1vw);
+          min-width: 30px;
+          min-height: 12px;
           flex-shrink: 0;
           margin-top: 0;
         }
 
-        /* Large tablets and small laptops */
-        @media (max-width: 1024px) {
-          .grid-wrapper {
-            gap: 0;
-          }
-          .grid-header {
-            font-size: calc(9px + 0.4vw);
-          }
+        /* Large desktop */
+        @media (min-width: 1600px) {
           .number-text {
-            font-size: calc(8px + 0.4vw);
+            font-size: calc(13px + 0.5vw);
+            margin-bottom: 4px;
           }
           .number-capsule {
-            width: calc(25.3px + 1.65vw); /* 10% wider */
-            height: calc(12.6px + 0.945vh); /* 5% taller */
-            min-width: 24.2px; /* 10% wider */
-            min-height: 10.5px; /* 5% taller */
+            width: calc(60px + 2vw);
+            height: calc(20px + 1vw);
+          }
+        }
+
+        /* Laptops */
+        @media (max-width: 1366px) {
+          .number-text {
+            font-size: calc(10px + 0.5vw);
+            margin-bottom: 3px;
+          }
+          .number-capsule {
+            width: calc(45px + 2vw);
+            height: calc(18px + 1vw);
+          }
+        }
+
+        /* Large tablets and small laptops */
+        @media (max-width: 1024px) {
+          .grid-header {
+            font-size: calc(10px + 0.5vw);
+          }
+          .number-text {
+            font-size: calc(9px + 0.5vw);
+            margin-bottom: 3px;
+          }
+          .number-capsule {
+            width: calc(40px + 2vw);
+            height: calc(16px + 1vw);
           }
         }
 
         /* Tablets */
         @media (max-width: 768px) {
-          .grid-wrapper {
-            gap: 0;
-          }
           .grid-header {
-            font-size: calc(8px + 0.4vw);
-            padding: 0;
+            font-size: calc(9px + 0.5vw);
           }
           .number-text {
-            font-size: calc(7px + 0.4vw);
-            line-height: 1;
+            font-size: calc(8px + 0.5vw);
+            margin-bottom: 2.5px;
           }
           .number-capsule {
-            width: calc(22px + 1.65vw); /* 10% wider */
-            height: calc(9.45px + 0.945vh); /* 5% taller */
-            min-width: 22px; /* 10% wider */
-            min-height: 9.45px; /* 5% taller */
-            border-width: 1.1px;
+            width: calc(35px + 2vw);
+            height: calc(14px + 1vw);
+            border-width: 1.3px;
           }
         }
 
         /* Large phones */
         @media (max-width: 600px) {
           .grid-header {
-            font-size: calc(7px + 0.4vw);
+            font-size: calc(8px + 0.5vw);
           }
           .number-text {
-            font-size: calc(6px + 0.4vw);
+            font-size: calc(7px + 0.5vw);
+            margin-bottom: 2px;
           }
           .number-capsule {
-            width: calc(19.8px + 1.65vw); /* 10% wider */
-            height: calc(8.4px + 0.945vh); /* 5% taller */
-            min-width: 19.8px; /* 10% wider */
-            min-height: 8.4px; /* 5% taller */
+            width: calc(38px + 2vw);
+            height: calc(12px + 1vw);
           }
         }
 
         /* Medium phones */
         @media (max-width: 480px) {
-          .grid-wrapper {
-            gap: 0;
+          .grid-header {
+            font-size: calc(7px + 0.5vw);
+          }
+          .number-text {
+            font-size: calc(6px + 0.5vw);
+            margin-bottom: 1.5px;
           }
           .number-capsule {
-            width: calc(17.6px + 1.65vw); /* 10% wider */
-            height: calc(12.35px + 0.945vh); /* 5% taller */
-            min-width: 17.6px; /* 10% wider */
-            min-height: 7.35px; /* 5% taller */
-            border-width: 1px;
+            width: calc(28px + 2vw);
+            height: calc(10px + 1vw);
+            border-width: 1.1px;
           }
         }
 
         /* Small phones */
         @media (max-width: 400px) {
           .grid-header {
-            font-size: calc(6px + 0.4vw);
+            font-size: calc(6px + 0.5vw);
           }
           .number-text {
-            font-size: calc(5px + 0.4vw);
+            font-size: calc(5px + 0.5vw);
+            margin-bottom: 1px;
           }
           .number-capsule {
-            width: calc(15.4px + 1.65vw); /* 10% wider */
-            height: calc(6.3px + 0.945vh); /* 5% taller */
-            min-width: 15.4px; /* 10% wider */
-            min-height: 6.3px; /* 5% taller */
-          }
-        }
-
-        /* Extra small phones */
-        @media (max-width: 320px) {
-          .grid-wrapper {
-            gap: 0;
-          }
-          .number-capsule {
-            width: calc(13.2px + 1.65vw); /* 10% wider */
-            height: calc(5.25px + 0.945vh); /* 5% taller */
-            min-width: 13.2px; /* 10% wider */
-            min-height: 5.25px; /* 5% taller */
+            width: calc(22px + 2vw);
+            height: calc(8px + 1vw);
           }
         }
 
         /* Landscape orientation */
         @media (max-height: 500px) and (orientation: landscape) {
           .grid-header {
-            font-size: calc(6px + 0.4vh);
+            font-size: calc(7px + 0.5vh);
           }
           .number-text {
-            font-size: calc(5px + 0.4vh);
+            font-size: calc(6px + 0.5vh);
+            margin-bottom: 1px;
           }
           .number-capsule {
-            height: calc(6px + 0.6vh);
-            min-height: 6px;
+            width: calc(25px + 2vh);
+            height: calc(10px + 1vh);
           }
         }
 
