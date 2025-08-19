@@ -450,19 +450,6 @@
   background: #fff;
 }
 /* ThreeSectionLayout.css */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-html, body {
-  height: auto;
-  min-height: 100%;
-  overflow-x: hidden;
-}
 
 
 html, body, #root {
