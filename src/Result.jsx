@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Result() {
   return (
-    <div className="kohinoor-container" style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+    <div className="kohinoor-container">
       <div className="kohinoor-title">Kohinoor</div>
       <div className="kohinoor-boxes">
         <div className="box red">1085 <span>2x</span></div>
@@ -25,7 +25,7 @@ export default function Result() {
           display: flex;
           align-items: center;
           background: #000;
-          padding: 4px;
+          padding: 0.3vw;
           color: white;
           font-family: Arial, sans-serif;
           width: 100%;
@@ -51,19 +51,20 @@ export default function Result() {
           align-items: center;
           justify-content: center;
           gap: 0.3vw;
-          padding: 0;
+          padding: 0.2vw 0.4vw;
           border-radius: 0.3vw;
           font-weight: bold;
-          font-size: 2.2vw;
+          font-size: 1.6vw;
           flex: 1;
           min-width: 0;
-          height: 2.8vw;
+          height: 2.5vw;
+          box-sizing: border-box;
         }
         .box span {
           background: black;
           color: red;
           border-radius: 0.3vw;
-          font-size: 1.5vw;
+          font-size: 1vw;
           font-weight: bold;
           padding: 0.2vw 0.6vw;
           display: flex;
@@ -90,72 +91,55 @@ export default function Result() {
           flex-shrink: 0;
         }
 
-        /* Tablet/Small Desktop View */
-        @media (max-width: 999px) {
-          .kohinoor-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden !important;
-            padding: 1px !important;
-          }
-          .kohinoor-title {
-            font-size: 1.9vw !important;
-            margin-right: 0.4vw !important;
-          }
-          .kohinoor-boxes {
-            gap: 0.22vw !important;
-            overflow: hidden !important;
-          }
-          .box {
-            font-size: 1.2vw !important;
-            padding: 0.04vw 0.12vw !important;
-            height: 1.5vw !important;
-            min-width: 0 !important;
-          }
-          .box span {
-            font-size: 1vw !important;
-            padding: 0.04vw 0.18vw !important;
-            height: 65% !important;
-            min-width: 1.5vw !important;
-          }
-          .kohinoor-time {
-            font-size: 0.7vw !important;
-            margin-left: 0.4vw !important;
-          }
+        /* Large tablets */
+        @media (max-width: 1200px) {
+          .kohinoor-title { font-size: 1.8vw; margin-right: 0.4vw; }
+          .box { font-size: 1.4vw; height: 2.2vw; padding: 0.15vw 0.3vw; }
+          .box span { font-size: 0.9vw; padding: 0.15vw 0.5vw; }
+          .kohinoor-time { font-size: 1vw; margin-left: 0.4vw; }
+          .kohinoor-boxes { gap: 0.25vw; }
         }
 
-        /* 📱 Mobile View Only */
+        /* Tablets */
+        @media (max-width: 992px) {
+          .kohinoor-title { font-size: 1.6vw; margin-right: 0.35vw; }
+          .box { font-size: 1.3vw; height: 2vw; padding: 0.12vw 0.28vw; }
+          .box span { font-size: 0.85vw; padding: 0.12vw 0.45vw; }
+          .kohinoor-time { font-size: 0.9vw; margin-left: 0.35vw; }
+          .kohinoor-boxes { gap: 0.22vw; }
+        }
+
+        /* Mobile large */
         @media (max-width: 768px) {
-          .kohinoor-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden !important;
-            padding: 2px !important;
-          }
-          .kohinoor-title {
-            font-size: 2.4vw !important;
-            margin-right: 0.3vw !important;
-          }
-          .kohinoor-boxes {
-            gap: 0.15vw !important;
-            overflow: hidden !important;
-          }
-          .box {
-            font-size: 2.2vw !important; /* smaller text */
-            padding: 0.05vw 0.15vw !important;
-            height: 4.2vw !important; /* smaller height */
-            min-width: 0 !important;
-          }
-          .box span {
-            font-size: 0.9vw !important; /* smaller multiplier */
-            padding: 0.05vw 0.2vw !important; /* proportional padding */
-            height: 55% !important;
-            min-width: 1.8vw !important;
-          }
-          .kohinoor-time {
-            font-size: 1.6vw !important;
-            margin-left: 0.3vw !important;
-          }
+          .kohinoor-title { font-size: 2vw; margin-right: 0.3vw; }
+          .box { font-size: 1.6vw; height: 3vw; padding: 0.15vw 0.35vw; }
+          .box span { font-size: 1vw; padding: 0.15vw 0.4vw; }
+          .kohinoor-time { font-size: 1.2vw; margin-left: 0.3vw; }
+          .kohinoor-boxes { gap: 0.2vw; }
+        }
+
+        /* Mobile medium */
+        @media (max-width: 576px) {
+          .kohinoor-title { font-size: 2.2vw; margin-right: 0.25vw; }
+          .box { font-size: 1.8vw; height: 3.2vw; padding: 0.15vw 0.3vw; }
+          .box span { font-size: 1.1vw; padding: 0.12vw 0.35vw; }
+          .kohinoor-time { font-size: 1.3vw; margin-left: 0.25vw; }
+        }
+
+        /* Mobile small */
+        @media (max-width: 480px) {
+          .kohinoor-title { font-size: 2.5vw; margin-right: 0.2vw; }
+          .box { font-size: 2vw; height: 3.5vw; padding: 0.12vw 0.28vw; }
+          .box span { font-size: 1.2vw; padding: 0.1vw 0.3vw; }
+          .kohinoor-time { font-size: 1.4vw; margin-left: 0.2vw; }
+        }
+
+        /* Mobile extra small */
+        @media (max-width: 360px) {
+          .kohinoor-title { font-size: 2.8vw; margin-right: 0.2vw; }
+          .box { font-size: 2.2vw; height: 3.8vw; padding: 0.1vw 0.25vw; }
+          .box span { font-size: 1.3vw; padding: 0.1vw 0.25vw; }
+          .kohinoor-time { font-size: 1.6vw; margin-left: 0.2vw; }
         }
       `}</style>
     </div>

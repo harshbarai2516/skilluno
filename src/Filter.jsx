@@ -1,84 +1,84 @@
 import React from "react";
 
 const Filter = () => {
-  // Base styles
+  // Base styles (desktop-first, fully relative using vw)
   const baseStyles = {
-    button: {
-      flex: 1,
-      padding: '2px 4px',
-      fontSize: '12px',
-      borderRadius: '0px',
-      color: 'white',
-      lineHeight: '1',
+    container: {
       display: 'flex',
+      flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center',
-      height: '60%',
-      boxSizing: 'border-box',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      border: 'none',
-      cursor: 'pointer'
-    },
-    checkbox: {
-      width: '20px',
-      height: '12px',
-      marginRight: '2px',
-      cursor: 'pointer'
-    },
-    cell: (flex = 2) => ({
-      flex,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '2px',
+      justifyContent: 'flex-start',
+      gap: '0.5vw',
+      width: '100%',
       height: '100%',
       boxSizing: 'border-box',
-      minWidth: '0' // Prevent flex items from overflowing
+      flexWrap: 'nowrap',
+      overflow: 'hidden',
+      padding: '0.3vw'
+    },
+    button: {
+      flex: '0 0 auto',
+      padding: '0.3vw 0.8vw',
+      fontSize: '1vw',
+      borderRadius: '0.3vw',
+      color: 'white',
+      lineHeight: '1.2',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '2vw',
+      boxSizing: 'border-box',
+      whiteSpace: 'nowrap',
+      border: 'none',
+      cursor: 'pointer',
+      minWidth: '0'
+    },
+    checkbox: {
+      width: '1vw',
+      height: '1vw',
+      marginRight: '0.4vw',
+      cursor: 'pointer',
+      flexShrink: 0
+    },
+    cell: (flex = 1) => ({
+      flex: `${flex} 0 auto`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '0.4vw',
+      height: '100%',
+      boxSizing: 'border-box',
+      padding: '0 0.2vw'
     }),
     textSpan: {
       color: 'black',
-      fontSize: '12px',
+      fontSize: '1vw',
       textAlign: 'center',
       whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis'
+      flexShrink: 0
     },
     select: {
       backgroundColor: 'blue',
       color: '#fff',
       border: 'none',
       fontWeight: 'normal',
-      minWidth: '80px',
-      fontSize: '12px',
-      padding: '2px 4px',
-      borderRadius: '0px',
-      height: '32px',
-      lineHeight: '32px',
-      textAlign: 'center',
-      cursor: 'pointer'
+      minWidth: '6vw',
+      fontSize: '1vw',
+      padding: '0.3vw 0.5vw',
+      borderRadius: '0.3vw',
+      height: '2vw',
+      lineHeight: '1.2',
+      cursor: 'pointer',
+      flexShrink: 0
     }
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      gap: '2px',
-      width: '100%',
-      height: '100%',
-      boxSizing: 'border-box',
-      flexWrap: 'nowrap',
-      overflowX: 'auto',
-      padding: '2px'
-    }}>
+    <div style={baseStyles.container}>
       {/* Range filters */}
       {[{ label: 'All', bg: 'black' }, { label: '10-19', bg: 'blue' }, { label: '30-39', bg: 'green' }, { label: '50-59', bg: 'red' }]
         .map((btn, i) => (
-          <div key={`range-${i}`} style={baseStyles.cell(2)}>
+          <div key={`range-${i}`} style={baseStyles.cell(1.2)}>
             <input type="checkbox" style={baseStyles.checkbox} />
             <button style={{ ...baseStyles.button, backgroundColor: btn.bg }}>{btn.label}</button>
           </div>
@@ -86,7 +86,7 @@ const Filter = () => {
 
       {/* Type filters */}
       {['EVEN', 'ODD', 'CP', 'FP'].map((txt, i) => (
-        <div key={`type-${i}`} style={baseStyles.cell(1)}>
+        <div key={`type-${i}`} style={baseStyles.cell(0.9)}>
           <input type="checkbox" style={baseStyles.checkbox} />
           <span style={baseStyles.textSpan}>{txt}</span>
         </div>
@@ -97,7 +97,7 @@ const Filter = () => {
         .map((btn, i) => {
           if (btn.label === 'Password') {
             return [
-              <div key="dropdown" style={baseStyles.cell(2)}>
+              <div key="dropdown" style={baseStyles.cell(1.3)}>
                 <select style={baseStyles.select}>
                   <option value="">Language</option>
                   <option value="en">English</option>
@@ -105,7 +105,7 @@ const Filter = () => {
                   <option value="mr">Marathi</option>
                 </select>
               </div>,
-              <div key={`action-${i}`} style={baseStyles.cell(2)}>
+              <div key={`action-${i}`} style={baseStyles.cell(1.2)}>
                 <button style={{ 
                   ...baseStyles.button, 
                   backgroundColor: btn.bg, 
@@ -117,7 +117,7 @@ const Filter = () => {
             ];
           }
           return (
-            <div key={`action-${i}`} style={baseStyles.cell(2)}>
+            <div key={`action-${i}`} style={baseStyles.cell(1.2)}>
               <button style={{ 
                 ...baseStyles.button, 
                 backgroundColor: btn.bg, 
@@ -131,155 +131,60 @@ const Filter = () => {
 
       {/* Responsive Media Queries */}
       <style jsx>{`
-        @media (max-width: 1440px) {
-          /* Desktop adjustments */
-          div[style*="flex-direction: row"] {
-            gap: 1px;
+        /* Desktop is default (using vw for relative sizing) */
+
+        @media (max-width: 1200px) {
+          button, select {
+            font-size: 0.9vw; padding: 0.25vw 0.6vw; height: 1.8vw;
           }
-          button {
-            font-size: 11px;
-            padding: 1px 3px;
-          }
-          span {
-            font-size: 11px;
-          }
-          select {
-            font-size: 11px;
-            min-width: 70px;
-          }
+          span { font-size: 0.9vw; }
+          input[type="checkbox"] { width: 0.9vw; height: 0.9vw; }
+          div[style*="gap"] { gap: 0.45vw; }
         }
 
-        @media (max-width: 1024px) {
-          /* Tablet landscape */
-          div[style*="flex-direction: row"] {
-            gap: 1px;
+        @media (max-width: 992px) {
+          button, select {
+            font-size: 1.1vw; padding: 0.3vw 0.7vw; height: 2vw;
           }
-          button {
-            font-size: 10px;
-            padding: 1px 2px;
-          }
-          span {
-            font-size: 10px;
-          }
-          select {
-            font-size: 10px;
-            min-width: 65px;
-            height: 28px;
-          }
+          span { font-size: 1.1vw; }
+          input[type="checkbox"] { width: 1.1vw; height: 1.1vw; }
+          div[style*="gap"] { gap: 0.5vw; }
         }
 
-        @media (max-width: 999px) {
-          /* Tablet portrait */
-          div[style*="flex-direction: row"] {
-            gap: 0.2px;
+        @media (max-width: 768px) {
+          button, select {
+            font-size: 1.4vw; padding: 0.35vw 0.8vw; height: 2.2vw;
           }
-          button {
-            font-size: 7px;
-            padding: 1px 2px;
-          }
-          span {
-            font-size: 6px;
-          }
-          select {
-            font-size: 9px;
-            min-width: 40px;
-            height: 15px;
-          }
-          input[type="checkbox"] {
-            width: 18px;
-            height: 10px;
-          }
+          span { font-size: 1.4vw; }
+          input[type="checkbox"] { width: 1.3vw; height: 1.3vw; }
+          div[style*="gap"] { gap: 0.6vw; }
         }
 
-        @media (max-width: 600px) {
-          /* Large phones */
-          button {
-            font-size: 8px;
-            padding: 0.5px 1px;
+        @media (max-width: 576px) {
+          button, select {
+            font-size: 1.6vw; padding: 0.4vw 0.9vw; height: 2.4vw;
           }
-          span {
-            font-size: 8px;
-          }
-          select {
-            font-size: 8px;
-            min-width: 55px;
-            height: 24px;
-          }
-          input[type="checkbox"] {
-            width: 16px;
-            height: 9px;
-            margin-right: 1px;
-          }
+          span { font-size: 1.6vw; }
+          input[type="checkbox"] { width: 1.5vw; height: 1.5vw; }
+          div[style*="gap"] { gap: 0.7vw; }
         }
 
         @media (max-width: 480px) {
-          /* Medium phones */
-          button {
-            font-size: 7px;
+          button, select {
+            font-size: 1.8vw; padding: 0.45vw 1vw; height: 2.6vw;
           }
-          span {
-            font-size: 7px;
-          }
-          select {
-            font-size: 7px;
-            min-width: 50px;
-            height: 22px;
-          }
-          input[type="checkbox"] {
-            width: 14px;
-            height: 8px;
-          }
+          span { font-size: 1.8vw; }
+          input[type="checkbox"] { width: 1.7vw; height: 1.7vw; }
+          div[style*="gap"] { gap: 0.8vw; }
         }
 
         @media (max-width: 360px) {
-          /* Small phones */
-          button {
-            font-size: 6px;
-          }
-          span {
-            font-size: 6px;
-          }
-          select {
-            font-size: 6px;
-            min-width: 45px;
-            height: 20px;
-          }
-          input[type="checkbox"] {
-            width: 12px;
-            height: 7px;
-          }
-        }
-
-        @media (max-width: 320px) {
-          /* Extra small phones */
-          button {
-            font-size: 5.5px;
-          }
-          span {
-            font-size: 5.5px;
-          }
-          select {
-            font-size: 5.5px;
-            min-width: 40px;
-            height: 18px;
-          }
-        }
-
-        /* Landscape orientation adjustments */
-        @media (orientation: landscape) and (max-height: 500px) {
-          div[style*="flex-direction: row"] {
-            height: 80%;
-          }
           button, select {
-            height: 70%;
+            font-size: 2vw; padding: 0.5vw 1.2vw; height: 2.8vw;
           }
-        }
-
-        /* Print styles */
-        @media print {
-          div[style*="flex-direction: row"] {
-            display: none !important;
-          }
+          span { font-size: 2vw; }
+          input[type="checkbox"] { width: 1.9vw; height: 1.9vw; }
+          div[style*="gap"] { gap: 0.9vw; }
         }
       `}</style>
     </div>

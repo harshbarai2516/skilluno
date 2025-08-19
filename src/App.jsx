@@ -5,6 +5,9 @@ import RightCol from './RightCol';
 import NumberGrid from './NumberGrid'; 
 import Filter from './Filter';
 import Result from './Result';
+import UpperRow from './Upperrow';
+import Notification from './Notifcation';
+
 
 const App = () => {
   const [heights, setHeights] = useState({
@@ -33,8 +36,8 @@ const App = () => {
       <div className="section top-section" style={{ height: heights.top }}>
         <div className="top-vertical-container">
           <div className="top-vertical-part part1"><Result/></div>
-          <div className="top-vertical-part part2">Top 2 (15%)</div>
-          <div className="top-vertical-part part3">Top 3 (25%)</div>
+          <div className="top-vertical-part part2"><Notification /></div>
+          <div className="top-vertical-part part3"><UpperRow /></div>
           <div className="top-vertical-part part4"><Filter /></div>
         </div>
       </div>
