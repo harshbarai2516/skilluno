@@ -122,7 +122,7 @@ export default function Leftcol() {
             margin-right: 4px;
           }
           .range-text {
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(8px + 0.3vw);
           }
         }
 
@@ -137,7 +137,7 @@ export default function Leftcol() {
             margin-right: 4px;
           }
           .range-text {
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(8px + 0.3vw);
           }
         }
 
@@ -156,7 +156,7 @@ export default function Leftcol() {
             margin-right: 3px;
           }
           .range-text {
-            font-size: calc(5px + 0.3vw);
+            font-size: calc(6px + 0.3vw);
           }
         }
 
@@ -174,7 +174,7 @@ export default function Leftcol() {
             margin-right: 2px;
           }
           .range-text {
-            font-size: calc(4px + 0.3vw);
+            font-size: calc(5.5px + 0.3vw);
           }
         }
 
