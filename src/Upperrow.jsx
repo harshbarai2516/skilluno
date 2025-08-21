@@ -146,7 +146,7 @@ const UpperRow = () => {
 
         .bonus-value {
           background: #fff;
-          color: #000;
+          color: #ff0000;
           padding: 1px 5px;
           border-radius: 8px;
           border: 1px solid #000;

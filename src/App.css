@@ -24,8 +24,8 @@
 }
 .part1 { background: #030303; height: 35%; flex-basis: 30%; }
 .part2 { background: #060606; height: 18%; flex-basis: 15%; }
-.part3 { background: #593d5f; height: 23%; flex-basis: 30%; }
-.part4 { background: #bb1eda; height: 24%; flex-basis: 25%; }
+.part3 { background: #faf8fb; height: 23%; flex-basis: 30%; }
+.part4 { background: #faf8fb; height: 24%; flex-basis: 25%; }
 
 @media (max-width: 900px) {
   .top-vertical-part { font-size: 1rem; padding: 0.15em 0.3em; }
@@ -318,7 +318,8 @@
   overflow: hidden;
 }
 .advance-sum-btn:active {
-  background: #f0f0f0;
+  width: 110%;
+  height: 110%;
 }
 
 @media (max-width: 999px) {
