@@ -51,12 +51,12 @@ const Filter = () => {
       padding: '0 0.2vw'
     }),
     textSpan: {
-      color: 'black',
-      fontSize: '1vw',
-      textAlign: 'center',
-      whiteSpace: 'nowrap',
-      flexShrink: 0
-    },
+        color: 'black',
+        fontSize: '1.25vw',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        flexShrink: 0
+      },
     select: {
       backgroundColor: 'blue',
       color: '#fff',
@@ -88,7 +88,7 @@ const Filter = () => {
       {['EVEN', 'ODD', 'CP', 'FP'].map((txt, i) => (
         <div key={`type-${i}`} style={baseStyles.cell(0.9)}>
           <input type="checkbox" style={baseStyles.checkbox} />
-          <span style={baseStyles.textSpan}>{txt}</span>
+          <span className="type-filter-span" style={baseStyles.textSpan}>{txt}</span>
         </div>
       ))}
 
@@ -136,12 +136,16 @@ const Filter = () => {
           font-weight: 700;
           font-size: 1.35vw;
         }
+        .type-filter-span {
+          font-size: 1.6vw;
+        }
 
         @media (max-width: 1200px) {
           button, select {
             font-size: 1.25vw; font-weight: 700; padding: 0.25vw 0.6vw; height: 1.8vw;
           }
           span { font-size: 1.25vw; font-weight: 700; }
+          .type-filter-span { font-size: 1.45vw; }
           input[type="checkbox"] { width: 0.9vw; height: 0.9vw; }
           div[style*="gap"] { gap: 0.45vw; }
         }
@@ -151,6 +155,7 @@ const Filter = () => {
             font-size: 1.45vw; font-weight: 700; padding: 0.3vw 0.7vw; height: 2vw;
           }
           span { font-size: 1.45vw; font-weight: 700; }
+          .type-filter-span { font-size: 1.6vw; }
           input[type="checkbox"] { width: 1.1vw; height: 1.1vw; }
           div[style*="gap"] { gap: 0.5vw; }
         }
@@ -160,6 +165,7 @@ const Filter = () => {
             font-size: 1.75vw; font-weight: 700; padding: 0.35vw 0.8vw; height: 2.2vw;
           }
           span { font-size: 1.75vw; font-weight: 700; }
+          .type-filter-span { font-size: 1.9vw; }
           input[type="checkbox"] { width: 1.3vw; height: 1.3vw; }
           div[style*="gap"] { gap: 0.6vw; }
         }
@@ -169,6 +175,7 @@ const Filter = () => {
             font-size: 2.05vw; font-weight: 700; padding: 0.4vw 0.9vw; height: 2.4vw;
           }
           span { font-size: 2.05vw; font-weight: 700; }
+          .type-filter-span { font-size: 2.2vw; }
           input[type="checkbox"] { width: 1.5vw; height: 1.5vw; }
           div[style*="gap"] { gap: 0.7vw; }
         }
@@ -178,6 +185,7 @@ const Filter = () => {
             font-size: 2.35vw; font-weight: 700; padding: 0.45vw 1vw; height: 2.6vw;
           }
           span { font-size: 2.35vw; font-weight: 700; }
+          .type-filter-span { font-size: 2.5vw; }
           input[type="checkbox"] { width: 1.7vw; height: 1.7vw; }
           div[style*="gap"] { gap: 0.8vw; }
         }
@@ -187,6 +195,7 @@ const Filter = () => {
             font-size: 2.65vw; font-weight: 700; padding: 0.5vw 1.2vw; height: 2.8vw;
           }
           span { font-size: 2.65vw; font-weight: 700; }
+          .type-filter-span { font-size: 2.8vw; }
           input[type="checkbox"] { width: 1.9vw; height: 1.9vw; }
           div[style*="gap"] { gap: 0.9vw; }
         }
