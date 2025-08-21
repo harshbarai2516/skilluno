@@ -62,7 +62,7 @@ export default function NumberGrid() {
         }
 
         .grid-header {
-          font-weight: bold;
+          font-weight: 800;
           text-align: center;
           color: #000 !important;
           font-size: calc(13px + 0.5vw); /* desktop default */
@@ -89,7 +89,7 @@ export default function NumberGrid() {
         }
 
         .number-text {
-          font-weight: bold;
+          font-weight: 800;
           line-height: 1;
           font-size: calc(13px + 0.5vw); /* desktop default */
           color: #000 !important;
@@ -137,29 +137,30 @@ export default function NumberGrid() {
             height: calc(15px + 0.5vw);
           }
         }
-          .grid-header { font-size: calc(7px + 0.5vw); }
-          .number-text { font-size: calc(8px + 0.5vw); }
+          .grid-header { font-size: calc(7px + 0.5vw); font-weight: 800; }
+          .number-text { font-size: calc(8px + 0.5vw); font-weight: 800; }
           .number-capsule { width: calc(28px + 2vw); height: calc(9px + 0.9vw); border-width: 1.1px; }
         }
 
         /* Small phones */
         @media (max-width: 400px) {
-          .grid-header { font-size: calc(6px + 0.5vw); }
-          .number-text { font-size: calc(5px + 0.5vw); }
+          .grid-header { font-size: calc(6px + 0.5vw); font-weight: 800; }
+          .number-text { font-size: calc(5px + 0.5vw); font-weight: 800; }
           .number-capsule { width: calc(22px + 2vw); height: calc(7px + 0.9vw); }
         }
 
         /* Landscape */
         @media (max-height: 500px) and (orientation: landscape) {
-          .grid-header { font-size: calc(7px + 0.5vh); }
-          .number-text { font-size: calc(6px + 0.5vh); }
+          .grid-header { font-size: calc(7px + 0.5vh); font-weight: 800; }
+          .number-text { font-size: calc(6px + 0.5vh); font-weight: 800; }
           .number-capsule { width: calc(25px + 2vh); height: calc(9px + 0.9vh); }
         }
 
         /* High contrast */
         @media (forced-colors: active) {
-          .grid-header { background: ButtonFace; color: #000 !important; }
+          .grid-header { background: ButtonFace; color: #000 !important; font-weight: 800; }
           .grid-cell { background: Canvas; color: #000 !important; }
+          .number-text { font-weight: 800; }
           .number-capsule { border-color: #000; background: Canvas; }
         }
       `}</style>

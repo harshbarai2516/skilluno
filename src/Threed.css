@@ -1,0 +1,75 @@
+.skeleton-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Top Bar */
+.skeleton-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: lightblue;
+  padding: 10px;
+}
+.skeleton-user { background: #f4a261; padding: 6px; }
+.skeleton-options { background: #2a9d8f; padding: 6px; }
+
+/* Body */
+.skeleton-body {
+  flex: 1;
+  display: flex;
+  background: #f1faee;
+}
+
+/* Left Side */
+.skeleton-left {
+  flex: 0 0 20%;
+  background: #e9c46a;
+  padding: 10px;
+}
+
+/* Center Content */
+.skeleton-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #e0e0e0;
+}
+
+/* Ticket Row */
+.skeleton-ticketrow {
+  background: #a8dadc;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Main Board */
+.skeleton-board {
+  flex: 1;
+  background: #457b9d;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Right Side (optional, can be removed if unused) */
+.skeleton-right {
+  flex: 0 0 15%;
+  background: #ffafcc;
+  padding: 10px;
+}
+
+/* Bottom Bar */
+.skeleton-bottombar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: lightgreen;
+  padding: 10px;
+}
+.skeleton-timer { background: #f77f00; padding: 6px; }
+.skeleton-actions { background: #003049; color: white; padding: 6px; }

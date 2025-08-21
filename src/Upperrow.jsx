@@ -85,27 +85,27 @@ const UpperRow = () => {
         .info-label {
           background: #000;
           color: #fff;
-          font-weight: bold;
+          font-weight: 800;
           border-radius: 8px;
           padding: 1px 3px;
           margin-right: 3px;
-          font-size: calc(8px + 0.2vw);
+          font-size: calc(10px + 0.3vw);
           flex-shrink: 0;
         }
 
         .info-value {
-          font-size: calc(9px + 0.3vw);
-          font-weight: bold;
+          font-size: calc(12px + 0.4vw);
+          font-weight: 800;
           flex-shrink: 0;
         }
 
         .info-value.highlight {
-          font-weight: 600;
+          font-weight: 900;
         }
 
         .info-suffix {
-          font-size: calc(8px + 0.2vw);
-          font-weight: 400;
+          font-size: calc(10px + 0.3vw);
+          font-weight: 700;
           margin-left: 3px;
           color: #0c0c0c;
           flex-shrink: 0;
@@ -117,6 +117,8 @@ const UpperRow = () => {
           cursor: pointer;
           transition: all 0.2s;
           flex-grow: 1;
+          font-size: calc(12px + 0.4vw);
+          font-weight: 800;
         }
 
         .action-btn:hover {
@@ -134,8 +136,8 @@ const UpperRow = () => {
         }
 
         .bonus-label {
-          font-weight: bold;
-          font-size: calc(8px + 0.2vw);
+          font-weight: 800;
+          font-size: calc(10px + 0.3vw);
           flex-shrink: 0;
           display: inline-block;
           overflow: hidden;
@@ -148,55 +150,111 @@ const UpperRow = () => {
           padding: 1px 5px;
           border-radius: 8px;
           border: 1px solid #000;
-          font-size: calc(9px + 0.2vw);
+          font-size: calc(12px + 0.3vw);
           min-width: 25px;
           text-align: center;
           flex-shrink: 0;
+          font-weight: 800;
         }
 
         /* Desktop only: Increase Global Bonus size */
         @media (min-width: 992px) {
           .bonus-label {
-            font-size: calc(13px + 0.5vw);
+            font-size: calc(16px + 0.7vw);
+            font-weight: 900;
           }
           .bonus-value {
-            font-size: calc(15px + 0.6vw);
+            font-size: calc(18px + 0.8vw);
             min-width: 35px;
             padding: 2px 10px;
+            font-weight: 900;
           }
         }
 
         /* Responsive Adjustments */
         @media (max-width: 1440px) {
           .info-label, .bonus-label {
-            font-size: calc(7px + 0.2vw);
+            font-size: calc(9px + 0.2vw);
+            font-weight: 800;
           }
           .info-value {
-            font-size: calc(8px + 0.3vw);
+            font-size: calc(10px + 0.3vw);
+            font-weight: 800;
           }
         }
 
         @media (max-width: 1200px) {
           .bonus-label {
             display: inline-block;
+            font-size: calc(10px + 0.2vw);
+            font-weight: 800;
+          }
+          .bonus-value {
+            font-size: calc(12px + 0.3vw);
+            font-weight: 800;
+          }
+          .info-label {
+            font-size: calc(9px + 0.2vw);
+            font-weight: 800;
+          }
+          .info-value {
+            font-size: calc(10px + 0.3vw);
+            font-weight: 800;
+          }
+          .info-suffix {
+            font-size: calc(9px + 0.2vw);
+            font-weight: 700;
+          }
+          .action-btn {
+            font-size: calc(10px + 0.3vw);
+            font-weight: 800;
           }
         }
 
         @media (max-width: 992px) {
           .info-suffix {
             margin-left: 2px;
+            font-size: calc(8px + 0.2vw);
+            font-weight: 700;
           }
           .action-btn {
-            font-size: calc(7px + 0.3vw);
+            font-size: calc(8px + 0.3vw);
+            font-weight: 800;
+          }
+          .info-label, .bonus-label {
+            font-size: calc(8px + 0.2vw);
+            font-weight: 800;
+          }
+          .info-value {
+            font-size: calc(9px + 0.3vw);
+            font-weight: 800;
           }
         }
 
         @media (max-width: 768px) {
           .info-box, .action-btn {
-            font-size: calc(6px + 0.3vw);
+            font-size: calc(6px + 0.22vw);
+            font-weight: 700;
           }
           .bonus-label {
-            font-size: calc(6px + 0.2vw);
+            font-size: calc(5.5px + 0.08vw);
+            font-weight: 800;
+          }
+          .bonus-value {
+            font-size: calc(4px + 0.15vw);
+            font-weight: 800;
+          }
+          .info-label {
+            font-size: calc(5px + 0.15vw);
+            font-weight: 800;
+          }
+          .info-value {
+            font-size: calc(6.5px + 0.22vw);
+            font-weight: 800;
+          }
+          .info-suffix {
+            font-size: calc(6px + 0.15vw);
+            font-weight: 700;
           }
         }
 
@@ -206,26 +264,32 @@ const UpperRow = () => {
           }
           .info-value, .action-btn {
             font-size: calc(5px + 0.3vw);
+            font-weight: 800;
           }
           .bonus-value {
             min-width: 20px;
+            font-size: calc(7px + 0.2vw);
+            font-weight: 800;
           }
           .bonus-label {
             font-size: calc(5px + 0.2vw);
+            font-weight: 800;
           }
         }
 
         @media (max-width: 480px) {
           .info-suffix {
             margin-left: 1px;
-            font-size: calc(5px + 0.2vw);
+            font-size: calc(6px + 0.2vw);
+            font-weight: 700;
           }
         }
 
         /* Landscape orientation */
         @media (orientation: landscape) and (max-height: 500px) {
           .info-box, .action-btn {
-            font-size: calc(6px + 0.3vh);
+            font-size: calc(7px + 0.3vh);
+            font-weight: 800;
           }
         }
 

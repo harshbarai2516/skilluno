@@ -132,57 +132,61 @@ const Filter = () => {
       {/* Responsive Media Queries */}
       <style jsx>{`
         /* Desktop is default (using vw for relative sizing) */
+        button, select, span {
+          font-weight: 700;
+          font-size: 1.2vw;
+        }
 
         @media (max-width: 1200px) {
           button, select {
-            font-size: 0.9vw; padding: 0.25vw 0.6vw; height: 1.8vw;
+            font-size: 1.1vw; font-weight: 700; padding: 0.25vw 0.6vw; height: 1.8vw;
           }
-          span { font-size: 0.9vw; }
+          span { font-size: 1.1vw; font-weight: 700; }
           input[type="checkbox"] { width: 0.9vw; height: 0.9vw; }
           div[style*="gap"] { gap: 0.45vw; }
         }
 
         @media (max-width: 992px) {
           button, select {
-            font-size: 1.1vw; padding: 0.3vw 0.7vw; height: 2vw;
+            font-size: 1.3vw; font-weight: 700; padding: 0.3vw 0.7vw; height: 2vw;
           }
-          span { font-size: 1.1vw; }
+          span { font-size: 1.3vw; font-weight: 700; }
           input[type="checkbox"] { width: 1.1vw; height: 1.1vw; }
           div[style*="gap"] { gap: 0.5vw; }
         }
 
         @media (max-width: 768px) {
           button, select {
-            font-size: 1.4vw; padding: 0.35vw 0.8vw; height: 2.2vw;
+            font-size: 1.6vw; font-weight: 700; padding: 0.35vw 0.8vw; height: 2.2vw;
           }
-          span { font-size: 1.4vw; }
+          span { font-size: 1.6vw; font-weight: 700; }
           input[type="checkbox"] { width: 1.3vw; height: 1.3vw; }
           div[style*="gap"] { gap: 0.6vw; }
         }
 
         @media (max-width: 576px) {
           button, select {
-            font-size: 1.6vw; padding: 0.4vw 0.9vw; height: 2.4vw;
+            font-size: 1.9vw; font-weight: 700; padding: 0.4vw 0.9vw; height: 2.4vw;
           }
-          span { font-size: 1.6vw; }
+          span { font-size: 1.9vw; font-weight: 700; }
           input[type="checkbox"] { width: 1.5vw; height: 1.5vw; }
           div[style*="gap"] { gap: 0.7vw; }
         }
 
         @media (max-width: 480px) {
           button, select {
-            font-size: 1.8vw; padding: 0.45vw 1vw; height: 2.6vw;
+            font-size: 2.2vw; font-weight: 700; padding: 0.45vw 1vw; height: 2.6vw;
           }
-          span { font-size: 1.8vw; }
+          span { font-size: 2.2vw; font-weight: 700; }
           input[type="checkbox"] { width: 1.7vw; height: 1.7vw; }
           div[style*="gap"] { gap: 0.8vw; }
         }
 
         @media (max-width: 360px) {
           button, select {
-            font-size: 2vw; padding: 0.5vw 1.2vw; height: 2.8vw;
+            font-size: 2.5vw; font-weight: 700; padding: 0.5vw 1.2vw; height: 2.8vw;
           }
-          span { font-size: 2vw; }
+          span { font-size: 2.5vw; font-weight: 700; }
           input[type="checkbox"] { width: 1.9vw; height: 1.9vw; }
           div[style*="gap"] { gap: 0.9vw; }
         }
