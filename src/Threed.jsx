@@ -5,6 +5,7 @@ import Card from "./Card";
 import BetPanel from "./Betpanel";
 import Navbar from "./Navbar";
 import BetBoard from "./BetBoard";
+import demoImage from './assets/demo.png'
 
 export default function Threed() {
   return (
@@ -16,7 +17,11 @@ export default function Threed() {
         <div className="bottom-section">
           <div className="bottom-top">
             <div className="part-1"></div>
-            <div className="part-2">  </div>
+            <div className="part-2">  <img src={demoImage} alt="Demo"       style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "contain", // Ensures the image fits without cropping
+      }} />  </div>
             <div className="part-3"><GameInfoPanel/></div>
           </div>
           <div className="bottom-bottom">
@@ -58,7 +63,7 @@ export default function Threed() {
         
         .bottom-section {
           display: flex;
-          flex-direction: row;
+          flex-direction: row; /* Divides the section horizontally */
           height: 93%;
           width: 100%;
           background-color: blue;
@@ -67,7 +72,7 @@ export default function Threed() {
         .bottom-top {
           display: flex;
           flex-direction: column;
-          flex: 1;
+          flex: 3; /* 30% of the width */
           background-color: lightblue;
           overflow: hidden;
         }
@@ -90,7 +95,7 @@ export default function Threed() {
         .bottom-bottom {
           display: flex;
           flex-direction: column;
-          flex: 1;
+          flex: 7; /* 70% of the width */
           background-color: darkblue;
           overflow: hidden;
         }
@@ -111,23 +116,21 @@ export default function Threed() {
         }
 
         /* Responsive adjustments */
-        @media (max-width: 1024px), (max-width: 768px), (max-width: 600px), (max-width: 480px), (max-width: 360px) {
+        @media (max-width: 1024px), (max-width: 820px), (max-width: 680px), (max-width: 560px), (max-width: 440px), (max-width: 360px) {
           .bottom-section {
-            flex-direction: row;
+            display: flex;
+            flex-direction: row; /* Divides the section horizontally */
+            height: 93%;
+            width: 100%;
           }
-          .bottom-top, .bottom-bottom {
-            flex: 1;
-          }
+
           .bottom-top {
-            flex-direction: column;
+            flex: 3; /* 30% of the width */
           }
-          .bottom-top > .part-1 { flex: 45; }
-          .bottom-top > .part-2 { flex: 40; }
-          .bottom-top > .part-3 { flex: 15; }
-          .bottom-bottom > .part-1 { flex: 60; }
-          .bottom-bottom > .part-2 { flex: 30; }
-          .bottom-bottom > .part-3 { flex: 10; }
-          
+
+          .bottom-bottom {
+            flex: 7; /* 70% of the width */
+          }
         }
       `}</style>
     </>

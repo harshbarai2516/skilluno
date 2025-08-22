@@ -95,28 +95,28 @@ export default function GameInfoPanel() {
 
         /* ✅ Responsive Queries */
         @media (max-width: 1024px) {
-          .clock { font-size: calc(1.1vw + 12px); max-width: 30%; }
+          .clock { font-size: calc(0.9vw + 12px); max-width: 33%; }
           .info-box { font-size: calc(0.6vw + 7px); padding: 0.25em; max-width: 70%; }
         }
 
-        @media (max-width: 768px) {
-          .clock { font-size: calc(1.2vw + 11px); max-width: 30%; }
-          .info-box { font-size: calc(0.7vw + 6px); padding: 0.24em; max-width: 70%; }
+        @media (max-width: 999px) {
+          .clock { font-size: calc(0.9vw + 11px); max-width: 33%; }
+          .info-box { font-size: calc(0.4vw + 6px); padding: 0.24em; max-width: 67%; }
         }
 
         @media (max-width: 680px) {
-          .clock { font-size: calc(1.3vw + 10px); max-width: 30%; }
-          .info-box { font-size: calc(0.7vw + 5px); padding: 0.22em; max-width: 70%; }
+          .clock { font-size: calc(1.1vw + 10px); max-width: 33%; }
+          .info-box { font-size: calc(0.5vw + 5px); padding: 0.22em; max-width: 67%; }
         }
 
         @media (max-width: 480px) {
-          .clock { font-size: calc(1.4vw + 9px); max-width: 30%; }
-          .info-box { font-size: calc(0.8vw + 5px); padding: 0.2em; max-width: 70%; }
+          .clock { font-size: calc(1.2vw + 9px); max-width: 33%; }
+          .info-box { font-size: calc(0.6vw + 5px); padding: 0.2em; max-width: 67%; }
         }
 
         @media (max-width: 360px) {
-          .clock { font-size: calc(1.5vw + 8px); max-width: 12%; }
-          .info-box { font-size: calc(0.7vw + 4px); padding: 0.18em; max-width: 70%; }
+          .clock { font-size: calc(1.3vw + 8px); max-width: 33%; }
+          .info-box { font-size: calc(0.5vw + 4px); padding: 0.18em; max-width: 67%; }
         }
       `}</style>
     </div>

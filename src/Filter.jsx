@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Filter = () => {
+  const navigate = useNavigate();
+
   // Base styles (desktop-first, fully relative using vw)
   const baseStyles = {
     container: {
@@ -122,7 +125,11 @@ const Filter = () => {
                 ...baseStyles.button, 
                 backgroundColor: btn.bg, 
                 fontWeight: btn.bold ? 'bold' : 'normal' 
-              }}>
+              }} onClick={() => {
+                  if (btn.label === '3D Game') {
+                    navigate('/threed'); // Navigate to Threed using useNavigate
+                  }
+                }}>
                 {btn.label}
               </button>
             </div>

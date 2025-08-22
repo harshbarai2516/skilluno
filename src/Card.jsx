@@ -6,7 +6,7 @@ export default function Card() {
       {[...Array(5)].map((_, i) => (
         <div key={i} className="card">
           <div className="card-time">9:40:00 AM</div>
-
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em' }}>
           <div className="card-letters">
             <span className="letter a">A</span>
             <span className="letter b">B</span>
@@ -29,7 +29,7 @@ export default function Card() {
             <span>8</span>
             <span>7</span>
           </div>
-
+          </div>
           <div className="card-footer">N</div>
         </div>
       ))}
@@ -119,6 +119,7 @@ export default function Card() {
         .card-letters,
         .card-numbers {
           display: flex;
+          flex-direction: column;
           gap: 0.45em;
           align-items: center;
           justify-content: center;
