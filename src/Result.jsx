@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+const fetchPreviousResults = async () => {
+  try {
+    const response = await fetch("https://api.goldbazar.co.in/api/results/previousResult");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching previous results:", error);
+    return null;
+  }
+};
 
 export default function Result() {
+  const [results, setResults] = useState(null);
+
+  useEffect(() => {
+    const getResults = async () => {
+      const data = await fetchPreviousResults();
+      setResults(data);
+      console.log("Previous Results:", data);
+    };
+    getResults();
+  }, []);
+
   return (
     <div className="kohinoor-container">
       <div className="kohinoor-title">Kohinoor</div>
@@ -20,6 +45,7 @@ export default function Result() {
         <span className="kohinoor-date">2023-02-01</span>
         <span className="kohinoor-time-small">04:30 pm</span>
       </div>
+ 
 
       <style>{`
         .kohinoor-container {

@@ -130,7 +130,7 @@ const Filter = () => {
         })}
 
       {/* Responsive Media Queries */}
-      <style jsx>{`
+      <style jsx="true">{`
         /* Desktop is default (using vw for relative sizing) */
         button, select, span {
           font-weight: 700;

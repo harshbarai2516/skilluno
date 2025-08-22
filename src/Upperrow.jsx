@@ -36,7 +36,7 @@ const UpperRow = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .upper-row-container {
           width: 100%;
           height: 100%;

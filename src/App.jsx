@@ -22,14 +22,11 @@ function App() {
       </div>
 
       {/* Orientation-based styles */}
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         /* Portrait mode: block the app, show overlay */
         @media (orientation: portrait) {
           .app-wrapper {
             display: none !important;
-          }
-          .rotate-overlay {
-            display: flex !important;
           }
         }
 

@@ -29,7 +29,7 @@ export default function Leftcol() {
         ))}
       </div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .left-col-container {
           width: 100%;
           height: 100%;
