@@ -13,21 +13,23 @@ export default function Threed() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
       <div className="threed-container">
-        <div className="top-section"><Navbar/></div>
+        <div className="top-section"><Navbar /></div>
         <div className="bottom-section">
           <div className="bottom-top">
-            <div className="part-1"></div>
-            <div className="part-2">  <img src={demoImage} alt="Demo"       style={{
-        width: "100%",
-        height: "100%",
-        objectFit: "contain", // Ensures the image fits without cropping
-      }} />  </div>
-            <div className="part-3"><GameInfoPanel/></div>
+            <div className="part-1">
+              <img src={demoImage} alt="Demo"
+                style={{
+                  width: "100%",
+                  height: "100%", // Ensure the image occupies the full height of its parent div
+                  objectFit: "cover", // Adjust to cover the entire area without distortion
+                }} /> 
+              </div>
+            <div className="part-3"><GameInfoPanel /></div>
           </div>
           <div className="bottom-bottom">
-            <div className="part-1"><BetPanel/></div>
-            <div className="part-2"><Card/></div>
-            <div className="part-3"><ButtonsBar/></div>
+            <div className="part-1"><BetPanel /></div>
+            <div className="part-2"><Card /></div>
+            <div className="part-3"><ButtonsBar /></div>
           </div>
         </div>
       </div>
@@ -78,15 +80,11 @@ export default function Threed() {
         }
 
         .bottom-top > .part-1 {
-          flex: 45;
-          background-color: #99ccff;
+          flex: 85;
+          background-color: #aabdd0ff;
         }
 
-        .bottom-top > .part-2 {
-          flex: 40;
-          background-color: #99ccff;
-        }
-
+        
         .bottom-top > .part-3 {
           flex: 15;
           background-color: #99ff99;

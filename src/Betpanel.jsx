@@ -38,8 +38,9 @@ export default function BetPanel() {
 
       <style jsx>{`
         .bet-panel {
-          display: flex;
-          flex-direction: column;
+          height: 100%; /* Ensure the BetPanel uses the full height of its parent div */
+          display: flex; /* Optional: Ensure proper alignment of children */
+          flex-direction: column; /* Optional: Stack children vertically */
           width: 100%;
           background: #fff;
           border: 2px solid #b7410e;
@@ -98,7 +99,7 @@ export default function BetPanel() {
           display: flex;
           flex-wrap: nowrap;
           gap: 0.5em;
-          padding: 0.6em;
+          padding: 0.1em;
           overflow-x: auto;
           scrollbar-width: none;
         }
@@ -109,7 +110,7 @@ export default function BetPanel() {
         .bet-card {
           flex: 0 1 auto;
           min-width: 60px;
-          padding: 0.4em;
+          padding: 0.1em;
           background: #fff;
           border: 2px solid #4caf50;
           border-radius: 0.3em;
@@ -120,7 +121,7 @@ export default function BetPanel() {
           font-size: calc(0.5vw + 8px);
         }
 
-        .num { font-weight: bold; }
+        .num {  color: #333; font-weight: bold; }
         .type { color: #333; font-size: calc(0.4vw + 7px); }
         .amt { color: #000; }
         .remove { color: red; font-weight: bold; cursor: pointer; }
@@ -159,4 +160,3 @@ export default function BetPanel() {
     </div>
   );
 }
- 

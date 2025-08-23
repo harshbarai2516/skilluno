@@ -6,25 +6,25 @@ export default function Card() {
       {[...Array(5)].map((_, i) => (
         <div key={i} className="card">
           <div className="card-time">9:40:00 AM</div>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em' }}>
-          <div className="card-letters">
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+          <div className="card-letters" >
             <span className="letter a">A</span>
             <span className="letter b">B</span>
             <span className="letter c">C</span>
           </div>
 
           {/* You had three number rows – keeping them, styled identically */}
-          <div className="card-numbers">
+          <div className="card-numbers" >
             <span>1</span>
             <span>8</span>
             <span>7</span>
           </div>
-          <div className="card-numbers">
+          <div className="card-numbers" >
             <span>1</span>
             <span>8</span>
             <span>7</span>
           </div>
-          <div className="card-numbers">
+          <div className="card-numbers" >
             <span>1</span>
             <span>8</span>
             <span>7</span>
@@ -185,6 +185,21 @@ export default function Card() {
           .card-row { padding: 0.25em; gap: 0.25em; }
           .card     { padding: 0.18em 0.24em; }
           .card-time { min-height: 1.4em; }
+        }
+
+        /* >= 1025px (desktop) */
+        @media (min-width: 1025px) {
+          .card-letters {
+            /* Add desktop-specific styles for card-letters here */
+            font-size: 1.2em;
+            gap: 1.5em; /* Example: Adjust gap for desktop */
+          }
+
+          .card-numbers {
+            /* Add desktop-specific styles for card-numbers here */
+            gap: 1.5em; 
+            font-size: 1.2em; /* Example: Increase font size for desktop */
+          }
         }
       `}</style>
     </div>

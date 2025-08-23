@@ -105,8 +105,8 @@ export default function GameInfoPanel() {
         }
 
         @media (max-width: 680px) {
-          .clock { font-size: calc(1.1vw + 10px); max-width: 33%; }
-          .info-box { font-size: calc(0.5vw + 5px); padding: 0.22em; max-width: 67%; }
+          .clock { font-size: calc(0.8vw + 10px); max-width: 40%; }
+          .info-box { font-size: calc(0.2vw + 5px); padding: 0.20em; max-width: 60%; }
         }
 
         @media (max-width: 480px) {
