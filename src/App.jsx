@@ -17,8 +17,8 @@ function App() {
       <div className="app-wrapper">
         <BrowserRouter>
           <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/threed" element={<Threed />} />
             <Route path="/sample" element={<Sample />} />
           </Routes>
