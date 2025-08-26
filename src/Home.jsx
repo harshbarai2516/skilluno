@@ -11,6 +11,7 @@ import Notification from './Notifcation';
 
 const Home = () => {
   const [selectedRange, setSelectedRange] = useState('10-19');
+  const [selectedRangeState, setSelectedRangeState] = useState("1000-1099");
 
   useEffect(() => {
     const setVH = () => {
@@ -54,7 +55,7 @@ const Home = () => {
           <div className="top-vertical-part part2"><Notification /></div>
           <div className="top-vertical-part part3"><UpperRow /></div>
           <div className="top-vertical-part part4">
-            <Filter setSelectedRange={setSelectedRange} />
+            <Filter setSelectedRange={setSelectedRange} setSelectedRangeState={setSelectedRangeState}/>
           </div>
         </div>
       </div>
@@ -63,12 +64,12 @@ const Home = () => {
         <div className="middle-container">
           <div className="middle-left">
             <div className="middle-content">
-              <Leftcol selectedRange={selectedRange} />
+              <Leftcol selectedRange={selectedRange} selectedRangeState={selectedRangeState} setSelectedRangeState={setSelectedRangeState}/>
             </div>
           </div>
           <div className="middle-center">
             <div className="middle-content">
-              <NumberGrid />
+              <NumberGrid selectedRangeState={selectedRangeState} />
             </div>
           </div>
           <div className="middle-right">

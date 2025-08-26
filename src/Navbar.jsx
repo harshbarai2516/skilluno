@@ -31,7 +31,7 @@ export default function Navbar() {
         <button className="close-btn" aria-label="Close">×</button>
       </div>
 
-      <style jsx>{`
+      <style jsx ='true'>{`
         :root {
           --gap-main: clamp(6px, 1vw, 12px);
           --pad-box: clamp(4px, 0.6vw, 10px) clamp(10px, 1vw, 16px);

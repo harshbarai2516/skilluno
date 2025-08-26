@@ -47,7 +47,7 @@ export default function Result() {
       </div>
  
 
-      <style>{`
+      <style jsx ='true'>{`
         .kohinoor-container {
           display: flex;
           align-items: center;

@@ -1,7 +1,8 @@
+import { label } from "framer-motion/client";
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-const Filter = ({ setSelectedRange }) => {
+const Filter = ({ setSelectedRange,setSelectedRangeState }) => {
   const navigate = useNavigate();
 
   // Base styles (desktop-first, fully relative using vw)
@@ -78,6 +79,13 @@ const Filter = ({ setSelectedRange }) => {
 
   const handleRangeClick = (range) => {
     setSelectedRange(range); // Update the range in the parent component
+    if (range === '30-39') {
+      setSelectedRangeState('3000-3099');
+    } else if (range === '10-19') {
+      setSelectedRangeState('1000-1099');
+    } else if (range === '50-59') {
+      setSelectedRangeState('5000-5099');
+    }
   };
 
   return (

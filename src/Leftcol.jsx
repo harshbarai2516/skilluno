@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-export default function Leftcol({ selectedRange }) {
+export default function Leftcol({ selectedRange, selectedRangeState,setSelectedRangeState }) {
   const [ranges, setRanges] = useState([]);
-  const [selectedRangeState, setSelectedRange] = useState("10-19");
-  
+
 
   useEffect(() => {
     if (selectedRange === "10-19") {
@@ -62,8 +61,7 @@ export default function Leftcol({ selectedRange }) {
               selectedRangeState === range ? "selected" : ""
             }`}
             onClick={() => {
-              setSelectedRange(range);
-              console.log(`Range selected: ${range}`);
+              setSelectedRangeState(range);
             }}
           >
             <input type="checkbox" className="range-checkbox" />

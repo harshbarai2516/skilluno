@@ -18,7 +18,7 @@ export default function GameInfoPanel() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .game-info {
           display: flex;
           align-items: center;

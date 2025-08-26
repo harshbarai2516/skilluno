@@ -30,7 +30,7 @@ export default function BottomSection() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .bottom-section-container {
           width: 100%;
           height: 100%;

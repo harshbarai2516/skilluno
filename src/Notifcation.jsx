@@ -5,7 +5,7 @@ const Notification = () => {
     <div className="notification-bar">
       <span>Welcome to the Kohinoor Game</span>
 
-      <style>{`
+      <style jsx ='true'>{`
         .notification-bar {
           width: 100%;
           background: #0d0d0eff;

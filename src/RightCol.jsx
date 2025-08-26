@@ -29,7 +29,7 @@ export default function RightCol() {
         ))}
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .right-col-container {
           width: 100%;
           height: 100%;

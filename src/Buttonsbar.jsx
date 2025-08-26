@@ -8,7 +8,7 @@ export default function ButtonsBar() {
       <button className="btn btn-clear">Clear</button>
       <button className="btn btn-print">Print</button>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .button-bar {
           display: flex;
           justify-content: space-between;

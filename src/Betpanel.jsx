@@ -36,7 +36,7 @@ export default function BetPanel() {
         ))}
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .bet-panel {
           height: 100%; /* Ensure the BetPanel uses the full height of its parent div */
           display: flex; /* Optional: Ensure proper alignment of children */

@@ -34,7 +34,7 @@ export default function Card() {
         </div>
       ))}
 
-      <style jsx>{`
+      <style jsx='true'>{`
         /* ===== Row (parent) ===== */
         .card-row {
           display: flex;

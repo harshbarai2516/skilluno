@@ -35,7 +35,7 @@ export default function Threed() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx ='true'>{`
         * {
           box-sizing: border-box;
           margin: 0;

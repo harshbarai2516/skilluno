@@ -10,7 +10,7 @@ export default function Login() {
   useEffect(() => {
     const storedUser = localStorage.getItem("username");
     if (storedUser) {
-      navigate("/"); // Redirect if already logged in
+      navigate("/home"); // Redirect if already logged in
     }
   }, [navigate]);
 
@@ -56,7 +56,7 @@ export default function Login() {
 
   return (
     <>
-      <style>{`
+      <style jsx ='true'>{`
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body, html, #root { height: 100%; background-color: #f3f4f6; }
         .min-h-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; }

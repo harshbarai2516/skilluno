@@ -67,7 +67,7 @@ export default function BetBoard({ values }) {
       {/* Action bar */}
       <div className="action-bar">Place Bet Please</div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .bet-board {
           display: flex;
           flex-direction: column;

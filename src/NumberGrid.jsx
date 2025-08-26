@@ -1,16 +1,22 @@
 import React from "react";
 
-export default function NumberGrid() {
+export default function NumberGrid({ selectedRangeState }) {
   const columns = ["B0", 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const numbers = [];
   const blocks = Array.from({ length: 10 }, (_, i) => `F${i}`);
 
-  for (let i = 0; i < 10; i++) {
-    const row = [];
-    for (let j = 0; j < 10; j++) {
-      row.push(1000 + i * 10 + j);
+  if (selectedRangeState) {
+    const [start, end] = selectedRangeState.split("-").map(Number);
+    for (let i = 0; i < 10; i++) {
+      const row = [];
+      for (let j = 0; j < 10; j++) {
+        const num = start + i * 10 + j;
+        if (num <= end) {
+          row.push(num);
+        }
+      }
+      numbers.push(row);
     }
-    numbers.push(row);
   }
 
   return (
@@ -29,17 +35,41 @@ export default function NumberGrid() {
               <div className="number-text">{block}</div>
               <div className="number-capsule"></div>
             </div>
-            {numbers[rowIdx].map((num) => (
+            {numbers[rowIdx] && numbers[rowIdx].map((num) => (
               <div key={num} className="grid-cell">
                 <div className="number-text">{num}</div>
-                <div className="number-capsule"></div>
+                <div className="number-capsule">
+                  <input
+                    type="number"
+                    className="capsule-input"
+                    placeholder=""
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.target.blur(); // Remove focus on Enter
+                      }
+                    }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      fontWeight: "bold",
+                      border: "none",
+                      outline: "none",
+                      textAlign: "center",
+                      background: "transparent",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 0,
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </React.Fragment>
         ))}
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .number-grid-container {
           width: 100%;
           height: 100%;
@@ -110,6 +140,8 @@ export default function NumberGrid() {
           min-width: 30px;
           min-height: 10px;
           flex-shrink: 0;
+          justify-content: center;
+          align-items: center;
         }
 
         /* Laptops */
@@ -162,6 +194,40 @@ export default function NumberGrid() {
           .grid-cell { background: Canvas; color: #000 !important; }
           .number-text { font-weight: 800; }
           .number-capsule { border-color: #000; background: Canvas; }
+        }
+
+        .capsule-input {
+          font-size: 1rem; /* Default font size */
+        }
+
+        @media (max-width: 1200px) {
+          .capsule-input {
+            font-size: 0.9rem;
+          }
+        }
+
+        @media (max-width: 992px) {
+          .capsule-input {
+            font-size: 0.6rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .capsule-input {
+            font-size: 0.5rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .capsule-input {
+            font-size: 0.5rem;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .capsule-input {
+            font-size: 0.5rem;
+          }
         }
       `}</style>
     </div>
