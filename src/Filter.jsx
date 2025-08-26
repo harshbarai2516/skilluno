@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-const Filter = () => {
+const Filter = ({ setSelectedRange }) => {
   const navigate = useNavigate();
 
   // Base styles (desktop-first, fully relative using vw)
@@ -76,6 +76,10 @@ const Filter = () => {
     }
   };
 
+  const handleRangeClick = (range) => {
+    setSelectedRange(range); // Update the range in the parent component
+  };
+
   return (
     <div style={baseStyles.container}>
       {/* Range filters */}
@@ -83,7 +87,12 @@ const Filter = () => {
         .map((btn, i) => (
           <div key={`range-${i}`} style={baseStyles.cell(1.2)}>
             <input type="checkbox" style={baseStyles.checkbox} />
-            <button style={{ ...baseStyles.button, backgroundColor: btn.bg }}>{btn.label}</button>
+            <button
+              style={{ ...baseStyles.button, backgroundColor: btn.bg }}
+              onClick={() => handleRangeClick(btn.label)}
+            >
+              {btn.label}
+            </button>
           </div>
         ))}
 
@@ -128,6 +137,10 @@ const Filter = () => {
               }} onClick={() => {
                   if (btn.label === '3D Game') {
                     navigate('/threed'); // Navigate to Threed using useNavigate
+                  }
+                   if (btn.label === 'Logout') {
+                    localStorage.clear(); // Clear all items from localStorage
+                    navigate('/'); // Navigate to the home page
                   }
                 }}>
                 {btn.label}

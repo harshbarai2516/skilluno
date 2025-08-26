@@ -5,7 +5,8 @@ import Card from "./Card";
 import BetPanel from "./Betpanel";
 import Navbar from "./Navbar";
 import BetBoard from "./BetBoard";
-import demoImage from './assets/demo.png'
+import demoImage from './assets/demo.png';
+import backgroundImage from './assets/bgi.jpg'; // Import the background image
 
 export default function Threed() {
   return (
@@ -20,10 +21,10 @@ export default function Threed() {
               <img src={demoImage} alt="Demo"
                 style={{
                   width: "100%",
-                  height: "100%", // Ensure the image occupies the full height of its parent div
-                  objectFit: "cover", // Adjust to cover the entire area without distortion
+                  height: "100%",
+                  objectFit: "cover",
                 }} /> 
-              </div>
+            </div>
             <div className="part-3"><GameInfoPanel /></div>
           </div>
           <div className="bottom-bottom">
@@ -45,6 +46,7 @@ export default function Threed() {
           width: 100%;
           height: 100%;
           overflow: hidden;
+          position: relative;
         }
 
         .threed-container {
@@ -53,81 +55,125 @@ export default function Threed() {
           height: 100vh;
           width: 100vw;
           overflow: hidden;
+          position: relative;
+          background-image: url(${backgroundImage}); /* Use imported image */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
         }
 
         .top-section {
-            height: 7dvh;   /* ✅ use dynamic viewport height */
-            min-height: 40px; /* fallback to prevent collapse */
-            width: 100%;
-            background-color: red;
-          }
+          height: 7dvh;
+          min-height: 40px;
+          width: 100%;
+          background-color: transparent;
+          z-index: 2; /* Ensure navbar stays above background */
+          position: relative;
+        }
 
-        
         .bottom-section {
           display: flex;
-          flex-direction: row; /* Divides the section horizontally */
+          flex-direction: row;
           height: 93%;
           width: 100%;
-          background-color: blue;
+          background-color: transparent;
+          z-index: 1; /* Ensure content stays above background */
+          position: relative;
         }
 
         .bottom-top {
           display: flex;
           flex-direction: column;
-          flex: 3; /* 30% of the width */
-          background-color: lightblue;
+          flex: 3;
+          background-color: transparent;
           overflow: hidden;
         }
 
         .bottom-top > .part-1 {
           flex: 85;
-          background-color: #aabdd0ff;
+          background-color: transparent;
         }
 
-        
         .bottom-top > .part-3 {
           flex: 15;
-          background-color: #99ff99;
+          background-color: transparent;
         }
 
         .bottom-bottom {
           display: flex;
           flex-direction: column;
-          flex: 7; /* 70% of the width */
-          background-color: darkblue;
+          flex: 7;
+          background-color: transparent;
           overflow: hidden;
         }
 
         .bottom-bottom > .part-1 {
           flex: 60;
-          background-color: #f7f6f6ff;
+          background-color: transparent;
         }
 
         .bottom-bottom > .part-2 {
           flex: 30;
-          background-color: #4ecdc4;
+          background-color: transparent;
         }
 
         .bottom-bottom > .part-3 {
           flex: 10;
-          background-color: #1a535c;
+          background-color: transparent;
+        }
+
+        /* Add overlay to improve readability if needed */
+        .bottom-top::before,
+        .bottom-bottom::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+          z-index: -1; /* Place behind content */
         }
 
         /* Responsive adjustments */
-        @media (max-width: 1024px), (max-width: 820px), (max-width: 680px), (max-width: 560px), (max-width: 440px), (max-width: 360px) {
+        @media (max-width: 1024px) {
+          .threed-container {
+            background-size: cover;
+            background-position: center;
+          }
+        }
+
+        @media (max-width: 768px) {
           .bottom-section {
-            display: flex;
-            flex-direction: row; /* Divides the section horizontally */
-            height: 93%;
-            width: 100%;
+            flex-direction: column;
           }
-
+          
           .bottom-top {
-            flex: 3; /* 30% of the width */
+            flex: 4;
           }
-
+          
           .bottom-bottom {
-            flex: 7; /* 70% of the width */
+            flex: 6;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .threed-container {
+            background-size: cover;
+            background-position: center top;
+          }
+          
+          .bottom-section {
+            flex-direction: column;
+          }
+        }
+
+        /* Landscape orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .threed-container {
+            background-size: cover;
+            background-position: center;
           }
         }
       `}</style>

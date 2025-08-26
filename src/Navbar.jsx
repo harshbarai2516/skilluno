@@ -35,9 +35,9 @@ export default function Navbar() {
         :root {
           --gap-main: clamp(6px, 1vw, 12px);
           --pad-box: clamp(4px, 0.6vw, 10px) clamp(10px, 1vw, 16px);
-          --font-box: clamp(10px, 0.6vw + 8px, 15px);
-          --font-center: clamp(10px, 0.5vw + 9px, 16px);
-          --font-radio: clamp(9px, 0.5vw + 8px, 14px);
+          --font-box: clamp(23px, 0.6vw + 8px, 15px);
+          --font-center: clamp(25px, 0.5vw + 9px, 16px);
+          --font-radio: clamp(25px, 0.5vw + 8px, 14px);
           --btn-size: clamp(22px, 2.2vh, 28px);
         }
 
@@ -146,90 +146,54 @@ export default function Navbar() {
         /* ===================== Responsive Tweaks ===================== */
         @media (max-width: 1024px) {
           .nav-left, .nav-right {
-            justify-content: center;
+            flex-basis: clamp(156px, 26.4%, 288px); /* Increase by 20% */
           }
-          .nav-left { flex-basis: clamp(130px, 24%, 240px); }
-          .nav-right { flex-basis: clamp(150px, 26%, 280px); }
-          .radio-buttons input[type="radio"] { transform: scale(0.9); }
+        }
+
+        @media (max-width: 980px) {
+          :root {
+            --font-radio: clamp(12.4px, 1.44vw, 12px); /* Increase by 20% */
+            --font-center: clamp(12.6px, 1.68vw, 13.2px); /* Increase by 20% */
+            --font-box: clamp(20.6px, 1.56vw, 13.2px); /* Increase by 20% */
+          }
         }
 
         @media (max-width: 820px) {
-          .nav-left, .nav-right {
-            justify-content: center;
+          .nav-left {
+            flex-basis: clamp(144px, 31.2%, 264px); /* Increase by 20% */
           }
-          .nav-left { flex-basis: clamp(120px, 26%, 220px); }
-          .nav-right { flex-basis: clamp(140px, 26%, 260px); }
-          .amusement-text { letter-spacing: 0; }
-          .radio-buttons { gap: clamp(3px, 0.6vw, 8px); }
-          .radio-buttons input[type="radio"] { transform: scale(0.85); }
+          .nav-right {
+            flex-basis: clamp(168px, 31.2%, 312px); /* Increase by 20% */
+          }
         }
 
         @media (max-width: 680px) {
-          .nav-left, .nav-right {
-            justify-content: center;
-          }
           :root {
-            --font-radio: clamp(7px, 1.2vw, 10px);
-            --font-center: clamp(8px, 1.4vw, 11px);
-            --font-box: clamp(8px, 1.3vw, 11px);
-          }
-          .nav-left {
-            flex-basis: clamp(90px, 24%, 160px);
-          }
-          .nav-right {
-            flex-basis: clamp(110px, 24%, 180px);
-          }
-          .radio-buttons {
-            gap: clamp(2px, 0.4vw, 5px);
-          }
-          .radio-buttons input[type="radio"] {
-            transform: scale(0.7);
+            --font-radio: clamp(8.4px, 1.44vw, 12px); /* Increase by 20% */
+            --font-center: clamp(9.6px, 1.68vw, 13.2px); /* Increase by 20% */
+            --font-box: clamp(9.6px, 1.56vw, 13.2px); /* Increase by 20% */
           }
         }
 
         @media (max-width: 560px) {
-          .nav-left, .nav-right {
-            justify-content: center;
+          :root {
+            --gap-main: clamp(4.8px, 0.96vw, 9.6px); /* Increase by 20% */
           }
-          :root { --gap-main: clamp(4px, 0.8vw, 8px); }
-          .nav-left { flex-basis: clamp(100px, 30%, 180px); }
-          .nav-right { flex-basis: clamp(120px, 30%, 200px); }
-          .radio-buttons { gap: clamp(2px, 0.5vw, 6px); }
-          .radio-buttons input[type="radio"] { transform: scale(0.75); }
         }
 
         @media (max-width: 440px) {
-          .nav-left, .nav-right {
-            justify-content: center;
-          }
-          :root { --font-radio: clamp(8px, 2.4vw, 11px); --font-center: clamp(10px, 2.6vw, 12px); --font-box: clamp(9px, 2.3vw, 12px); }
-          .nav-left { flex-basis: clamp(92px, 30%, 160px); }
-          .nav-right { flex-basis: clamp(108px, 32%, 170px); }
-          .radio-buttons input[type="radio"] { transform: scale(0.7); }
-        }
-
-        @media (max-width: 360px) {
-          .nav-left, .nav-right {
-            justify-content: center;
-          }
-          :root { --gap-main: 4px; }
-          .radio-buttons { gap: 2px; }
-          .radio-buttons input[type="radio"] { transform: scale(0.65); }
-        }
-
-        /* Extra small devices */
-        @media (max-width: 320px) {
-          .amusement-text {
-            display: none; /* Hide on very small screens */
+          :root {
+            --font-radio: clamp(9.6px, 2.88vw, 13.2px); /* Increase by 20% */
+            --font-center: clamp(12px, 3.12vw, 14.4px); /* Increase by 20% */
+            --font-box: clamp(10.8px, 2.76vw, 14.4px); /* Increase by 20% */
           }
         }
 
-        /* Landscape mode optimization */
         @media (max-height: 500px) and (orientation: landscape) {
           :root {
-            --font-box: clamp(8px, 0.8vw, 12px);
-            --font-center: clamp(9px, 0.9vw, 13px);
-            --font-radio: clamp(7px, 0.7vw, 11px);
+            --font-box: clamp(9.6px, 0.96vw, 14.4px); /* Increase by 20% */
+            --font-center: clamp(10.8px, 1.08vw, 15.6px); /* Increase by 20% */
+            --font-radio: clamp(8.4px, 0.84vw, 13.2px); /* Increase by 20% */
           }
         }
 

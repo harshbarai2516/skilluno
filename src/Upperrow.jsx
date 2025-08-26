@@ -1,6 +1,16 @@
 import React from "react";
 
 const UpperRow = () => {
+  const [usernameLocal, setUsernameLocal] = React.useState("");
+  React.useEffect(() => {
+    const storedUsername = localStorage.getItem("balance");
+    if (storedUsername) {
+      setUsernameLocal(storedUsername);
+    }
+  }, []);
+
+
+
   return (
     <div className="upper-row-container">
       <div className="upper-row-flex">
@@ -31,8 +41,8 @@ const UpperRow = () => {
 
         {/* Bonus Box */}
         <div className="bonus-box">
-          <span className="bonus-label">Global Bonus:</span>
-          <span className="bonus-value">1000</span>
+          <span className="bonus-label">Global<br/> Bonus:</span>
+          <span className="bonus-value">{usernameLocal}</span>
         </div>
       </div>
 

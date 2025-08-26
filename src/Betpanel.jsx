@@ -42,7 +42,7 @@ export default function BetPanel() {
           display: flex; /* Optional: Ensure proper alignment of children */
           flex-direction: column; /* Optional: Stack children vertically */
           width: 100%;
-          background: #fff;
+          background: linear-gradient(180deg, #eeececff, #f5f5f5ff);
           border: 2px solid #b7410e;
           border-radius: 0.4em;
           overflow: hidden;
@@ -111,7 +111,7 @@ export default function BetPanel() {
           flex: 0 1 auto;
           min-width: 60px;
           padding: 0.1em;
-          background: #fff;
+          background: #fff7f7ff;
           border: 2px solid #4caf50;
           border-radius: 0.3em;
           text-align: center;
@@ -122,8 +122,8 @@ export default function BetPanel() {
         }
 
         .num {  color: #333; font-weight: bold; }
-        .type { color: #333; font-size: calc(0.4vw + 7px); }
-        .amt { color: #000; }
+        .type { color: #333;font-weight: bold; font-size: calc(0.4vw + 7px); }
+        .amt { color: #000;font-weight: bold; }
         .remove { color: red; font-weight: bold; cursor: pointer; }
 
         /* ✅ Responsive tuning */

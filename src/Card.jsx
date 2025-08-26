@@ -58,7 +58,7 @@ export default function Card() {
           max-height: 100%;
           box-sizing: border-box;
 
-          background: linear-gradient(180deg, #f0f0f0, #dcdcdc);
+          background: linear-gradient(180deg, #deaaaaff, #dcdcdc);
           border-radius: 0.5em;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 
@@ -87,32 +87,42 @@ export default function Card() {
         /* Adjustments for smaller screens */
         @media (max-width: 1024px) {
           .card-time {
-            font-size: calc(0.5vw + 7px); /* Shrink font size */
+            font-size: calc(0.6vw + 8.4px); /* Increase by 20% */
           }
         }
 
         @media (max-width: 999px) {
           .card-time {
-            font-size: calc(0.3vw + 7px); /* Shrink font size */
+            font-size: calc(0.36vw + 8.4px); /* Increase by 20% */
           }
         }
 
         @media (max-width: 768px) {
           .card-time {
-            font-size: calc(0.3vw + 6px); /* Shrink font size further */
+            font-size: calc(0.36vw + 7.2px); /* Increase by 20% */
           }
         }
 
         @media (max-width: 480px) {
           .card-time {
-            font-size: calc(0.3vw + 5px); /* Shrink font size further */
+            font-size: calc(0.36vw + 6px); /* Increase by 20% */
           }
         }
 
         @media (max-width: 360px) {
           .card-time {
-            font-size: calc(0.2vw + 4px); /* Shrink font size further */
+            font-size: calc(0.24vw + 4.8px); /* Increase by 20% */
           }
+        }
+
+        /* Rows (letters & numbers) */
+        .card-letters,
+        .card-numbers {
+          font-size: clamp(10.8px, 0.96vw + 6px, 19.2px); /* Increase by 20% */
+        }
+
+        .card-footer {
+          font-size: clamp(10.8px, 0.96vw + 6px, 19.2px); /* Increase by 20% */
         }
 
         /* ===== Rows (letters & numbers) ===== */

@@ -2,6 +2,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Threed from './Threed';
+import Sample from './Sample';
+import Login from './Login';
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
       <div className="app-wrapper">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Login />} />
             <Route path="/threed" element={<Threed />} />
+            <Route path="/sample" element={<Sample />} />
           </Routes>
         </BrowserRouter>
       </div>

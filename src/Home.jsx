@@ -10,8 +10,9 @@ import Notification from './Notifcation';
 
 
 const Home = () => {
+  const [selectedRange, setSelectedRange] = useState('10-19');
 
-useEffect(() => {
+  useEffect(() => {
     const setVH = () => {
       document.documentElement.style.setProperty(
         "--vh",
@@ -52,7 +53,9 @@ useEffect(() => {
           <div className="top-vertical-part part1"><Result/></div>
           <div className="top-vertical-part part2"><Notification /></div>
           <div className="top-vertical-part part3"><UpperRow /></div>
-          <div className="top-vertical-part part4"><Filter /></div>
+          <div className="top-vertical-part part4">
+            <Filter setSelectedRange={setSelectedRange} />
+          </div>
         </div>
       </div>
       
@@ -60,7 +63,7 @@ useEffect(() => {
         <div className="middle-container">
           <div className="middle-left">
             <div className="middle-content">
-              <Leftcol />
+              <Leftcol selectedRange={selectedRange} />
             </div>
           </div>
           <div className="middle-center">

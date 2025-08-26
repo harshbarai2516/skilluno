@@ -1,31 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Leftcol() {
-  const ranges = [
-    "All",
-    "1000-1099", "1100-1199", "1200-1299",
-    "1300-1399", "1400-1499", "1500-1599",
-    "1600-1699", "1700-1799", "1800-1899",
-    "1900-1999"
-  ];
-  const [selected, setSelected] = useState("1000-1099");
+export default function Leftcol({ selectedRange }) {
+  const [ranges, setRanges] = useState([]);
+  const [selectedRangeState, setSelectedRange] = useState("10-19");
+  
+
+  useEffect(() => {
+    if (selectedRange === "10-19") {
+      setRanges([
+        "1000-1099",
+        "1100-1199",
+        "1200-1299",
+        "1300-1399",
+        "1400-1499",
+        "1500-1599",
+        "1600-1699",
+        "1700-1799",
+        "1800-1899",
+        "1900-1999",
+      ]);
+    } else if (selectedRange === "30-39") {
+      setRanges([
+        "3000-3099",
+        "3100-3199",
+        "3200-3299",
+        "3300-3399",
+        "3400-3499",
+        "3500-3599",
+        "3600-3699",
+        "3700-3799",
+        "3800-3899",
+        "3900-3999",
+      ]);
+    } else if (selectedRange === "50-59") {
+      setRanges([
+        "5000-5099",
+        "5100-5199",
+        "5200-5299",
+        "5300-5399",
+        "5400-5499",
+        "5500-5599",
+        "5600-5699",
+        "5700-5799",
+        "5800-5899",
+        "5900-5999",
+      ]);
+    }
+  }, [selectedRange]);
 
   return (
     <div className="left-col-container">
       <div className="range-list">
+        <div className="range-item">
+          <input type="checkbox" className="range-checkbox" />
+          <span className="range-text">All</span>
+        </div>
         {ranges.map((range) => (
-          <label
+          <div
             key={range}
-            className={`range-item ${selected === range ? "selected" : ""}`}
+            className={`range-item ${
+              selectedRangeState === range ? "selected" : ""
+            }`}
+            onClick={() => {
+              setSelectedRange(range);
+              console.log(`Range selected: ${range}`);
+            }}
           >
-            <input
-              type="checkbox"
-              checked={selected === range}
-              onChange={() => setSelected(range)}
-              className="range-checkbox"
-            />
+            <input type="checkbox" className="range-checkbox" />
             <span className="range-text">{range}</span>
-          </label>
+          </div>
         ))}
       </div>
 
@@ -43,7 +86,7 @@ export default function Leftcol() {
 
         .range-list {
           display: grid;
-          grid-template-rows: repeat(${ranges.length}, 1fr);
+          grid-template-rows: repeat(${ranges.length + 1}, 1fr);
           width: 100%;
           height: 100%;
           gap: 3px;
@@ -65,13 +108,14 @@ export default function Leftcol() {
 
         .range-item:hover {
           transform: scale(1.01);
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          color: #f2f0f0ff;
+          background: linear-gradient(90deg, #e1e118ff 0%, #f3c01bff 100%);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .range-item.selected {
-          background: linear-gradient(90deg, #ffe066 0%, #ffcc00 100%);
-          border-color: #ffbf00;
-          box-shadow: 0 0 0 2px rgba(255,215,0,0.5);
+          background: red;
+          color: white;
         }
 
         .range-checkbox {
