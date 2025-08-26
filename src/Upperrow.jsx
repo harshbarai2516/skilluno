@@ -5,7 +5,7 @@ const UpperRow = () => {
   React.useEffect(() => {
     const storedUsername = localStorage.getItem("balance");
     if (storedUsername) {
-      setUsernameLocal(storedUsername);
+      setUsernameLocal(storedUsername); 
     }
   }, []);
 

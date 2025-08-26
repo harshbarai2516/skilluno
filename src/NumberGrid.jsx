@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function NumberGrid({ selectedRangeState }) {
   const columns = ["B0", 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const numbers = [];
   const blocks = Array.from({ length: 10 }, (_, i) => `F${i}`);
+
+  const [rowValues, setRowValues] = useState({});
+  const [cellValues, setCellValues] = useState({});
 
   if (selectedRangeState) {
     const [start, end] = selectedRangeState.split("-").map(Number);
@@ -19,13 +22,50 @@ export default function NumberGrid({ selectedRangeState }) {
     }
   }
 
+  const handleBlockInputChange = (rowIdx, value) => {
+    setRowValues((prev) => ({ ...prev, [rowIdx]: value }));
+    setCellValues((prev) => {
+      const updatedCells = { ...prev };
+      numbers[rowIdx]?.forEach((num) => {
+        updatedCells[`${rowIdx}-${num}`] = value;
+      });
+      return updatedCells;
+    });
+  };
+
+  const handleCellInputChange = (rowIdx, num, value) => {
+    setCellValues((prev) => ({ ...prev, [`${rowIdx}-${num}`]: value }));
+  };
+
   return (
     <div className="number-grid-container">
       <div className="grid-wrapper">
         {/* Header row */}
         <div className="grid-header">BLOCK</div>
         {columns.map((col) => (
-          <div key={col} className="grid-header">{col}</div>
+          <div key={col} className="grid-header" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {col}
+            <div className="number-capsule">
+              <input
+                type="number"
+                className="capsule-input"
+                placeholder=""
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  fontWeight: "bold",
+                  border: "none",
+                  outline: "none",
+                  textAlign: "center",
+                  background: "transparent",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 0,
+                }}
+              />
+            </div>
+          </div>
         ))}
 
         {/* Data rows */}
@@ -33,7 +73,33 @@ export default function NumberGrid({ selectedRangeState }) {
           <React.Fragment key={block}>
             <div className="grid-cell">
               <div className="number-text">{block}</div>
-              <div className="number-capsule"></div>
+              <div className="number-capsule">
+                <input
+                  type="number"
+                  className="capsule-input"
+                  placeholder=""
+                  value={rowValues[rowIdx] || ""}
+                  onChange={(e) => handleBlockInputChange(rowIdx, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.target.blur(); // Remove focus on Enter
+                    }
+                  }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    fontWeight: "bold",
+                    border: "none",
+                    outline: "none",
+                    textAlign: "center",
+                    background: "transparent",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 0,
+                  }}
+                />
+              </div>
             </div>
             {numbers[rowIdx] && numbers[rowIdx].map((num) => (
               <div key={num} className="grid-cell">
@@ -43,11 +109,13 @@ export default function NumberGrid({ selectedRangeState }) {
                     type="number"
                     className="capsule-input"
                     placeholder=""
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.target.blur(); // Remove focus on Enter
-                      }
-                    }}
+                    value={cellValues[`${rowIdx}-${num}`] || ""}
+                    onChange={(e) => handleCellInputChange(rowIdx, num, e.target.value)}
+                       onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.target.blur(); // Remove focus on Enter
+                    }
+                  }}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -70,6 +138,17 @@ export default function NumberGrid({ selectedRangeState }) {
       </div>
 
       <style jsx='true'>{`
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        input[type="number"] {
+        -moz-appearance: textfield;
+        }
+
         .number-grid-container {
           width: 100%;
           height: 100%;
