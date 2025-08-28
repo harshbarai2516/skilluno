@@ -1,6 +1,24 @@
 import React from "react";
 
 export default function Card() {
+
+  const [previousResult, setPreviousResult] = React.useState(null);
+
+  const fetchPreviousResult = async() => {
+    try {
+      const response = await fetch('https://api.goldbazar.co.in/api/results/3dPreviousResult');
+      const data = await response.json();
+      console.log('Previous Result:', data);
+      setPreviousResult(data);
+    } catch (error) {
+      console.error('Error fetching previous result:', error);
+    }
+  }
+
+  React.useEffect(() => {
+    fetchPreviousResult();
+  }, [previousResult]);
+
   return (
     <div className="card-row">
       {[...Array(5)].map((_, i) => (

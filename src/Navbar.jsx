@@ -1,12 +1,26 @@
 import React from "react";
 
 export default function Navbar() {
+
+  const [localBalance, setLocalBalance] = React.useState('');
+  const [localUser, setLocalUser] = React.useState('');
+
+  let storedBalance = localStorage.getItem('balance');
+  let storedUser = localStorage.getItem('username');
+  
+  React.useEffect(() => {
+    if (storedBalance && storedUser) {
+      setLocalBalance(parseFloat(storedBalance).toLocaleString());
+      setLocalUser(storedUser);
+    }
+  }, [storedBalance]);
+
   return (
     <div className="navbar">
       {/* Left section */}
       <div className="nav-left">
         <div className="input-box" title="Name">
-          Name | user_16
+          Name | <span style={{ color: '#00ff00' }}>{localUser}</span>
         </div>
       </div>
 
@@ -26,7 +40,7 @@ export default function Navbar() {
       {/* Right section */}
       <div className="nav-right">
         <div className="balance-box" title="Balance">
-          Balance | ₹9,86,655.0
+          Balance | <span style={{ color: '#00ff00' }}>{localBalance}</span>
         </div>
         <button className="close-btn" aria-label="Close">×</button>
       </div>
