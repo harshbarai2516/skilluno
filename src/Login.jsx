@@ -24,7 +24,7 @@ export default function Login() {
     try {
       console.log("Login Attempt:", { username }); // Avoid logging password
 
-      const res = await fetch("http://api.goldbazar.co.in/api/auth/login", {
+      const res = await fetch("https://api.goldbazar.co.in/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
