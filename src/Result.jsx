@@ -14,36 +14,96 @@ const fetchPreviousResults = async () => {
   }
 };
 
-export default function Result() {
+// Parse a result string like "1040, 1199, 1203" into number array
+const parseResultString = (str) => {
+  if (!str || typeof str !== 'string') return [];
+  return str
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s !== '')
+    .map(s => {
+      const n = parseInt(s, 10);
+      return Number.isNaN(n) ? null : n;
+    })
+    .filter(n => n !== null);
+};
+
+export default function Result({ selectedRange = '10-19', timeData }) {
   const [results, setResults] = useState(null);
+  const [group1State, setGroup1State] = useState(Array(10).fill(null));
+  const [group2State, setGroup2State] = useState(Array(10).fill(null));
+  const [group3State, setGroup3State] = useState(Array(10).fill(null));
+  const [currentGroup, setCurrentGroup] = useState(Array(10).fill(null));
 
   useEffect(() => {
     const getResults = async () => {
       const data = await fetchPreviousResults();
       setResults(data);
-      console.log("Previous Results:", data);
+      // parse results array into arrays of numbers and log it
+      const parsed = Array.isArray(data?.results)
+        ? data.results.map(item => ({
+            ...item,
+            parsed: parseResultString(item.result)
+          }))
+        : [];
+      console.log("Previous Results (raw):", data?.results);
+      console.log("Previous Results (parsed):", parsed);
+
+  // Flatten all parsed number arrays and split into three groups of 10
+  const flatNumbers = parsed.reduce((acc, it) => acc.concat(it.parsed || []), []);
+  const group1 = flatNumbers.slice(0, 10);
+  const group2 = flatNumbers.slice(10, 20);
+  const group3 = flatNumbers.slice(20, 30);
+  console.log("First 10 parsed numbers (group1):", group1);
+  console.log("Next 10 parsed numbers (group2):", group2);
+  console.log("Next 10 parsed numbers (group3):", group3);
+
+  // store all groups into component state for rendering (use string values)
+  setGroup1State(group1.map(n => (n !== undefined && n !== null) ? String(n) : null));
+  setGroup2State(group2.map(n => (n !== undefined && n !== null) ? String(n) : null));
+  setGroup3State(group3.map(n => (n !== undefined && n !== null) ? String(n) : null));
     };
     getResults();
   }, []);
+
+  // Update currentGroup when selectedRange or group states change
+  useEffect(() => {
+    console.log("Selected Range in Result:", selectedRange);
+    switch (selectedRange) {
+      case '30-39':
+        console.log("Displaying group2State");
+        setCurrentGroup(group2State);
+        break;
+      case '50-59':
+        console.log("Displaying group3State");
+        setCurrentGroup(group3State);
+        break;
+      case '10-19':
+      default:
+        console.log("Displaying group1State (default)");
+        setCurrentGroup(group1State);
+        break;
+    }
+  }, [selectedRange, group1State, group2State, group3State]);
 
   return (
     <div className="kohinoor-container">
       <div className="kohinoor-title">Kohinoor</div>
       <div className="kohinoor-boxes">
-        <div className="box red">1085 <span>2x</span></div>
-        <div className="box blue">1190 <span>3x</span></div>
-        <div className="box purple">1251 <span>1x</span></div>
-        <div className="box green">1339 <span>1x</span></div>
-        <div className="box violet">1434 <span>2x</span></div>
-        <div className="box orange">1502 <span>3x</span></div>
-        <div className="box darkpink">1604 <span>3x</span></div>
-        <div className="box pink">1765 <span>2x</span></div>
-        <div className="box teal">1848 <span>1x</span></div>
-        <div className="box yellow">1920 <span>2x</span></div>
+        <div className="box red">{currentGroup[0] || '1085'} <span>2x</span></div>
+        <div className="box blue">{currentGroup[1] || '1190'} <span>3x</span></div>
+        <div className="box purple">{currentGroup[2] || '1251'} <span>1x</span></div>
+        <div className="box green">{currentGroup[3] || '1339'} <span>1x</span></div>
+        <div className="box violet">{currentGroup[4] || '1434'} <span>2x</span></div>
+        <div className="box orange">{currentGroup[5] || '1502'} <span>3x</span></div>
+        <div className="box darkpink">{currentGroup[6] || '1604'} <span>3x</span></div>
+        <div className="box pink">{currentGroup[7] || '1765'} <span>2x</span></div>
+        <div className="box teal">{currentGroup[8] || '1848'} <span>1x</span></div>
+        <div className="box yellow">{currentGroup[9] || '1920'} <span>2x</span></div>
       </div>
       <div className="kohinoor-time">
-        <span className="kohinoor-date">2023-02-01</span>
-        <span className="kohinoor-time-small">04:30 pm</span>
+        <span className="kohinoor-date">{timeData?.currentDate || new Date().toISOString().split('T')[0]}</span>
+        <span className="kohinoor-time-small">{timeData?.currentTime?.replace(/:\d{2}(?=\s*(AM|PM|am|pm))/i, '') || "Loading..."}</span>
       </div>
  
 

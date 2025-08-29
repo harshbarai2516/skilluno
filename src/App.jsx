@@ -4,6 +4,7 @@ import Home from './Home';
 import Threed from './Threed';
 import Sample from './Sample';
 import Login from './Login';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -17,10 +18,28 @@ function App() {
       <div className="app-wrapper">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/threed" element={<Threed />} />
-            <Route path="/sample" element={<Sample />} />
+            {/* Public route - Login page */}
+            <Route path="/" element={<Login />} />
+            
+            {/* Protected routes - require authentication */}
+            <Route path="/home" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/threed" element={
+              <ProtectedRoute>
+                <Threed />
+              </ProtectedRoute>
+            } />
+            <Route path="/sample" element={
+              <ProtectedRoute>
+                <Sample />
+              </ProtectedRoute>
+            } />
+            
+            {/* Catch all route - redirect to login */}
+            <Route path="*" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </div>

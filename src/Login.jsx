@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the page user was trying to access before login
+  const from = location.state?.from?.pathname || "/home";
 
   // 1. Check if already logged in
   useEffect(() => {
-    const storedUser = localStorage.getItem("username");
+    const storedUser = sessionStorage.getItem("username");
     if (storedUser) {
-      navigate("/home"); // Redirect if already logged in
+      navigate(from, { replace: true }); // Redirect to intended page or home
     }
-  }, [navigate]);
+  }, [navigate, from]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,16 +39,20 @@ export default function Login() {
 
       if (data.message === "Authentication successful") {
         console.log("Login Successful:", data.user.balance);
-        localStorage.setItem("username", data.user.username); // 2. Save user login
-         localStorage.setItem("balance", data.user.balance);
-        const result_res = await fetch("https://api.goldbazar.co.in/api/results/generate-24h",{
-            method:"post"
+        sessionStorage.setItem("username", data.user.username); // 2. Save user login (session)
+        sessionStorage.setItem("balance", data.user.balance);
+        const result_res = await fetch("https://api.goldbazar.co.in/api/results/generate-24h", {
+          method: "post"
         });
 
-            const result_data = await result_res.json();
-            console.log("Result Generation Response:", result_data);
-        
-        navigate("/home");
+        const result_data = await result_res.json();
+        console.log("Result Generation Response:", result_data);
+
+        const result_THREED = await fetch("https://api.goldbazar.co.in/api/results/3D");
+        const result_THREED_data = await result_THREED.json();
+        console.log("3D Result Fetch Response:", result_THREED_data);
+
+        navigate(from, { replace: true });
       } else {
         alert("Login failed: " + data.message);
       }
@@ -56,7 +64,7 @@ export default function Login() {
 
   return (
     <>
-      <style jsx ='true'>{`
+      <style jsx='true'>{`
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body, html, #root { height: 100%; background-color: #f3f4f6; }
         .min-h-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; }

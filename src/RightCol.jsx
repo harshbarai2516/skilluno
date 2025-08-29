@@ -1,10 +1,21 @@
 import React from "react";
 
-export default function RightCol() {
+export default function RightCol({ rangeSums = {}, selectedRange }) {
   const rows = 10;
+
+  // Fix: Get the current group from selectedRange (e.g., "10" from "10-19")
+  const currentGroup = selectedRange ? parseInt(selectedRange.split('-')[0]) : 10;
+  const groupKey = `group-${currentGroup}`;
+
+  // Get data for current group only
+  const currentGroupData = rangeSums[groupKey] || { quantities: Array(10).fill(0), amounts: Array(10).fill(0) };
+
+  const combinedQuantities = currentGroupData.quantities || Array(10).fill(0);
+  const combinedAmounts = currentGroupData.amounts || Array(10).fill(0);
+
   const columns = [
-    { title: "Quantity", color: "#1a2d5a" },
-    { title: "Amount", color: "#1a5a3a" }
+    { title: "Quantity", color: "#1a2d5a", data: combinedQuantities },
+    { title: "Amount", color: "#1a5a3a", data: combinedAmounts }
   ];
 
   return (
@@ -12,7 +23,7 @@ export default function RightCol() {
       <div className="qty-grid">
         {columns.map((col) => (
           <div key={col.title} className="qty-column">
-            <div 
+            <div
               className="qty-header"
               style={{ backgroundColor: col.color }}
             >
@@ -21,14 +32,13 @@ export default function RightCol() {
             <div className="qty-rows">
               {Array(rows).fill(0).map((_, idx) => (
                 <div key={idx} className="qty-cell">
-                  0
+                  {col.data[idx] || 0}
                 </div>
               ))}
             </div>
           </div>
         ))}
       </div>
-
       <style jsx='true'>{`
         .right-col-container {
           width: 100%;
@@ -63,8 +73,8 @@ export default function RightCol() {
           display: flex;
           align-items: center;
           justify-content: center;
-    font-size: calc(10px + 0.4vw);
-          height: calc(20px + 0.5vh);
+          font-size: calc(10px + 0.4vw);
+          height: calc(50px + 0.5vh);
           flex-shrink: 0;
         }
 
@@ -96,6 +106,21 @@ export default function RightCol() {
           }
           .qty-header {
             font-size: calc(9px + 0.4vw);
+             height: calc(50px + 0.5vh);
+          }
+          .qty-cell {
+            font-size: calc(8px + 0.4vw);
+            color: #000;
+          }
+        }
+
+         @media (max-width: 999px) {
+          .qty-grid, .qty-column, .qty-rows {
+            gap: 2.5px;
+          }
+          .qty-header {
+            font-size: calc(9px + 0.4vw);
+             height: calc(30px + 0.5vh);
           }
           .qty-cell {
             font-size: calc(8px + 0.4vw);
@@ -110,6 +135,7 @@ export default function RightCol() {
           }
           .qty-header {
             font-size: calc(8px + 0.4vw);
+             height: calc(25px + 0.5vh);
           }
           .qty-cell {
             font-size: calc(7px + 0.4vw);
@@ -125,6 +151,7 @@ export default function RightCol() {
           }
           .qty-header {
             font-size: calc(8px + 0.4vw);
+             height: calc(50px + 0.5vh);
           }
           .qty-cell {
             font-size: calc(7px + 0.4vw);
@@ -139,6 +166,7 @@ export default function RightCol() {
           }
           .qty-header {
             font-size: calc(7px + 0.4vw);
+             height: calc(50px + 0.5vh);
           }
           .qty-cell {
             font-size: calc(6px + 0.4vw);
@@ -153,6 +181,7 @@ export default function RightCol() {
           }
           .qty-header {
             font-size: calc(6px + 0.4vw);
+             height: calc(50px + 0.5vh);
           }
           .qty-cell {
             font-size: calc(5px + 0.4vw);
@@ -163,6 +192,7 @@ export default function RightCol() {
         /* High contrast mode support */
         @media (forced-colors: active) {
           .qty-header {
+           height: calc(50px + 0.5vh);
             forced-color-adjust: none;
             background-color: ButtonText !important;
             color: ButtonFace !important;
@@ -175,6 +205,7 @@ export default function RightCol() {
           }
         }
       `}</style>
+      {/* ... rest of the component remains the same ... */}
     </div>
   );
 }

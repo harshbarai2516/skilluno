@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-export default function Leftcol({ selectedRange, selectedRangeState,setSelectedRangeState }) {
+export default function Leftcol({ selectedRange, selectedRangeState, setSelectedRangeState, refresh, checkedRanges = [], onCheckedRangesChange }) {
   const [ranges, setRanges] = useState([]);
 
+  // Use props instead of localStorage
+  const checkedLocal = checkedRanges;
 
   useEffect(() => {
     if (selectedRange === "10-19") {
@@ -44,30 +46,85 @@ export default function Leftcol({ selectedRange, selectedRangeState,setSelectedR
         "5800-5899",
         "5900-5999",
       ]);
+    } else {
+      setRanges([]);
     }
   }, [selectedRange]);
+
+  // update checked state through props
+  const applyCheckedUpdate = (next) => {
+    if (onCheckedRangesChange) {
+      onCheckedRangesChange(next);
+    }
+  };
+
+  const toggleRangeChecked = (e, range) => {
+    e.stopPropagation();
+    const prev = checkedLocal ?? [];
+    const next = prev.includes(range) ? prev.filter((r) => r !== range) : [...prev, range];
+    applyCheckedUpdate(next);
+  };
+
+  const toggleAll = (e) => {
+    e.stopPropagation();
+    const prev = checkedLocal ?? [];
+    
+    // Filter to only ranges from current group
+    const currentGroupChecked = prev.filter(range => ranges.includes(range));
+    const allChecked = ranges.length > 0 && currentGroupChecked.length === ranges.length;
+    
+    if (allChecked) {
+      // Remove only current group ranges from checked list
+      const otherGroupRanges = prev.filter(range => !ranges.includes(range));
+      applyCheckedUpdate(otherGroupRanges);
+    } else {
+      // Add all current group ranges to checked list
+      const otherGroupRanges = prev.filter(range => !ranges.includes(range));
+      applyCheckedUpdate([...otherGroupRanges, ...ranges]);
+    }
+  };
+
+  const isAllChecked = ranges.length > 0 && 
+    ranges.every(range => checkedLocal?.includes(range));
+
+  const onRangeClick = (range) => {
+    if (typeof setSelectedRangeState === "function") {
+      setSelectedRangeState(range);
+    }
+  };
 
   return (
     <div className="left-col-container">
       <div className="range-list">
         <div className="range-item">
-          <input type="checkbox" className="range-checkbox" />
+          <input
+            type="checkbox"
+            className="range-checkbox"
+            checked={isAllChecked}
+            onChange={toggleAll}
+            onClick={(e) => e.stopPropagation()}
+          />
           <span className="range-text">All</span>
         </div>
-        {ranges.map((range) => (
-          <div
-            key={range}
-            className={`range-item ${
-              selectedRangeState === range ? "selected" : ""
-            }`}
-            onClick={() => {
-              setSelectedRangeState(range);
-            }}
-          >
-            <input type="checkbox" className="range-checkbox" />
-            <span className="range-text">{range}</span>
-          </div>
-        ))}
+        {ranges.map((range) => {
+          const checkedThis = checkedLocal.includes(range);
+          return (
+            <div
+              key={range}
+              className={`range-item ${selectedRangeState === range ? "selected" : ""}`}
+              onClick={() => onRangeClick(range)}
+            >
+              <input
+                type="checkbox"
+                className="range-checkbox"
+                checked={checkedThis}
+                onChange={(e) => toggleRangeChecked(e, range)}
+                onClick={(e) => e.stopPropagation()}
+              />
+              <span className="range-text">{range}</span>
+            </div>
+          );
+        })}
       </div>
 
       <style jsx="true">{`
