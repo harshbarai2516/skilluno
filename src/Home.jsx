@@ -44,7 +44,7 @@ const Home = () => {
     const username = sessionStorage.getItem('username') || "user123";
     setBonusLoading(true);
     try {
-      const response = await fetch("http://api.goldbazar.co.in/api/balance/bonus");
+      const response = await fetch("https://api.goldbazar.co.in/api/balance/bonus");
       const data = await response.json();
       if (data && data.bonus !== undefined) {
         setBonusBalance(data.bonus);
@@ -259,7 +259,7 @@ const Home = () => {
     const selectedSlotsString = localStorage.getItem('selectedSlotsString') || "";
     const selectedSlotsStringhour = localStorage.getItem('selectedSlotsString24h') || "";
 
-    let insertResponse = await fetch("http://api.goldbazar.co.in/api/record/insert2D", {
+    let insertResponse = await fetch("https://api.goldbazar.co.in/api/record/insert2D", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -289,7 +289,7 @@ const Home = () => {
 
     setBalanceLoading(true);
     try {
-      const response = await fetch("http://api.goldbazar.co.in/api/balance", {
+      const response = await fetch("https://api.goldbazar.co.in/api/balance", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -318,7 +318,7 @@ const Home = () => {
   async function InsertUsername() {
     const user = sessionStorage.getItem('username') || "user123";
 
-    let insertResp = await fetch("http://api.goldbazar.co.in/api/balance", {
+    let insertResp = await fetch("https://api.goldbazar.co.in/api/balance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

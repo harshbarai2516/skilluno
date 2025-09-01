@@ -8,7 +8,7 @@ export default function GameInfoPanel() {
   // Fetch draw time and remaining time
   const fetchTimeData = async () => {
     try {
-      const res = await fetch("http://api.goldbazar.co.in/api/time/getTime");
+      const res = await fetch("https://api.goldbazar.co.in/api/time/getTime");
       const data = await res.json();
 
       setRemainingTime(data.remaining_time);

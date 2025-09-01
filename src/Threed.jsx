@@ -27,7 +27,7 @@ export default function Threed() {
     console.log("🎟️ Posting Ticket:", tck_result);
 
     try {
-      const res = await fetch("http://api.goldbazar.co.in/api/record/insert", {
+      const res = await fetch("https://api.goldbazar.co.in/api/record/insert", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -51,7 +51,7 @@ export default function Threed() {
   const showResult = async () => {
     try {
       const response = await fetch(
-        "http://api.goldbazar.co.in/api/results/upcoming"
+        "https://api.goldbazar.co.in/api/results/upcoming"
       );
       const data = await response.json();
       console.log("3D Previous Result:", data);
