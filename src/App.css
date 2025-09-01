@@ -332,9 +332,9 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 670px) {
   .advance-sum-btn {
-    font-size: 0.95rem;
+    font-size: 0.75rem;
     height: 1.3em;
     width: 40%;
   }

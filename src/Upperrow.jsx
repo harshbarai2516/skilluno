@@ -1,6 +1,6 @@
 import React from "react";
 
-const UpperRow = ({handleRefresh, timeData}) => {
+const UpperRow = ({handleRefresh, timeData, userBalance, bonusbalance}) => {
   const [usernameLocal, setUsernameLocal] = React.useState("");
   React.useEffect(() => {
     const storedUsername = sessionStorage.getItem("balance");
@@ -25,14 +25,14 @@ const UpperRow = ({handleRefresh, timeData}) => {
         </div>
         <div className="info-box">
           <span className="info-label">CS:</span>
-          <span className="info-value">{formatTimeWithoutSeconds(timeData?.closeTime) || "Loading..."}</span>
+          <span className="info-value">{formatTimeWithoutSeconds(timeData?.drawTime) || "Loading..."}</span>
         </div>
         <div className="info-box">
           <span className="info-value highlight">{timeData?.remainingTime || "Loading..."}</span>
           <span className="info-suffix">RT</span>
         </div>
         <div className="info-box">
-          <span className="info-value">{timeData?.pointTotal || "Loading..."}</span>
+          <span className="info-value">{userBalance}</span>
           <span className="info-suffix">PT</span>
         </div>
 
@@ -46,7 +46,7 @@ const UpperRow = ({handleRefresh, timeData}) => {
         {/* Bonus Box */}
         <div className="bonus-box">
           <span className="bonus-label">Global<br /> Bonus:</span>
-          <span className="bonus-value">{usernameLocal}</span>
+          <span className="bonus-value">{bonusbalance}</span>
         </div>
       </div>
 

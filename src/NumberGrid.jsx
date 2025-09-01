@@ -33,7 +33,17 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
   const [headerValues, setHeaderValues] = useState({});
   const [inputDataObject, setInputDataObject] = useState({});
 
-  // Simple range-wise calculation for all target ranges
+  // Convert range like "1000-1099" to group format "10-19"
+  const groupForRange = (range) => {
+    if (!range || !range.includes('-')) return null;
+    
+    const start = parseInt(range.split('-')[0]);
+    if (isNaN(start)) return null;
+    
+    const groupStart = Math.floor(start / 100);
+    return `${groupStart}-${groupStart + 9}`;
+  };
+
   // Simple range-wise calculation for all target ranges
   const calculateQuantitiesAndAmounts = () => {
     const active = selectedRangeState;
@@ -82,44 +92,72 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
   // Create comprehensive input data object
   const updateInputDataObject = (key, value, num, rangeItem) => {
-    const newInputData = { ...inputDataObject };
+    setInputDataObject((prevInputData) => {
+      const newInputData = { ...prevInputData };
 
-    // If value is empty, remove the key instead of storing empty value
-    if (!value || value.trim() === '') {
-      delete newInputData[key];
-    } else {
-      newInputData[key] = {
-        value: value,
-        number: num,
-        range: rangeItem
-      };
-    }
+      // Create a unique key that includes both the range and number
+      // This ensures the same number in different ranges is stored separately
+      const uniqueKey = `${rangeItem}-${num}`;
 
-    setInputDataObject(newInputData);
-    console.log("Input Data Object Updated:", newInputData);
+      // If value is empty, remove the key instead of storing empty value
+      if (!value || value.trim() === '') {
+        delete newInputData[uniqueKey];
+      } else {
+        newInputData[uniqueKey] = {
+          value: value,
+          number: num,
+          range: rangeItem,
+          timestamp: Date.now()
+        };
+      }
 
-    // Store in session storage
-    try {
-      // Convert to array format for storage - each entry should be unique
-      const editedValuesArray = Object.entries(newInputData)
-        .filter(([key, data]) => data.value && data.value.trim() !== '') // Only include non-empty values
-        .map(([key, data]) => `${data.number}:${data.value}`);
+      console.log("Input Data Object Updated:", newInputData);
 
-      // Store the array as comma-separated string
-      sessionStorage.setItem('editedValuesArray', editedValuesArray.join(','));
+      // Store in session storage
+      try {
+        // Group by range first, then by number
+        const rangeData = {};
+        
+        Object.values(newInputData).forEach(data => {
+          if (data.value && data.value.trim() !== '') {
+            if (!rangeData[data.range]) {
+              rangeData[data.range] = {};
+            }
+            rangeData[data.range][data.number] = data.value;
+          }
+        });
 
-      // Store the count
-      sessionStorage.setItem('editedValuesCount', editedValuesArray.length.toString());
+        // Convert to a flat array for storage: number|value|range
+        const editedValuesArray = [];
+        Object.entries(rangeData).forEach(([range, numbers]) => {
+          Object.entries(numbers).forEach(([number, value]) => {
+            editedValuesArray.push(`${number}|${value}`);
+          });
+        });
 
-      console.log("📦 Stored to sessionStorage:", {
-        array: editedValuesArray,
-        count: editedValuesArray.length,
-        totalEntries: Object.keys(newInputData).length,
-        uniqueNumbers: new Set(editedValuesArray.map(item => item.split(':')[0])).size
-      });
-    } catch (error) {
-      console.error("Error storing to sessionStorage:", error);
-    }
+        // Store the array as comma-separated string
+        sessionStorage.setItem('editedValuesArray', editedValuesArray.join(','));
+        
+        // Also store the structured data for easier retrieval
+        sessionStorage.setItem('editedValuesStructured', JSON.stringify(rangeData));
+        
+        // Store the count
+        sessionStorage.setItem('editedValuesCount', editedValuesArray.length.toString());
+
+        console.log("📦 Stored to sessionStorage:", {
+          structured: rangeData,
+          flatArray: editedValuesArray,
+          count: editedValuesArray.length,
+          totalEntries: Object.keys(newInputData).length,
+          uniqueNumbers: new Set(editedValuesArray.map(item => item.split('|')[0])).size,
+          uniqueRanges: Object.keys(rangeData).length
+        });
+      } catch (error) {
+        console.error("Error storing to sessionStorage:", error);
+      }
+
+      return newInputData;
+    });
   };
 
   // parse a range string like "1000-1099"
@@ -238,6 +276,15 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
   }, [checkedRanges, checkedIndividualRanges, hasBeenRefreshed]);
 
   const targetRangesFor = (active) => {
+    // If ANY checkboxes are checked (either filter groups or individual ranges), enable mirroring
+    const anyCheckboxesChecked = (checkedRanges && checkedRanges.length > 0) || 
+                                 (checkedIndividualRanges && checkedIndividualRanges.length > 0);
+
+    // If NO boxes are checked anywhere, edits stay local
+    if (!anyCheckboxesChecked) {
+      return [active];
+    }
+
     // After refresh, only use the active range until new ranges are explicitly checked
     if (hasBeenRefreshed) {
       return [active];
@@ -340,7 +387,8 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
         // Add new entries
         cellsToUpdate.forEach(({ value, number, range }, num) => {
           if (value && value.trim() !== '') {
-            newInputData[`${range}-${rowIdx}-${number}`] = { value, number, range };
+            const uniqueKey = `${range}-${number}`;
+            newInputData[uniqueKey] = { value, number, range };
           }
         });
 
@@ -348,11 +396,28 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
         // Store in session storage - batch update
         try {
-          const editedValuesArray = Object.entries(newInputData)
-            .filter(([key, data]) => data.value && data.value.trim() !== '')
-            .map(([key, data]) => `${data.number}:${data.value}`);
+          // Group by range first, then by number
+          const rangeData = {};
+          
+          Object.values(newInputData).forEach(data => {
+            if (data.value && data.value.trim() !== '') {
+              if (!rangeData[data.range]) {
+                rangeData[data.range] = {};
+              }
+              rangeData[data.range][data.number] = data.value;
+            }
+          });
+
+          // Convert to a flat array for storage: number|value|range
+          const editedValuesArray = [];
+          Object.entries(rangeData).forEach(([range, numbers]) => {
+            Object.entries(numbers).forEach(([number, value]) => {
+              editedValuesArray.push(`${number}|${value}`);
+            });
+          });
 
           sessionStorage.setItem('editedValuesArray', editedValuesArray.join(','));
+          sessionStorage.setItem('editedValuesStructured', JSON.stringify(rangeData));
           sessionStorage.setItem('editedValuesCount', editedValuesArray.length.toString());
 
           console.log("📦 Block Input - Stored to sessionStorage:", {
@@ -390,7 +455,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
     setCellValues((prev) => {
       const next = { ...prev };
-      
+
       // If CP is active, handle diagonal pattern differently
       if (typeFilters.CP && value) {
         // FIRST: Clear all previous values when entering new value in CP mode
@@ -400,7 +465,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
               const clearNum = getNumberFor(r, row, col);
               if (clearNum !== undefined) {
                 next[`${r}-${row}-${clearNum}`] = '';
-                updateInputDataObject(`${r}-${row}-${clearNum}`, '', clearNum, r);
+                updateInputDataObject(`${r}-${clearNum}`, '', clearNum, r);
               }
             }
           }
@@ -413,7 +478,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
             const originalNum = getNumberFor(r, startRow, startCol);
             if (originalNum !== undefined) {
               next[`${r}-${startRow}-${originalNum}`] = value;
-              updateInputDataObject(`${r}-${startRow}-${originalNum}`, value, originalNum, r);
+              updateInputDataObject(`${r}-${originalNum}`, value, originalNum, r);
             }
           });
 
@@ -436,10 +501,10 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
                 const diagonalNum = getNumberFor(r, currentRow, currentCol);
                 if (diagonalNum !== undefined) {
                   next[`${r}-${currentRow}-${diagonalNum}`] = value;
-                  updateInputDataObject(`${r}-${currentRow}-${diagonalNum}`, value, diagonalNum, r);
+                  updateInputDataObject(`${r}-${diagonalNum}`, value, diagonalNum, r);
                 }
               });
-              
+
               // Move to next diagonal position
               currentRow += rowDelta;
               currentCol += colDelta;
@@ -455,7 +520,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
           const mappedNum = getNumberFor(r, rowIdx, colIdx);
           if (mappedNum !== undefined) {
             next[`${r}-${rowIdx}-${mappedNum}`] = value;
-            updateInputDataObject(`${r}-${rowIdx}-${mappedNum}`, value, mappedNum, r);
+            updateInputDataObject(`${r}-${mappedNum}`, value, mappedNum, r);
           }
         });
       }
@@ -463,7 +528,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
       // fallback key for active display
       next[`${rowIdx}-${num}`] = value;
       // Update input data object for fallback key
-      updateInputDataObject(`${rowIdx}-${num}`, value, num, active);
+      updateInputDataObject(`${active}-${num}`, value, num, active);
 
       return next;
     });
@@ -528,7 +593,8 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
         // Add new entries
         cellsToUpdate.forEach(({ value, number, range }, num) => {
           if (value && value.trim() !== '') {
-            newInputData[`${range}-col${colIdx}-${number}`] = { value, number, range };
+            const uniqueKey = `${range}-${number}`;
+            newInputData[uniqueKey] = { value, number, range };
           }
         });
 
@@ -536,11 +602,28 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
         // Store in session storage - batch update
         try {
-          const editedValuesArray = Object.entries(newInputData)
-            .filter(([key, data]) => data.value && data.value.trim() !== '')
-            .map(([key, data]) => `${data.number}:${data.value}`);
+          // Group by range first, then by number
+          const rangeData = {};
+          
+          Object.values(newInputData).forEach(data => {
+            if (data.value && data.value.trim() !== '') {
+              if (!rangeData[data.range]) {
+                rangeData[data.range] = {};
+              }
+              rangeData[data.range][data.number] = data.value;
+            }
+          });
+
+          // Convert to a flat array for storage: number|value|range
+          const editedValuesArray = [];
+          Object.entries(rangeData).forEach(([range, numbers]) => {
+            Object.entries(numbers).forEach(([number, value]) => {
+              editedValuesArray.push(`${number}|${value}`);
+            });
+          });
 
           sessionStorage.setItem('editedValuesArray', editedValuesArray.join(','));
+          sessionStorage.setItem('editedValuesStructured', JSON.stringify(rangeData));
           sessionStorage.setItem('editedValuesCount', editedValuesArray.length.toString());
 
           console.log("📦 Header Input - Stored to sessionStorage:", {
@@ -588,8 +671,6 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
               alignItems: "center",
               justifyContent: "center",
               padding: 0,
-              margin: 0,
-              gap: 0,
             }}
           >
             {col}
@@ -661,7 +742,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
               numbers[rowIdx].map((num, colIdx) => {
                 const value =
                   cellValues[`${selectedRangeState}-${rowIdx}-${num}`] ??
-                  cellValues[`${rowIdx}-${num}`] ??
+                  cellValues[`${selectedRangeState}-${num}`] ??
                   "";
 
                 const isDisabled = !isEditingAllowed(num, rowIdx, colIdx);
@@ -891,4 +972,3 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
     </div>
   );
 }
-
