@@ -5,8 +5,8 @@ export default function Navbar() {
   const [localBalance, setLocalBalance] = React.useState('');
   const [localUser, setLocalUser] = React.useState('');
 
-  let storedBalance = localStorage.getItem('balance');
-  let storedUser = localStorage.getItem('username');
+  let storedBalance = sessionStorage.getItem('balance');
+  let storedUser = sessionStorage.getItem('username');
   
   React.useEffect(() => {
     if (storedBalance && storedUser) {
