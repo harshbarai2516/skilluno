@@ -1,8 +1,9 @@
 import React from "react";
 
-export default function ButtonsBar() {
+export default function ButtonsBar({ onBuy }) {
   return (
     <div className="button-bar">
+      <button className="btn btn-report" onClick={onBuy}>Buy</button>
       <button className="btn btn-report">Report</button>
       <button className="btn btn-advance">Advance</button>
       <button className="btn btn-clear">Clear</button>
