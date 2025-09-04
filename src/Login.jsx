@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, data } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -18,49 +18,56 @@ export default function Login() {
     }
   }, [navigate, from]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      console.log("Login Attempt:", { username }); // Avoid logging password
+  try {
+    console.log("Login Attempt:", { username });
 
-      const res = await fetch("https://api.goldbazar.co.in/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+    const res = await fetch("https://api.goldbazar.co.in/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+    const data = await res.json(); // ✅ Always parse the response
 
-      const data = await res.json();
-      console.log("Login Response:", data);
-
-      if (data.message === "Authentication successful") {
-        console.log("Login Successful:", data.user.balance);
-        sessionStorage.setItem("username", data.user.username); // 2. Save user login (session)
-        sessionStorage.setItem("balance", data.user.balance);
-        const result_res = await fetch("https://api.goldbazar.co.in/api/results/generate-24h", {
-          method: "post"
-        });
-
-        const result_data = await result_res.json();
-        console.log("Result Generation Response:", result_data);
-
-        const result_THREED = await fetch("https://api.goldbazar.co.in/api/results/3D");
-        const result_THREED_data = await result_THREED.json();
-        console.log("3D Result Fetch Response:", result_THREED_data);
-
-        navigate(from, { replace: true });
-      } else {
-        alert("Login failed: " + data.message);
-      }
-    } catch (error) {
-      console.error("Login Error:", error);
-      alert("An error occurred during login. Please try again.");
+    if (!res.ok) {
+      // ✅ Use the message from backend if available
+      throw new Error(data.message || `HTTP error! status: ${res.status}`);
     }
-  };
+
+    console.log("Login Response:", data);
+
+    if (data.message === "Authentication successful") {
+      console.log("Login Successful:", data.user.balance);
+
+      // Save session
+      sessionStorage.setItem("username", data.user.username);
+      sessionStorage.setItem("balance", data.user.balance);
+
+      // Call generate-24h
+      const result_res = await fetch("https://api.goldbazar.co.in/api/results/generate-24h", {
+        method: "POST",
+      });
+      const result_data = await result_res.json();
+      console.log("Result Generation Response:", result_data);
+
+      // Fetch 3D results
+      const result_THREED = await fetch("https://api.goldbazar.co.in/api/results/3D");
+      const result_THREED_data = await result_THREED.json();
+      console.log("3D Result Fetch Response:", result_THREED_data);
+
+      // Redirect
+      navigate(from, { replace: true });
+    } else {
+      alert("Login failed: " + data.message);
+    }
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert(error.message); // ✅ Now shows "User already logged in"
+  }
+};
 
   return (
     <>
@@ -128,6 +135,58 @@ export default function Login() {
           cursor: pointer;
         }
         .forgot:hover { text-decoration: underline; }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+          .min-h-screen {
+            padding: 16px;
+            align-items: flex-start;
+          }
+          .card {
+            max-width: 100%;
+            padding: 18px 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          }
+          .title {
+            font-size: 22px;
+            margin-bottom: 16px;
+          }
+          .input {
+            font-size: 13px;
+            padding: 8px 10px;
+            border-radius: 8px;
+          }
+          .btn {
+            font-size: 15px;
+            padding: 9px;
+            border-radius: 8px;
+          }
+        }
+
+        @media (max-width: 490px) {
+          .min-h-screen {
+            padding: 6px;
+          }
+          .card {
+            padding: 10px 2px;
+            border-radius: 7px;
+          }
+          .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+          .input {
+            font-size: 12px;
+            padding: 7px 7px;
+            border-radius: 6px;
+          }
+          .btn {
+            font-size: 14px;
+            padding: 7px;
+            border-radius: 6px;
+          }
+        }
       `}</style>
 
       <div className="min-h-screen">

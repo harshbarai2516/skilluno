@@ -30,7 +30,7 @@ function generateTimeSlots(start, end, interval) {
   return slots;
 }
 
-export default function AdvanceDraw() {
+export default function AdvanceDraw({ setShowAdvanceDraw, onSlotsChange }) {
   const navigate = useNavigate();
 
   const [selectedSlots, setSelectedSlots] = useState(() => {
@@ -78,17 +78,19 @@ export default function AdvanceDraw() {
       console.log('Selected Slots String:', selectedSlotsString);
       // Store in localStorage for persistence
       localStorage.setItem('selectedSlotsString', selectedSlotsString);
-  // Convert to 24h format and store
-  selectedSlotsString24h = convertSlotsStringTo24h(selectedSlotsString);
-  localStorage.setItem('selectedSlotsString24h', selectedSlotsString24h);
-      navigate('-1');
+      // Convert to 24h format and store
+      selectedSlotsString24h = convertSlotsStringTo24h(selectedSlotsString);
+      localStorage.setItem('selectedSlotsString24h', selectedSlotsString24h);
+      if (onSlotsChange) onSlotsChange();
+      setShowAdvanceDraw(false);
     } else {
       selectedSlotsString = '';
       latestSelectedSlotsString = '';
       console.log('No slots selected.');
       localStorage.setItem('selectedSlotsString', '');
-  localStorage.setItem('selectedSlotsString24h', '');
-      navigate('-1');
+      localStorage.setItem('selectedSlotsString24h', '');
+      if (onSlotsChange) onSlotsChange();
+      setShowAdvanceDraw(false);
     }
   }
 
@@ -208,7 +210,7 @@ export default function AdvanceDraw() {
         </button>
         <button style={styles.closeBtn} >
           {/* To go to /home, use navigate('/home'). To go back, use navigate(-1). Uncomment as needed. */}
-          <span style={styles.closeText} onClick={() => navigate('-1', { state: { selectedSlotsString } })}>✕</span>
+          <span style={styles.closeText} onClick={() => setShowAdvanceDraw(false)}>✕</span>
           {/* Or, for back navigation: <span style={styles.closeText} onClick={() => navigate && navigate(-1)}>✕</span> */}
         </button>
       </div>
@@ -375,7 +377,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 2,
+    marginBottom: 8,
     gap: 8,
     flexWrap: 'wrap',
     justifyContent: 'space-between'

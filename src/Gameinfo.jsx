@@ -144,15 +144,15 @@ export default function GameInfoPanel() {
           }
         }
 
-        @media (max-width: 680px) {
+        @media (max-width: 780px) and (min-width: 481px) {
           .clock {
-            font-size: calc(0.8vw + 10px);
-            max-width: 40%;
+            font-size: calc(0.9vw + 10px);
+            max-width: 70%;
           }
           .info-box {
-            font-size: calc(0.2vw + 5px);
-            padding: 0.2em;
-            max-width: 60%;
+            font-size: calc(0.4vw + 6px);
+            padding: 0.22em;
+            max-width: 67%;
           }
         }
 

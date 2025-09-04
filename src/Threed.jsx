@@ -6,14 +6,34 @@ import BetPanel from "./Betpanel";
 import Navbar from "./Navbar";
 import demoImage from "./assets/demo.png";
 import backgroundImage from "./assets/bgi.jpg";
+import { useLocation } from "react-router-dom";
+
 
 export default function Threed() {
   const [displayNumbers, setDisplayNumbers] = useState(Array(12).fill("-"));
   const [finalResults, setFinalResults] = useState(Array(12).fill("-"));
   const [isAnimating, setIsAnimating] = useState(true);
 
+  const location = useLocation();
+  const timeData = location.state?.timeData;
+
   // ✅ yahan pe bets state parent me rakha
   const [bets, setBets] = useState([]);
+
+  
+  function barcode() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = String(today.getFullYear()).slice(-2);
+    const datePrefix = year + month + day;
+    const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const barcodeValue = datePrefix + randomSuffix;
+
+    // Store barcodeValue in localStorage
+
+    return barcodeValue;
+  }
 
   // ✅ Buy button ka handler
   const handleBuy = async () => {
@@ -22,17 +42,54 @@ export default function Threed() {
       return;
     }
 
-    // ticket result banana
-    const tck_result = bets.map(b => `${b.type}|${b.num}|${b.amt}`).join(", ");
+    // ticket result banana (combine A/B/C with top type filters if both present)
+    const abcTypes = ["A", "B", "C"];
+    const mainTypes = ["BOX", "STR", "SP", "FP", "BP", "AP"];
+    let resultArr = [];
+    bets.forEach(bet => {
+      const isABC = abcTypes.includes(bet.type);
+      const isMain = mainTypes.includes(bet.type);
+      // If bet is only A/B/C and there are also main types for same num/amt, combine
+      if (isABC) {
+        // Find all main type bets for same num/amt
+        const matchingMain = bets.filter(mb => mainTypes.includes(mb.type) && mb.num === bet.num && mb.amt === bet.amt);
+        if (matchingMain.length > 0) {
+          matchingMain.forEach(mb => {
+            resultArr.push(`${bet.type}|${mb.type}|${bet.num}|${bet.amt}`);
+          });
+        } else {
+          resultArr.push(`${bet.type}|${bet.num}|${bet.amt}`);
+        }
+      } else if (isMain) {
+        // If main type, only add if not already combined above
+        const hasABC = bets.some(ab => abcTypes.includes(ab.type) && ab.num === bet.num && ab.amt === bet.amt);
+        if (!hasABC) {
+          resultArr.push(`${bet.type}|${bet.num}|${bet.amt}`);
+        }
+      } else {
+        // Any other type, just add
+        resultArr.push(`${bet.type}|${bet.num}|${bet.amt}`);
+      }
+    });
+    // Remove duplicates
+    const tck_result = Array.from(new Set(resultArr)).join(", ");
     console.log("🎟️ Posting Ticket:", tck_result);
+    const username = sessionStorage.getItem('username') || "user123";
+    const nextDraw24h = sessionStorage.getItem('nextdrawTime') || timeData?.nextdrawTime || "";
+    const drawTime12h = sessionStorage.getItem('drawTime') || timeData?.drawTime || "";
 
     try {
       const res = await fetch("https://api.goldbazar.co.in/api/record/insert", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tck_result,
-          bets
+          bets: tck_result,
+          nextDraw24h: nextDraw24h,
+          drawTime12h: drawTime12h,
+          currentDate: timeData.currentDate,
+          currentTime: timeData.currentTime,
+          username: username,
+          barcode: barcode(),
         })
       });
 
@@ -132,9 +189,8 @@ export default function Threed() {
                   {displayNumbers.map((num, i) => (
                     <div
                       key={i}
-                      className={`overlay-box ${
-                        isAnimating ? "bg-gray-200" : "bg-white"
-                      }`}
+                      className={`overlay-box ${isAnimating ? "bg-gray-200" : "bg-white"
+                        }`}
                     >
                       {num}
                     </div>
@@ -215,13 +271,51 @@ export default function Threed() {
           background-color: transparent;
           overflow: hidden;
         }
+        .bottom-top > .part-1,
+        .bottom-top > .part-3 {
+          background-color: transparent;
+          padding: 16px 18px;
+          box-sizing: border-box;
+        }
         .bottom-top > .part-1 {
           flex: 85;
-          background-color: transparent;
         }
         .bottom-top > .part-3 {
           flex: 15;
+        }
+        .bottom-bottom > .part-1,
+        .bottom-bottom > .part-2,
+        .bottom-bottom > .part-3 {
           background-color: transparent;
+          padding: 12px 16px;
+          box-sizing: border-box;
+        }
+        .bottom-bottom > .part-1 {
+          flex: 60;
+        }
+        .bottom-bottom > .part-2 {
+          flex: 30;
+        }
+        .bottom-bottom > .part-3 {
+          flex: 10;
+        }
+        @media (max-width: 768px) {
+          .bottom-top > .part-1,
+          .bottom-top > .part-3,
+          .bottom-bottom > .part-1,
+          .bottom-bottom > .part-2,
+          .bottom-bottom > .part-3 {
+            padding: 8px 0.4vw;
+          }
+        }
+        @media (max-width: 480px) {
+          .bottom-top > .part-1,
+          .bottom-top > .part-3,
+          .bottom-bottom > .part-1,
+          .bottom-bottom > .part-2,
+          .bottom-bottom > .part-3 {
+            padding: 6px 2vw;
+          }
         }
         .bottom-bottom {
           display: flex;

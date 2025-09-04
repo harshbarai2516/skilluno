@@ -8,7 +8,8 @@ const Filter = ({
   onCheckedRangesChange, 
   typeFilters, 
   onTypeFiltersChange, 
-  refresh 
+  refresh,
+  timeData 
 }) => {
   const navigate = useNavigate();
 
@@ -278,7 +279,7 @@ const Filter = ({
               }}
               onClick={() => {
                 if (btn.label === "3D Game") {
-                  navigate("/threed");
+                  navigate("/threed",  { state: { timeData } });
                 }
                 if (btn.label === "Logout") {
                   // Clear all storage

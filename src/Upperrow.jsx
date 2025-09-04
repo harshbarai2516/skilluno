@@ -1,7 +1,12 @@
-import React from "react";
 
-const UpperRow = ({handleRefresh, timeData, userBalance, bonusbalance}) => {
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const UpperRow = ({ handleRefresh, timeData, userBalance, bonusbalance, balanceAfterQuantity, setIsBuyDisabled }) => {
   const [usernameLocal, setUsernameLocal] = React.useState("");
+  const [popup, setPopup] = React.useState("");
+  const [prevTime, setPrevTime] = React.useState(null);
+  const navigate = useNavigate();
   React.useEffect(() => {
     const storedUsername = sessionStorage.getItem("balance");
     if (storedUsername) {
@@ -9,14 +14,127 @@ const UpperRow = ({handleRefresh, timeData, userBalance, bonusbalance}) => {
     }
   }, []);
 
+  // Popup logic for remainingTime
+  React.useEffect(() => {
+    // Parse MM:SS to seconds
+    function parseTimeToSeconds(str) {
+      if (!str) return NaN;
+      if (/^\d+$/.test(str)) return Number(str); // already seconds
+      const parts = str.split(":");
+      if (parts.length === 2) {
+        const min = parseInt(parts[0], 10);
+        const sec = parseInt(parts[1], 10);
+        return min * 60 + sec;
+      }
+      return NaN;
+    }
+    const rt = parseTimeToSeconds(timeData?.remainingTime);
+    console.log("[UpperRow] remainingTime:", timeData?.remainingTime, "rt:", rt, "prevTime:", prevTime);
+    if (isNaN(rt)) return;
+    if (prevTime !== null && prevTime > 10 && rt <= 10) {
+      setPopup("Time is almost up!");
+      setTimeout(() => setPopup(""), 2000);
+      InsertWin();
+    } else if (prevTime !== null && prevTime < 899 && rt >= 899) {
+      setPopup("New round started!");
+      setTimeout(() => setPopup(""), 2000);
+    }
+    setPrevTime(rt);
+  }, [timeData?.remainingTime]);
+
   // Format time to remove seconds ONLY for close time (CS), keep seconds for current time (CT)
   const formatTimeWithoutSeconds = (timeString) => {
     if (!timeString) return "";
     return timeString.replace(/:\d{2}(?=\s*(AM|PM|am|pm))/i, '');
   };
 
+  // Use parsed seconds for disabling
+  function parseTimeToSeconds(str) {
+    if (!str) return NaN;
+    if (/^\d+$/.test(str)) return Number(str);
+    const parts = str.split(":");
+    if (parts.length === 2) {
+      const min = parseInt(parts[0], 10);
+      const sec = parseInt(parts[1], 10);
+      return min * 60 + sec;
+    }
+    return NaN;
+  }
+  const isBuyDisabled = parseTimeToSeconds(timeData?.remainingTime) <= 10;
+  React.useEffect(() => {
+    if (setIsBuyDisabled) setIsBuyDisabled(isBuyDisabled);
+  }, [isBuyDisabled, setIsBuyDisabled]);
+
+    async function InsertWin() {
+
+    let insertResp = await fetch("https://api.goldbazar.co.in/api/winlogic/win_2D", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        draw_time: timeData?.nextdrawTime,
+      })
+
+
+    });
+    let insertUser = await insertResp.json();
+    console.log("InsertWin response:", insertUser);
+
+
+  }
+
+
+
+  async function InsertUserDraw() {
+
+     const username = sessionStorage.getItem('username') || "user123";
+
+    let insertResp = await fetch("https://api.goldbazar.co.in/api/winlogic/userResult", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        draw_time: timeData?.prevDraw,
+      })
+
+
+    });
+    let insertUser = await insertResp.json();
+    console.log("InsertWin UserDraw response:", insertUser);
+
+    if(insertUser.status === 'WIN'){
+      setPopup(`Congratulations! You won ${insertUser.win_amount}`);
+    }else{
+      setPopup("No Win this time. Try Again!");
+    }
+
+
+  }
+
+
   return (
     <div className="upper-row-container">
+      {popup && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: '#222',
+          color: '#fff',
+          padding: '12px 32px',
+          borderRadius: 10,
+          fontSize: 18,
+          zIndex: 9999,
+          boxShadow: '0 2px 12px rgba(0,0,0,0.18)',
+          maxWidth: '90vw',
+          textAlign: 'center',
+          wordBreak: 'break-word',
+        }}>{popup}</div>
+      )}
       <div className="upper-row-flex">
         {/* Time Boxes */}
         <div className="info-box">
@@ -32,16 +150,22 @@ const UpperRow = ({handleRefresh, timeData, userBalance, bonusbalance}) => {
           <span className="info-suffix">RT</span>
         </div>
         <div className="info-box">
-          <span className="info-value">{userBalance}</span>
+          <span className="info-value">{balanceAfterQuantity}</span>
           <span className="info-suffix">PT</span>
         </div>
 
         {/* Action Buttons */}
-        <div className="action-btn green">RESULT (F1)</div>
+        <div className="action-btn green" onClick={() => navigate('/ogresult')}>RESULT (F1)</div>
         <div className="action-btn green">ACCOUNT(F2)</div>
         <div className="action-btn green">REPRINT (F3)</div>
         <div className="action-btn green">CANCEL (F4)</div>
-        <div className="action-btn green" onClick={handleRefresh}>REFRESH (F5)</div>
+        <div
+          className="action-btn green"
+          onClick={isBuyDisabled ? undefined : handleRefresh}
+          style={isBuyDisabled ? { pointerEvents: 'none', opacity: 0.5, cursor: 'not-allowed' } : {}}
+        >
+          REFRESH (F5)
+        </div>
 
         {/* Bonus Box */}
         <div className="bonus-box">

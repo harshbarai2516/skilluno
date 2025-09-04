@@ -216,7 +216,7 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
   // Helper: check if editing is allowed based on type filters
   const isEditingAllowed = (num, rowIdx, colIdx) => {
     // If no type filters are active, allow all editing
-    if (!typeFilters.EVEN && !typeFilters.ODD && !typeFilters.FP) {
+    if (!typeFilters.EVEN && !typeFilters.ODD && !typeFilters.FP && !typeFilters.CP) {
       return true;
     }
 
@@ -230,14 +230,13 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
     }
 
     if (typeFilters.FP) {
-      // If no cell has been edited yet, allow editing any cell
-      if (!lastEditedPosition) {
-        return true;
-      }
+      // FP logic: ALL cells remain editable, FP only controls mirroring behavior
+      return true;
+    }
 
-      // Get the allowed FP positions based on the last edited cell
-      const allowedPositions = getFpEditPositions(lastEditedPosition.rowIdx, lastEditedPosition.colIdx);
-      return allowedPositions.has(`${rowIdx}-${colIdx}`);
+    if (typeFilters.CP) {
+      // CP logic: ALL cells remain editable, CP only controls diagonal mirroring behavior
+      return true;
     }
 
     return true;
@@ -439,14 +438,21 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
     const active = selectedRangeState;
     if (!active) return;
 
-    const colIdx = numbers[rowIdx]?.indexOf(num);
+    let colIdx = numbers[rowIdx]?.indexOf(num);
+    // Defensive: If colIdx is undefined, calculate it from numbers[rowIdx]
+    if (typeof colIdx !== 'number' || colIdx < 0) {
+      if (Array.isArray(numbers[rowIdx])) {
+        colIdx = numbers[rowIdx].indexOf(num);
+      }
+    }
 
     // Check if editing is allowed based on type filters
     if (!isEditingAllowed(num, rowIdx, colIdx)) {
       return; // Block editing if not allowed
     }
 
-    // Update last edited position for FP logic
+    // --- FP LOGIC MIRROR ---
+    // For FP, update lastEditedPosition to the cell being edited (like CP logic)
     if (typeFilters.FP) {
       setLastEditedPosition({ rowIdx, colIdx });
     }
@@ -514,8 +520,21 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
         // Apply diagonal pattern from the edited cell position
         applyDiagonalPattern(rowIdx, colIdx);
+      } else if (typeFilters.FP) {
+        // Mirror value to all FP group cells
+        const fpPositions = getFpEditPositions(rowIdx, colIdx);
+        fpPositions.forEach((pos) => {
+          const [fpRow, fpCol] = pos.split('-').map(Number);
+          targets.forEach((r) => {
+            const mappedNum = getNumberFor(r, fpRow, fpCol);
+            if (mappedNum !== undefined) {
+              next[`${r}-${fpRow}-${mappedNum}`] = value;
+              updateInputDataObject(`${r}-${mappedNum}`, value, mappedNum, r);
+            }
+          });
+        });
       } else {
-        // Normal logic when CP is not active
+        // Normal logic for other cases: only update the edited cell
         targets.forEach((r) => {
           const mappedNum = getNumberFor(r, rowIdx, colIdx);
           if (mappedNum !== undefined) {

@@ -4,6 +4,8 @@ import Home from './Home';
 import Threed from './Threed';
 import Sample from './Sample';
 import Login from './Login';
+import Print from './Print';
+import Ogresult from './Ogresult';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -30,6 +32,16 @@ function App() {
             <Route path="/threed" element={
               <ProtectedRoute>
                 <Threed />
+              </ProtectedRoute>
+            } />
+            <Route path="/ogresult" element={
+              <ProtectedRoute>
+                <Ogresult />
+              </ProtectedRoute>
+            } />
+             <Route path="/print" element={
+              <ProtectedRoute>
+                <Print />
               </ProtectedRoute>
             } />
             <Route path="/sample" element={

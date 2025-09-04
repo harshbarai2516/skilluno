@@ -9,6 +9,7 @@ import UpperRow from './Upperrow';
 import Notification from './Notifcation';
 import AdvanceDraw from './AdvanceDraw';
 import { useLocation } from "react-router-dom";
+import { pre } from 'framer-motion/client';
 
 
 
@@ -24,7 +25,8 @@ const Home = () => {
   });
   const [refreshKey, setRefreshKey] = useState(0);
 
-
+    // State to control Buy Now button disabled
+  const [isBuyDisabled, setIsBuyDisabled] = useState(false);``
 
   // NEW: Store range-specific sums
   const [rangeSums, setRangeSums] = useState({});
@@ -32,6 +34,10 @@ const Home = () => {
   // State for AdvanceDraw modal
   const [showAdvanceDraw, setShowAdvanceDraw] = useState(false);
   const [selectedSlots, setSelectedSlots] = useState([]);
+  // State to trigger recalculation when slots change
+  const [slotsRefreshKey, setSlotsRefreshKey] = useState(0);
+  // State to always hold the latest selectedSlotsString from localStorage
+  const [selectedSlotsString, setSelectedSlotsString] = useState(localStorage.getItem('selectedSlotsString') || '');
 
   // State for user balance
   const [userBalance, setUserBalance] = useState(0);
@@ -64,17 +70,17 @@ const Home = () => {
   // Time API state
   const [timeData, setTimeData] = useState({
     currentTime: "10:35:02",
+    prevDraw: "10:30",
     drawTime: "10:40 am",
     closeTime: "10:45 am",
     remainingTime: "09:58",
     pointTotal: "17080"
   });
 
+
   // Calculate total quantity and amount - sum ALL groups' data
   const totalQuantity = useMemo(() => {
     let total = 0;
-
-    // Sum quantities from ALL groups (group-10, group-30, group-50, etc.)
     Object.values(rangeSums).forEach(groupData => {
       if (groupData.quantities) {
         groupData.quantities.forEach(qty => {
@@ -82,14 +88,15 @@ const Home = () => {
         });
       }
     });
-
+    localStorage.setItem('quantity', total.toString());
     return total;
   }, [rangeSums]);
 
+  // Store userBalance - totalQuantity in a variable
+
+
   const totalAmount = useMemo(() => {
     let total = 0;
-
-    // Sum amounts from ALL groups (group-10, group-30, group-50, etc.)
     Object.values(rangeSums).forEach(groupData => {
       if (groupData.amounts) {
         groupData.amounts.forEach(amt => {
@@ -97,9 +104,25 @@ const Home = () => {
         });
       }
     });
-
+    if (selectedSlotsString && selectedSlotsString.trim() !== '') {
+      const slotCount = selectedSlotsString.split(',').filter(Boolean).length;
+      const finalAmount = total * slotCount;
+      localStorage.setItem('amount', finalAmount.toString());
+      return finalAmount;
+    }
+    localStorage.setItem('amount', total.toString());
     return total;
-  }, [rangeSums]);
+  }, [rangeSums, slotsRefreshKey, selectedSlotsString]);
+
+
+  // Store userBalance - totalAmount in a variable
+
+  const balanceAfterQuantity = userBalance - totalAmount;
+
+  // Sync selectedSlotsString from localStorage whenever slotsRefreshKey changes (i.e., after AdvanceDraw OKAY)
+  useEffect(() => {
+    setSelectedSlotsString(localStorage.getItem('selectedSlotsString') || '');
+  }, [slotsRefreshKey]);
 
   // Handler for receiving calculated quantities and amounts from NumberGrid
   const handleQuantitiesChange = useCallback((data) => {
@@ -144,6 +167,9 @@ const Home = () => {
     localStorage.setItem('selectedSlots', "");
     localStorage.setItem('selectedSlotsString', "");
     localStorage.setItem('selectedSlotsString24h', "");
+    // localStorage.setItem('quantity', "");
+    // localStorage.setItem('amount', "");
+    setSelectedSlotsString(""); // Also reset the state so totalAmount updates immediately
   };
 
   // Fetch time from API
@@ -156,6 +182,7 @@ const Home = () => {
         const newTimeData = {
           currentDate: data.current_date || timeData.currentDate,
           currentTime: data.current_time_24h || timeData.currentTime,
+          prevDraw: data.draw_time_24h || timeData.prevDraw,
           drawTime: data.next_draw_time_12h || timeData.drawTime,
           nextdrawTime: data.next_draw_time_24h || data.closeTime || timeData.closeTime,
           remainingTime: data.remaining_time || timeData.remainingTime,
@@ -163,6 +190,10 @@ const Home = () => {
         };
 
         setTimeData(newTimeData);
+
+        // Store drawTime in localStorage
+        sessionStorage.setItem('drawTime', newTimeData.drawTime);
+        sessionStorage.setItem('nextdrawTime', newTimeData.nextdrawTime);
       }
     } catch (error) {
       console.error("Error fetching time data:", error);
@@ -184,6 +215,7 @@ const Home = () => {
     };
   }, []);
 
+ 
 
   useEffect(() => {
     fetchBonusBalance();
@@ -249,6 +281,9 @@ const Home = () => {
     const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     const barcodeValue = datePrefix + randomSuffix;
 
+    // Store barcodeValue in localStorage
+    localStorage.setItem('barcodeValue', barcodeValue);
+
     return barcodeValue;
   }
 
@@ -259,28 +294,67 @@ const Home = () => {
     const selectedSlotsString = localStorage.getItem('selectedSlotsString') || "";
     const selectedSlotsStringhour = localStorage.getItem('selectedSlotsString24h') || "";
 
-    let insertResponse = await fetch("https://api.goldbazar.co.in/api/record/insert2D", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ticket: ticket,
-        ticlen: ticketlength,
-        barcode: barcode(),
-        totalAmount: totalAmount,
-        currentDate: timeData?.currentDate || new Date().toISOString().split('T')[0],
-        drawTime: selectedSlotsString || timeData?.drawTime || "",
-        nextdrawTime: selectedSlotsStringhour || timeData?.nextdrawTime || "",
-        currentTime: timeData?.currentTime || "",
-        username: username,
-      })
-    });
+    // Generate barcode and store in localStorage
+    const barcodeVal = barcode();
+    localStorage.setItem('barcodeValue', barcodeVal);
 
+    // Store the current totalAmount and totalQuantity in localStorage as one-time snapshots
+    localStorage.setItem('finalAmount', totalAmount.toString());
+    localStorage.setItem('finalQuantity', totalQuantity.toString());
 
+    // Split slots and hours by comma, filter out empty
+    const slotsArr = selectedSlotsString.split(',').map(s => s.trim()).filter(Boolean);
+    const hoursArr = selectedSlotsStringhour.split(',').map(s => s.trim()).filter(Boolean);
 
-    let insertData = await insertResponse.json();
+    // If no slots or only one, do single call as before
+    if (slotsArr.length <= 1) {
+      await fetch("https://api.goldbazar.co.in/api/record/insert2D", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ticket: ticket,
+          ticlen: ticketlength,
+          barcode: barcodeVal,
+          totalAmount: totalAmount,
+          currentDate: timeData?.currentDate || new Date().toISOString().split('T')[0],
+          drawTime: selectedSlotsString || timeData?.drawTime || "",
+          nextdrawTime: selectedSlotsStringhour || timeData?.nextdrawTime || "",
+          currentTime: timeData?.currentTime || "",
+          username: username,
+        })
+      });
+    } else {
+      // Multiple slots: loop and call for each
+      for (let i = 0; i < slotsArr.length; i++) {
+        const drawTime = slotsArr[i];
+        const nextdrawTime = hoursArr[i] || timeData?.nextdrawTime || "";
+        await fetch("https://api.goldbazar.co.in/api/record/insert2D", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ticket: ticket,
+            ticlen: ticketlength,
+            barcode: barcodeVal,
+            totalAmount: totalAmount,
+            currentDate: timeData?.currentDate || new Date().toISOString().split('T')[0],
+            drawTime: drawTime,
+            nextdrawTime: nextdrawTime,
+            currentTime: timeData?.currentTime || "",
+            username: username,
+          })
+        });
+      }
+    }
+
+    localStorage.setItem('amount', totalAmount);
+
     handleRefresh();
+    fetchUserBalance();
+    fetchBonusBalance();
   }
 
   // Fetch user balance from API
@@ -315,20 +389,19 @@ const Home = () => {
   };
 
 
-  async function InsertUsername() {
+  async function InsertWin() {
     const user = sessionStorage.getItem('username') || "user123";
 
-    let insertResp = await fetch("https://api.goldbazar.co.in/api/balance", {
+    let insertResp = await fetch("https://api.goldbazar.co.in/api/winlogic/win_2D", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: user,
+        draw_time: timeData?.nextdrawTime,
       })
     });
 
-    let insertUser = await insertResp.json();
   }
 
   // Close modal when clicking outside
@@ -354,6 +427,8 @@ const Home = () => {
             <AdvanceDraw
               totalQuantity={totalQuantity}
               setTotalQuantity={() => { }}
+              setShowAdvanceDraw={setShowAdvanceDraw}
+              onSlotsChange={() => setSlotsRefreshKey(k => k + 1)}
             />
           </div>
         </div>
@@ -363,9 +438,10 @@ const Home = () => {
         <div className="top-vertical-container">
           <div className="top-vertical-part part1"><Result selectedRange={selectedRange} timeData={timeData} /></div>
           <div className="top-vertical-part part2"><Notification /></div>
-          <div className="top-vertical-part part3"><UpperRow handleRefresh={handleRefresh} timeData={timeData} userBalance={userBalance} bonusbalance={bonusbalance} /></div>
+          <div className="top-vertical-part part3"><UpperRow handleRefresh={handleRefresh} timeData={timeData} userBalance={userBalance} bonusbalance={bonusbalance} balanceAfterQuantity={balanceAfterQuantity} setIsBuyDisabled={setIsBuyDisabled} /></div>
           <div className="top-vertical-part part4">
             <Filter
+              timeData={timeData}
               setSelectedRange={setSelectedRange}
               setSelectedRangeState={setSelectedRangeState}
               onCheckedRangesChange={setCheckedRanges}
@@ -402,6 +478,7 @@ const Home = () => {
                 typeFilters={typeFilters}
                 refresh={refreshKey}
                 onQuantitiesChange={handleQuantitiesChange}
+                balanceAfterQuantity={balanceAfterQuantity}
               />
             </div>
           </div>
@@ -436,7 +513,7 @@ const Home = () => {
                 <input type="text" placeholder="Barcode" className="barcode-input" />
               </div>
               <div className="footer-center-col footer-center-col3">
-                <button className="buy-now-btn" onClick={InsertData}>Buy Now (F6)</button>
+                <button className="buy-now-btn" onClick={isBuyDisabled ? undefined : InsertData} style={isBuyDisabled ? { pointerEvents: 'none', opacity: 0.5, cursor: 'not-allowed' } : {}}>Buy Now (F6)</button>
               </div>
             </div>
           </div>

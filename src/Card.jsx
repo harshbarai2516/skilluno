@@ -70,11 +70,17 @@ export default function Card() {
         .card-row {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.6em;
-          justify-content: flex-start;
+          gap: 0.4em;
+          justify-content: space-between;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
         }
         .card {
-          width: 120px;
+          flex: 1 1 auto;
+          min-width: 100px;
+          max-width: 180px;
           background: #fff;
           border-radius: 0.5em;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -82,6 +88,7 @@ export default function Card() {
           flex-direction: column;
           align-items: center;
           padding: 0.4em;
+          box-sizing: border-box;
         }
         .card-time {
           font-weight: bold;
@@ -93,6 +100,7 @@ export default function Card() {
           border-radius: 0.2em;
           width: 100%;
           text-align: center;
+          box-sizing: border-box;
         }
         .card-body {
           display: flex;
@@ -100,6 +108,8 @@ export default function Card() {
           gap: 1em;
           justify-content: center;
           align-items: center;
+          min-width: 0;
+          overflow: hidden;
         }
         .card-letters,
         .card-numbers {
@@ -110,6 +120,7 @@ export default function Card() {
           align-items: center;
           font-weight: 700;
           font-size: 1.1em;
+          min-width: 0;
         }
         .card-footer {
           margin-top: 0.3em;
@@ -124,6 +135,123 @@ export default function Card() {
         }
         .letter.c {
           color: #e74c3c;
+        }
+
+        /* Tablet and medium screens */
+        @media (max-width: 1024px) {
+          .card-row {
+            gap: 0.3em;
+            justify-content: space-between;
+          }
+          .card {
+            flex: 1 1 auto;
+            min-width: 85px;
+            max-width: 100px;
+            padding: 0.3em;
+          }
+          .card-time {
+            font-size: 0.8em;
+            padding: 0.1em 0.3em;
+          }
+          .card-body {
+            gap: 0.8em;
+          }
+          .card-letters,
+          .card-numbers {
+            font-size: 1em;
+            gap: 0.3em;
+          }
+        }
+
+        /* Small tablets and large phones */
+        @media (max-width: 768px) {
+          .card-row {
+            gap: 0.2em;
+            justify-content: space-between;
+          }
+          .card {
+            flex: 1 1 auto;
+            min-width: 70px;
+            max-width: 80px;
+            padding: 0.25em;
+          }
+          .card-time {
+            font-size: 0.7em;
+            padding: 0.1em 0.2em;
+            margin-bottom: 0.2em;
+          }
+          .card-body {
+            gap: 0.6em;
+          }
+          .card-letters,
+          .card-numbers {
+            font-size: 0.9em;
+            gap: 0.2em;
+          }
+          .card-footer {
+            margin-top: 0.2em;
+          }
+        }
+
+        /* Mobile phones */
+        @media (max-width: 480px) {
+          .card-row {
+            gap: 0.15em;
+            justify-content: space-between;
+          }
+          .card {
+            flex: 1 1 auto;
+            min-width: 60px;
+            max-width: 70px;
+            padding: 0.2em;
+            border-radius: 0.3em;
+          }
+          .card-time {
+            font-size: 0.6em;
+            padding: 0.05em 0.15em;
+            margin-bottom: 0.15em;
+          }
+          .card-body {
+            gap: 0.4em;
+          }
+          .card-letters,
+          .card-numbers {
+            font-size: 0.8em;
+            gap: 0.15em;
+          }
+          .card-footer {
+            margin-top: 0.15em;
+            font-size: 0.9em;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+          .card-row {
+            gap: 0.1em;
+            justify-content: space-between;
+          }
+          .card {
+            flex: 1 1 auto;
+            min-width: 50px;
+            max-width: 60px;
+            padding: 0.15em;
+          }
+          .card-time {
+            font-size: 0.55em;
+            padding: 0.05em 0.1em;
+          }
+          .card-body {
+            gap: 0.3em;
+          }
+          .card-letters,
+          .card-numbers {
+            font-size: 0.7em;
+            gap: 0.1em;
+          }
+          .card-footer {
+            font-size: 0.8em;
+          }
         }
       `}</style>
     </div>

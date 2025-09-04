@@ -34,8 +34,17 @@ export default function BetPanel({ setBets: setParentBets }) {
   }, [bets]);
 
   // ✅ Checkbox toggle handler
-  const handleCheckboxChange = (label) => {
-    if (label === "ALL") {
+  const handleCheckboxChange = (label, group = null) => {
+    if (label === "ALL" && group === "abc") {
+      // Only for A/B/C row
+      const abc = ["A", "B", "C"];
+      if (abc.every(t => selectedTypes.includes(t))) {
+        setSelectedTypes(selectedTypes.filter(t => !abc.includes(t)));
+      } else {
+        setSelectedTypes([...selectedTypes, ...abc.filter(t => !selectedTypes.includes(t))]);
+      }
+    } else if (label === "ALL") {
+      // Only for top controls
       if (selectedTypes.includes("ALL")) {
         setSelectedTypes([]);
       } else {
@@ -134,12 +143,14 @@ export default function BetPanel({ setBets: setParentBets }) {
       const values = generateCombinations(inputValue);
       console.log("🎲 Generated Values:", values);
 
-      let typesToAdd =
-        selectedTypes.includes("ALL")
-          ? ["BOX", "STR", "SP", "FP", "BP", "AP"]
-          : selectedTypes;
 
-      console.log("✅ Types Selected:", typesToAdd);
+      // Separate ABC types from main types
+      const abcTypes = ["A", "B", "C"].filter(t => selectedTypes.includes(t));
+      let typesToAdd = selectedTypes.includes("ALL")
+        ? ["BOX", "STR", "SP", "FP", "BP", "AP"]
+        : selectedTypes.filter(t => !["A", "B", "C"].includes(t));
+
+      console.log("✅ Types Selected:", typesToAdd, "ABC:", abcTypes);
 
       typesToAdd.forEach((type) => {
         switch (type) {
@@ -147,10 +158,8 @@ export default function BetPanel({ setBets: setParentBets }) {
             if (values.straight) addBet(values.straight, type, amount);
             break;
           case "BOX":
-            if (values.box) {
-              values.box.forEach((perm) => {
-                addBet(perm, type, amount);
-              });
+            if (inputValue && inputValue.length === 3) {
+              addBet(inputValue, type, amount);
             }
             break;
           case "FP":
@@ -168,6 +177,11 @@ export default function BetPanel({ setBets: setParentBets }) {
           default:
             break;
         }
+      });
+
+      // Add ABC as bet types (just use inputValue as num)
+      abcTypes.forEach((type) => {
+        if (inputValue) addBet(inputValue, type, amount);
       });
 
       setInputValue("");
@@ -189,24 +203,43 @@ export default function BetPanel({ setBets: setParentBets }) {
       <div className="bet-controls">
         <div className="bet-options">
           {["ALL", "BOX", "STR", "SP", "FP", "BP", "AP"].map((label, i) => (
-            <label key={i} className="option">
+            <label key={label} className="option">
               <input
                 type="checkbox"
                 checked={selectedTypes.includes(label)}
                 onChange={() => handleCheckboxChange(label)}
-              />{" "}
-              {label}
+              /> {label}
             </label>
           ))}
         </div>
-        <input
-          type="text"
-          placeholder="ADD NUMBER"
-          className="add-number"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+        <div className="input-and-abc">
+          <div className="abc-options">
+            <label className="option">
+              <input
+                type="checkbox"
+                checked={["A","B","C"].every(t => selectedTypes.includes(t))}
+                onChange={() => handleCheckboxChange("ALL", "abc")}
+              /> All
+            </label>
+            {["A", "B", "C"].map((label) => (
+              <label key={label} className="option">
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(label)}
+                  onChange={() => handleCheckboxChange(label)}
+                /> {label}
+              </label>
+            ))}
+          </div>
+          <input
+            type="text"
+            placeholder="ADD NUMBER"
+            className="add-number"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
       </div>
 
       {/* Bet Cards */}
@@ -242,37 +275,215 @@ export default function BetPanel({ setBets: setParentBets }) {
           background: linear-gradient(180deg, #ff5722, #d84315);
           padding: 0.4em 0.6em;
           gap: 0.4em;
+          width: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
         }
         .bet-options {
           display: flex;
-          gap: 0.4em;
+          gap: 0.3em;
           font-weight: bold;
           color: #fff;
-          flex: 1;
+          flex: 1 1 60%;
+          flex-wrap: wrap;
+          min-width: 0;
         }
         .option {
           display: flex;
           align-items: center;
           font-size: calc(0.5vw + 8px);
           gap: 0.2em;
+          min-width: 0;
+          white-space: nowrap;
+        }
+        .input-and-abc {
+          display: flex;
+          align-items: center;
+          gap: 0.3em;
+          flex: 1 1 40%;
+          min-width: 0;
         }
         .add-number {
-          width: clamp(120px, 20%, 200px);
-          padding: 0.3em 0.6em;
+          flex: 1 1 auto;
+          min-width: 80px;
+          max-width: 120px;
+          padding: 0.3em 0.4em;
           border-radius: 0.3em;
           border: none;
           outline: none;
           font-size: calc(0.5vw + 8px);
+          box-sizing: border-box;
+        }
+        .abc-options {
+          display: flex;
+          gap: 0.2em;
+          flex-wrap: wrap;
+          min-width: 0;
+        }
+
+        /* Tablet and medium screens */
+        @media (max-width: 1024px) {
+          .bet-controls {
+            padding: 0.3em 0.4em;
+            gap: 0.3em;
+          }
+          .bet-options {
+            gap: 0.25em;
+          }
+          .option {
+            font-size: calc(0.4vw + 7px);
+            gap: 0.15em;
+          }
+          .input-and-abc {
+            gap: 0.25em;
+          }
+          .add-number {
+            min-width: 70px;
+            max-width: 100px;
+            padding: 0.25em 0.3em;
+            font-size: calc(0.4vw + 7px);
+          }
+          .abc-options {
+            gap: 0.15em;
+          }
+        }
+
+        /* Small tablets and large phones */
+        @media (max-width: 768px) {
+          .bet-controls {
+            flex-direction: row;
+            padding: 0.25em 0.3em;
+            gap: 0.2em;
+          }
+          .bet-options {
+            gap: 0.2em;
+            justify-content: flex-start;
+            width: auto;
+            flex-wrap: nowrap;
+          }
+          .option {
+            font-size: calc(0.3vw + 6px);
+            gap: 0.1em;
+            white-space: nowrap;
+          }
+          .input-and-abc {
+            gap: 0.2em;
+            width: auto;
+            justify-content: flex-end;
+          }
+          .add-number {
+            min-width: 50px;
+            max-width: 70px;
+            padding: 0.2em 0.25em;
+            font-size: calc(0.3vw + 6px);
+          }
+          .abc-options {
+            gap: 0.1em;
+          }
+        }
+
+        /* Only allow column layout and wrapping on true mobile */
+        @media (max-width: 480px) {
+          .bet-controls {
+            flex-direction: column;
+          }
+          .bet-options {
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+
+        /* Mobile phones */
+        @media (max-width: 480px) {
+          .bet-controls {
+            padding: 0.2em 0.25em;
+            gap: 0.15em;
+          }
+          .bet-options {
+            gap: 0.15em;
+            flex-wrap: wrap;
+          }
+          .option {
+            font-size: calc(0.2vw + 5px);
+            gap: 0.05em;
+          }
+          .option input[type="checkbox"] {
+            transform: scale(0.8);
+          }
+          .input-and-abc {
+            gap: 0.15em;
+          }
+          .add-number {
+            min-width: 50px;
+            max-width: 70px;
+            padding: 0.15em 0.2em;
+            font-size: calc(0.2vw + 5px);
+          }
+          .abc-options {
+            gap: 0.05em;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+          .bet-controls {
+            padding: 0.15em 0.2em;
+            gap: 0.1em;
+          }
+          .bet-options {
+            gap: 0.1em;
+          }
+          .option {
+            font-size: calc(0.1vw + 4px);
+            gap: 0.02em;
+          }
+          .option input[type="checkbox"] {
+            transform: scale(0.7);
+          }
+          .input-and-abc {
+            gap: 0.1em;
+          }
+          .add-number {
+            min-width: 45px;
+            max-width: 60px;
+            padding: 0.1em 0.15em;
+            font-size: calc(0.1vw + 4px);
+          }
+          .abc-options {
+            gap: 0.02em;
+          }
         }
         .bet-cards {
           display: flex;
-          gap: 0.5em;
-          padding: 0.1em;
+          flex-direction: row;
+          gap: 0.4em;
+          padding: 0.5em 0.6em 0.5em 0.6em;
           overflow-x: auto;
+          overflow-y: hidden;
+          width: 100%;
+          box-sizing: border-box;
+          flex-wrap: nowrap;
+          scrollbar-width: thin;
+          scrollbar-color: #b7410e #f5f5f5;
+        }
+        .bet-cards::-webkit-scrollbar {
+          height: 8px;
+        }
+        .bet-cards::-webkit-scrollbar-thumb {
+          background: #b7410e;
+          border-radius: 4px;
+        }
+        .bet-cards::-webkit-scrollbar-track {
+          background: #f5f5f5;
         }
         .bet-card {
-          min-width: 60px;
-          padding: 0.1em;
+          flex: 0 0 auto;
+          min-width: 50px;
+          max-width: 70px;
+          margin-right: 0.3em;
+          margin-left: 0.1em;
+          padding: 0.2em 0.4em;
           background: #fff7f7;
           color: #333;
           border: 2px solid #4caf50;
@@ -282,6 +493,56 @@ export default function BetPanel({ setBets: setParentBets }) {
           flex-direction: column;
           align-items: center;
           font-size: calc(0.5vw + 8px);
+          box-sizing: border-box;
+        }
+
+        /* Bet cards media queries */
+        @media (max-width: 1024px) {
+          .bet-cards {
+            gap: 0.3em;
+          }
+          .bet-card {
+            min-width: 45px;
+            max-width: 60px;
+            font-size: calc(0.4vw + 7px);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .bet-cards {
+            gap: 0.25em;
+            justify-content: space-between;
+          }
+          .bet-card {
+            min-width: 40px;
+            max-width: 55px;
+            padding: 0.08em;
+            font-size: calc(0.3vw + 6px);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .bet-cards {
+            gap: 0.2em;
+          }
+          .bet-card {
+            min-width: 35px;
+            max-width: 50px;
+            padding: 0.06em;
+            font-size: calc(0.2vw + 5px);
+          }
+        }
+
+        @media (max-width: 320px) {
+          .bet-cards {
+            gap: 0.15em;
+          }
+          .bet-card {
+            min-width: 30px;
+            max-width: 45px;
+            padding: 0.05em;
+            font-size: calc(0.1vw + 4px);
+          }
         }
         .num {
           font-weight: bold;
