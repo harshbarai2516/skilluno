@@ -696,6 +696,8 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
             <div className="number-capsule" style={{ margin: 0 }}>
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 className="capsule-input"
                 placeholder=""
                 value={headerValues[`${selectedRangeState}-${colIdx}`] || ""}
@@ -731,6 +733,8 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
               <div className="number-capsule">
                 <input
                   type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   className="capsule-input"
                   placeholder=""
                   value={rowValues[`${selectedRangeState}-${rowIdx}`] || ""}
@@ -766,12 +770,10 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
                 const isDisabled = !isEditingAllowed(num, rowIdx, colIdx);
 
-                return (
-                  <div key={num} className="grid-cell">
-                    <div className="number-text">{num}</div>
-                    <div className={`number-capsule ${isDisabled ? 'disabled' : ''}`}>
                       <input
                         type="number"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         className="capsule-input"
                         placeholder=""
                         value={value}
@@ -792,6 +794,10 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
                           background: "transparent",
                           display: "flex",
                           justifyContent: "center",
+                          alignItems: "center",
+                          padding: 0,
+                        }}
+                      />
                           alignItems: "center",
                           padding: 0,
                           opacity: isDisabled ? 0.4 : 1,

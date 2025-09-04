@@ -5,6 +5,7 @@ export default function BetPanel({ setBets: setParentBets }) {
   const [bets, setBets] = useState([]); // ✅ Array of objects
   const [inputValue, setInputValue] = useState("");
   const [amount, setAmount] = useState(10);
+  const inputRef = React.useRef(null);
 
   // 🔄 Navbar ke radio se amount fetch
   useEffect(() => {
@@ -232,12 +233,22 @@ export default function BetPanel({ setBets: setParentBets }) {
             ))}
           </div>
           <input
-            type="text"
+            type="number"
+            inputMode="numeric"
+            pattern="[0-9]*"
             placeholder="ADD NUMBER"
             className="add-number"
             value={inputValue}
+            ref={inputRef}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                handleKeyDown(e);
+                e.target.blur(); // Close numpad on Enter
+              } else {
+                handleKeyDown(e);
+              }
+            }}
           />
         </div>
       </div>
