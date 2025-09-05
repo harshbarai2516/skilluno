@@ -660,8 +660,8 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
   };
 
   return (
-    <div className="number-grid-container">
-      <div className="grid-wrapper">
+    <div className="number-grid-container pro-grid-lock">
+      <div className="grid-wrapper pro-grid-wrapper">
         {/* Header row */}
         <div
           className="grid-header"
@@ -696,8 +696,6 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
             <div className="number-capsule" style={{ margin: 0 }}>
               <input
                 type="number"
-                inputMode="numeric"
-                pattern="[0-9]*"
                 className="capsule-input"
                 placeholder=""
                 value={headerValues[`${selectedRangeState}-${colIdx}`] || ""}
@@ -733,8 +731,6 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
               <div className="number-capsule">
                 <input
                   type="number"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
                   className="capsule-input"
                   placeholder=""
                   value={rowValues[`${selectedRangeState}-${rowIdx}`] || ""}
@@ -770,10 +766,12 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
 
                 const isDisabled = !isEditingAllowed(num, rowIdx, colIdx);
 
+                return (
+                  <div key={num} className="grid-cell">
+                    <div className="number-text">{num}</div>
+                    <div className={`number-capsule ${isDisabled ? 'disabled' : ''}`}>
                       <input
                         type="number"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
                         className="capsule-input"
                         placeholder=""
                         value={value}
@@ -796,10 +794,6 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
                           justifyContent: "center",
                           alignItems: "center",
                           padding: 0,
-                        }}
-                      />
-                          alignItems: "center",
-                          padding: 0,
                           opacity: isDisabled ? 0.4 : 1,
                           cursor: isDisabled ? 'not-allowed' : 'text',
                         }}
@@ -813,74 +807,71 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
       </div>
 
       <style jsx='true'>{`
-
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-        }
-
-        input[type="number"] {
-        -moz-appearance: textfield;
-        }
-
-        .number-grid-container {
-          width: 100%;
-          height: 100%;
-          max-height: 100%;
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          overflow-y: hidden;
+        .pro-grid-lock {
+          position: fixed;
+          inset: 0;
+          z-index: 10;
+          width: 100vw;
+          height: 100dvh;
+          max-width: 100vw;
+          max-height: 100dvh;
           background: #f5f5f5;
+          box-sizing: border-box;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-
-        .grid-wrapper {
+        .pro-grid-wrapper {
           display: grid;
           grid-template-columns: repeat(${columns.length + 1}, minmax(0, 1fr));
-          width: 100%;
-          height: 100%;
-          max-height: 100%;
-          gap: 0;
-          overflow-y: hidden;
+          grid-auto-rows: minmax(0, 1fr);
+          width: 98vw;
+          max-width: 98vw;
+          height: 92dvh;
+          max-height: 92dvh;
+          gap: 0.5vw;
+          background: #f5f5f5;
+          box-sizing: border-box;
+          overflow: visible;
+          border-radius: 18px;
+          padding: 1vw 0.5vw;
         }
-
         .grid-header {
-          font-weight: 800;
+          font-weight: 900;
           text-align: center;
-          color: #000 !important;
-          font-size: calc(13px + 0.5vw); /* desktop default */
+          color: #222 !important;
+          font-size: clamp(0.9rem, 1.2vw, 1.5rem);
           display: flex;
           align-items: center;
           justify-content: center;
           background: #e0e0e0;
-          border-radius: 4px;
+          border-radius: 8px;
           overflow: hidden;
           text-overflow: ellipsis;
+          min-width: 0;
+          min-height: 0;
         }
-
         .grid-cell {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: #ffffff;
-          border-radius: 4px;
+          background: #fff;
+          border-radius: 8px;
           overflow: hidden;
+          min-width: 0;
           min-height: 0;
-          max-height: 100%;
-          flex-shrink: 1;
+          box-sizing: border-box;
         }
-
         .grid-block-cell {
           background: #e0e0e0;
         }
-
         .number-text {
-          font-weight: 800;
-          line-height: 1;
-          font-size: calc(13px + 0.5vw); /* desktop default */
-          color: #000 !important;
+          font-weight: 900;
+          line-height: 1.1;
+          font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+          color: #222 !important;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -888,110 +879,123 @@ export default function NumberGrid({ selectedRangeState, checkedRanges = [], che
           text-align: center;
           margin: 0;
         }
-
         .number-capsule {
           border-radius: 999px;
-          border: 1.5px solid #6a1b9a;
-          background-color: white;
-          width: calc(60px + 2vw);   /* desktop default */
-          height: calc(20px + 1vw);  /* desktop default */
-          min-width: 30px;
-          min-height: 10px;
+          border: 2px solid #6a1b9a;
+          background-color: #fff;
+          width: clamp(38px, 5vw, 60px);
+          height: clamp(22px, 2.5vw, 38px);
+          min-width: 38px;
+          min-height: 22px;
+          max-width: 60px;
+          max-height: 38px;
           flex-shrink: 0;
           justify-content: center;
           align-items: center;
+          box-sizing: border-box;
+          margin: 0 auto;
         }
-
         .number-capsule.disabled {
           border-color: #ccc;
           background-color: #f5f5f5;
           opacity: 0.6;
         }
-
-        /* Laptops */
-        @media (max-width: 1366px) {
-          .number-text { font-size: calc(10px + 0.5vw); }
-          .number-capsule { width: calc(45px + 2vw); height: calc(17px + 0.9vw); }
-        }
-
-        /* Large desktop */
-        @media (min-width: 1600px) {
-          .number-text {
-            font-size: calc(17px + 0.5vw);
-            margin-bottom: 4px;
-          }
-          .number-capsule {
-            width: calc(40px + 1vw);
-            height: calc(15px + 0.5vw);
-          }
-        }
-
-        /* Desktop/Laptops */
-        @media (min-width: 1025px) and (max-width: 1599px) {
-          .number-capsule {
-            width: calc(36px + 1vw);
-            height: calc(15px + 0.5vw);
-          }
-        }
-          .grid-header { font-size: calc(7px + 0.5vw); font-weight: 800; }
-          .number-text { font-size: calc(8px + 0.5vw); font-weight: 800; }
-          .number-capsule { width: calc(28px + 2vw); height: calc(9px + 0.9vw); border-width: 1.1px; }
-        }
-
-        /* Small phones */
-        @media (max-width: 400px) {
-          .grid-header { font-size: calc(6px + 0.5vw); font-weight: 800; }
-          .number-text { font-size: calc(5px + 0.5vw); font-weight: 800; }
-          .number-capsule { width: calc(22px + 2vw); height: calc(7px + 0.9vw); }
-        }
-
-        /* Landscape */
-        @media (max-height: 500px) and (orientation: landscape) {
-          .grid-header { font-size: calc(7px + 0.5vh); font-weight: 800; }
-          .number-text { font-size: calc(6px + 0.5vh); font-weight: 800; }
-          .number-capsule { width: calc(25px + 2vh); height: calc(9px + 0.9vh); }
-        }
-
-        /* High contrast */
-        @media (forced-colors: active) {
-          .grid-header { background: ButtonFace; color: #000 !important; font-weight: 800; }
-          .grid-cell { background: Canvas; color: #000 !important; }
-          .number-text { font-weight: 800; }
-          .number-capsule { border-color: #000; background: Canvas; }
-        }
-
         .capsule-input {
-          font-size: 1rem; /* Default font size */
+          font-size: clamp(1.2rem, 2vw, 2.2rem);
+          font-weight: 900;
+          color: #222;
+          background: transparent;
+          border: none;
+          outline: none;
+          text-align: center;
+          width: 100%;
+          height: 100%;
+          padding: 0.1em 0.2em;
+          box-sizing: border-box;
+          letter-spacing: 0.03em;
         }
-
-        @media (max-width: 1200px) {
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+        @media (max-width: 900px) {
+          .pro-grid-wrapper {
+            width: 99vw;
+            max-width: 99vw;
+            height: 98dvh;
+            max-height: 98dvh;
+            gap: 0.2vw;
+            padding: 0.5vw 0.2vw;
+          }
+          .number-capsule {
+            width: clamp(32px, 4vw, 48px);
+            height: clamp(18px, 2vw, 32px);
+            min-width: 32px;
+            min-height: 18px;
+            max-width: 48px;
+            max-height: 32px;
+          }
           .capsule-input {
-            font-size: 0.9rem;
+            font-size: clamp(1.1rem, 2vw, 2rem);
           }
         }
-
-        @media (max-width: 992px) {
+        @media (max-width: 600px) {
+          .pro-grid-lock {
+            width: 100vw;
+            height: 100dvh;
+            max-width: 100vw;
+            max-height: 100dvh;
+            padding: 0;
+          }
+          .pro-grid-wrapper {
+            width: 100vw;
+            max-width: 100vw;
+            height: 100dvh;
+            max-height: 100dvh;
+            gap: 0.1vw;
+            padding: 0.2vw 0.1vw;
+            border-radius: 0;
+          }
+          .number-capsule {
+            width: clamp(28px, 3vw, 38px);
+            height: clamp(14px, 1.5vw, 22px);
+            min-width: 28px;
+            min-height: 14px;
+            max-width: 38px;
+            max-height: 22px;
+          }
           .capsule-input {
-            font-size: 0.6rem;
+            font-size: clamp(1rem, 2vw, 1.6rem);
           }
         }
-
-        @media (max-width: 768px) {
-          .capsule-input {
-            font-size: 0.5rem;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .capsule-input {
-            font-size: 0.5rem;
-          }
-        }
-
         @media (max-width: 400px) {
-          .capsule-input {
-            font-size: 0.5rem;
+          .number-capsule {
+            width: clamp(22px, 2vw, 28px);
+            height: clamp(10px, 1vw, 14px);
+            min-width: 22px;
+            min-height: 10px;
+            max-width: 28px;
+            max-height: 14px;
           }
+          .capsule-input {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+          }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+          .pro-grid-wrapper {
+            height: 98dvh;
+            max-height: 98dvh;
+          }
+        }
+        @media (forced-colors: active) {
+          .grid-header { background: ButtonFace; color: #000 !important; font-weight: 900; }
+          .grid-cell { background: Canvas; color: #000 !important; }
+          .number-text { font-weight: 900; }
+          .number-capsule { border-color: #000; background: Canvas; }
         }
       `}</style>
     </div>
